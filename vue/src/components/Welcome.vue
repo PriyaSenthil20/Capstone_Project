@@ -1,13 +1,12 @@
 <template>
      <div class = "welcome-message">
-        <h1>Welcome to Rocco's Pizza</h1>
+        <img src="../assets/welcome.png" alt="welcome">
     </div>
 </template>
 
 <style scoped>
 .welcome-message {
-    font-family: 'Press Start 2P', sans-serif;
-    color: white;
+    font-family: sans-serif;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -15,7 +14,6 @@
 }
 
 .text {
-    font-family: 'Press Start 2P', sans-serif;
-    color: white;
+    font-family: sans-serif;
 }
 </style>

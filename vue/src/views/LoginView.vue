@@ -1,4 +1,9 @@
 <template>
+  <div class="home">
+    <nav>
+      <nav-options/>
+    </nav>
+  </div>
   <div id="login">
     <form v-on:submit.prevent="login">
       <h1 >Please Sign In</h1>
@@ -24,10 +29,13 @@
 </template>
 
 <script>
+import NavOptions from '../components/NavOptions.vue';
 import authService from "../services/AuthService";
 
 export default {
-  components: {},
+  components: {
+    NavOptions
+  },
   data() {
     return {
       user: {
