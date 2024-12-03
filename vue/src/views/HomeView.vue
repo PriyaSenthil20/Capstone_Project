@@ -1,14 +1,19 @@
 <template>
   <div class="home">
-    <header>
-      
-    </header>
-    <h1>Home</h1>
-    <p>You must be authenticated to see this</p>
+    <nav>
+      <nav-options/>
+    </nav>
   </div>
 </template>
 
 <script>
+import NavOptions from '../components/NavOptions.vue';
+import Welcome from '../components/Welcome.vue'
+
 export default {
+  components: {
+    NavOptions,
+    Welcome
+  }
 };
 </script>
