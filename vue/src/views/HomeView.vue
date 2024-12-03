@@ -1,13 +1,14 @@
-<template>
+make the welcome page bigger and cleaner <template>
   <div class="home">
-    <nav>
-      <nav-options/>
-      
+    <nav class="navbar">
+      <nav-options />
     </nav>
-    <div>
-      <welcome/>
+    <div class="welcome-section">
+      <welcome />
     </div>
-    <div>
+    <div class="content-section">
+      <specials />
+      <about-us />
     </div>
   </div>
 </template>
@@ -23,7 +24,54 @@ export default {
     NavOptions,
     Welcome,
     Specials,
-    AboutUs
-  }
+    AboutUs,
+  },
 };
 </script>
+
+<style scoped>
+.home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  width: 100%;
+  background-color: #e63946;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-section {
+  width: 90%;
+  max-width: 1200px;
+  padding: 2rem 0;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-section {
+  width: 90%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.content-section > div {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+</style>

@@ -16,9 +16,9 @@
                         <button class = "navBtn"> Register </button></router-link>
                 </span>                            
            
-            <button> Menu </button>
-            <button> About Us </button>
-            <button> Specials </button>
+            <button class="navBtn">Menu</button>
+            <button class="navBtn">About Us</button>
+            <button class="navBtn">Specials</button>
 
             <!--
                 For Account route...
@@ -31,7 +31,7 @@
             -->
 
             <!-- If the user is not signed this should prompt them to sign in or register -->
-            <button> Start Order </button>
+            <button class="navBtn orderBtn">Start Order</button>
             <img v-bind:src="this.logoUrl"/>
         </div>
     </div>
@@ -62,23 +62,58 @@ export default {
 <style scoped>
 
 #main {
-    display: flex;
-    flex-direction: column;
-    grid-area: main;
-    border: white;
-    border-style: groove;
-    border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-area: main;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: #f4f4f4;
 }
 
-
-
-#game-options {
-    display: flex;
-    justify-content: space-between;
+#menu-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  background-color: #e63946;
+  border-radius: 15px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-#monster-image {
-    margin-top: auto;
+.navBtn {
+  padding: 1.2rem 2.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  background-color: #ff6347;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.2s;
 }
+
+.navBtn:hover {
+  background-color: #ff4500;
+  transform: translateY(-3px);
+}
+
+.orderBtn {
+  background-color: #ffd700;
+  color: #333;
+}
+
+.orderBtn:hover {
+  background-color: #ffcc00;
+}
+
+.logo {
+  max-width: 120px;
+  margin-top: 1.5rem;
+}
+
 
 </style>
