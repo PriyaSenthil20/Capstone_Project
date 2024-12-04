@@ -1,3 +1,6 @@
+
+
+
 <template>
   <div class="home">
     <nav>
@@ -42,7 +45,7 @@ export default {
         username: '',
         password: '',
         confirmPassword: '',
-        role: 'user',
+        role: 'admin',
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',

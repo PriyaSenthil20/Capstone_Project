@@ -4,7 +4,11 @@
       <nav-options/>
     </nav>
   </div>
-  <div id="register" class="text-center">
+  <span>
+    <h3 id="showStep1" v-if="$store.state.token == ''">Step 1/2</h3>
+    <h3 id="showStep2" v-if="$store.state.token != ''">Step 2/2</h3>
+  </span>
+  <div id="register" class="text-center" v-if="$store.state.token == ''">
     <form v-on:submit.prevent="register">
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
@@ -28,8 +32,8 @@
   </div>
 
   
-  <div id="customerRegister" class="text-center">
-    <form v-on:submit.prevent="register">
+  <div id="customerRegister" class="text-center" v-else>
+    <form v-on:submit.prevent="customerRegister">
        <h1>Enter Customer Details for {{this.$store.state.user.username}}</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -168,8 +172,30 @@ export default {
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
+              authService.login(this.user).then((response) => {
+              if (response.status == 200){
+                this.$store.commit("SET_AUTH_TOKEN", response.data.token);
+                this.$store.commit("SET_USER", response.data.user);
+            }
+              })
+            }
+          })
+          .catch((error) => {
+            const response = error.response;
+            this.registrationErrors = true;
+            if (response.status === 400) {
+              this.registrationErrorMsg = 'Bad Request: Validation Errors';
+            }
+          });
+      }
+    },
+    registerCustomer() {
+        authService
+          .registerCustomer(this.customer)
+          .then((response) => {
+            if (response.status == 201) {
               this.$router.push({
-                path: '/login',
+                path: '/',
                 query: { registration: 'success' },
               });
             }
@@ -181,7 +207,7 @@ export default {
               this.registrationErrorMsg = 'Bad Request: Validation Errors';
             }
           });
-      }
+      
     },
     clearErrors() {
       this.registrationErrors = false;

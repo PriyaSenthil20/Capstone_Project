@@ -15,7 +15,6 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/heroes")
 @PreAuthorize("isAuthenticated()")
 public class CustomerRegisterController {
     private final CustomerDao customerDao;
