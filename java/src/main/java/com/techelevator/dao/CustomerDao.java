@@ -8,7 +8,7 @@ import com.techelevator.model.User;
 import java.util.List;
 
 public interface CustomerDao {
-    public List<Customer> getCustomer();
+    public List<Customer> getCustomers();
 
     public Customer getCustomerById(int id);
 

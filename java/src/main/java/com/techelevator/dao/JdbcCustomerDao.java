@@ -11,26 +11,38 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 @Component
 public class JdbcCustomerDao implements CustomerDao {
     private final JdbcTemplate jdbcTemplate;
-    private final String selectCustomerSql="SELECT customer_id,customer_first_name,customer_last_name,customer_address," +
+    private final String CUSTOMER_SELECT="SELECT customer_id,customer_first_name,customer_last_name,customer_address," +
             "customer_phone_number,customer_state,customer_city,customer_email_address,customer_zip_code ";
     public JdbcCustomerDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
-    public List<Customer> getCustomer() {
-        return null;
+    public List<Customer> getCustomers() {
+        List<Customer> customers = new ArrayList<>();
+        String sql = CUSTOMER_SELECT+" FROM customers";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                Customer customer = mapRowToCustomer(results);
+                customers.add(customer);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return customers;
     }
 
     @Override
     public Customer getCustomerById(int id) {
         Customer customer = null;
-        String sql = selectCustomerSql+"  FROM customers WHERE customer_id = ?";
+        String sql =CUSTOMER_SELECT +"  FROM customers WHERE customer_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
             if (results.next()) {
@@ -46,7 +58,7 @@ public class JdbcCustomerDao implements CustomerDao {
     @Override
     public Customer getCustomerByEmail(String customerEmail) {
         Customer customer = null;
-        String sql = selectCustomerSql+"  FROM customers WHERE customer_email_address = ?";
+        String sql =CUSTOMER_SELECT +"  FROM customers WHERE customer_email_address = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, customerEmail);
             if (results.next()) {
