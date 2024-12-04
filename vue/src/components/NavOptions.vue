@@ -1,7 +1,8 @@
 <template>
     <div id="main">    
         <div id="menu-options">
-            <router-link v-bind:to="{ name: 'home' }"><button> Home </button></router-link>
+            <router-link v-bind:to="{ name: 'home' }">
+              <button class = "navBtn"> Home </button></router-link>
 
                 <span v-if="$store.state.token != ''">
                     <router-link v-bind:to="{ name: 'logout' }">
@@ -32,8 +33,9 @@
 
             <!-- If the user is not signed this should prompt them to sign in or register -->
             <button class="navBtn orderBtn">Start Order</button>
-            <img v-bind:src="this.logoUrl"/>
+            
         </div>
+        <img v-bind:src="this.logoUrl"/>
     </div>
 </template>
 
@@ -63,15 +65,21 @@ export default {
 
 #main {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  grid-area: main;
-  border-radius: 5px;
+  
+  /*border-radius: 5px;
   padding: 1rem;
-  background-color: #f4f4f4;
+  background-color: #f4f4f4;*/
+  background-color: #e63946;
 }
 
+
 #menu-options {
+  background-color: #e63946;
+  display: flex;
+  flex-wrap: wrap;
+/*
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -81,10 +89,15 @@ export default {
   background-color: #e63946;
   border-radius: 15px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  */
 }
 
 .navBtn {
-  padding: 1.2rem 2.5rem;
+   background-color: #FFD700;
+   font-size: 24px;
+   padding: 32px 32px;
+   border: 0px;
+  /*padding: 1.2rem 2.5rem;
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
@@ -93,7 +106,7 @@ export default {
   border-radius: 8px;
   cursor: pointer;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s, transform 0.2s;*/
 }
 
 .navBtn:hover {
@@ -101,6 +114,7 @@ export default {
   transform: translateY(-3px);
 }
 
+/*
 .orderBtn {
   background-color: #ffd700;
   color: #333;
@@ -108,7 +122,7 @@ export default {
 
 .orderBtn:hover {
   background-color: #ffcc00;
-}
+}*/
 
 .logo {
   max-width: 120px;

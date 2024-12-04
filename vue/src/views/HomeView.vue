@@ -31,20 +31,33 @@ export default {
 
 <style scoped>
 .home {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #f4f4f4;
   font-family: Arial, sans-serif;
+  /*
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  */
 }
+
 
 .navbar {
   width: 100%;
+  display: bottom;
+  justify-content: center;
+  /*
   background-color: #e63946;
   padding: 1rem 0;
   display: flex;
   justify-content: center;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  */
 }
 
 .welcome-section {
