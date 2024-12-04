@@ -5,8 +5,11 @@ import jakarta.validation.constraints.NotEmpty;
 
 public class CustomerDto {
     @NotEmpty
+    private int customerId;
+    @NotEmpty
     private String customerFirstName;
     @NotEmpty
+
     private String customerLastName;
     @NotEmpty
     private String customerAddress;
@@ -20,11 +23,10 @@ public class CustomerDto {
     private String customerState;
     @NotEmpty
     private int customerZipCode;
-    private String username;
-    @JsonIgnore
-    private String password;
 
-    public CustomerDto(String customerFirstName, String customerLastName, String customerAddress, String phoneNumber, String customerEmail, String customerCity, String customerState,int customerZipCode,String username,String password) {
+
+    public CustomerDto(int userId,String customerFirstName, String customerLastName, String customerAddress, String phoneNumber, String customerEmail, String customerCity, String customerState,int customerZipCode) {
+        this.customerId=userId;
         this.customerFirstName = customerFirstName;
         this.customerLastName = customerLastName;
         this.customerAddress = customerAddress;
@@ -33,26 +35,16 @@ public class CustomerDto {
         this.customerCity = customerCity;
         this.customerState = customerState;
         this.customerZipCode = customerZipCode;
-        this.username=username;
-        this.password=password;
-    }
-    public String getUsername() {
-        return username;
+
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public String getPassword() {
-        return password;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
 
     public String getCustomerFirstName() {
         return customerFirstName;

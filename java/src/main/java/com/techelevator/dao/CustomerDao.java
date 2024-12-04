@@ -11,7 +11,7 @@ public interface CustomerDao {
     public List<Customer> getCustomer();
 
     public Customer getCustomerById(int id);
-    public Customer getCustomerByUserName(String username);
+
 
     Customer getCustomerByEmail(String customerEmail);
 

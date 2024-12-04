@@ -1,52 +1,37 @@
 package com.techelevator.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 public class Customer {
-    private int userId;
+    private int customerId;
     private String customerFirstName;
     private String customerLastName;
     private String customerAddress;
-    private String phoneNumber;
+    private String customerPhoneNumber;
     private String customerEmail;
     private String customerCity;
     private String customerState;
     private int customerZipCode;
-    private String username;
-    @JsonIgnore
-    private String password;
+    public Customer(){}
 
-    public Customer(String customerFirstName, String customerLastName, String customerAddress, String phoneNumber, String customerEmail, String customerCity, String customerState,int customerZipCode,String username,String password) {
+    public Customer(int customerId,String customerFirstName, String customerLastName, String customerAddress, String customerPhoneNumber, String customerEmail, String customerCity, String customerState, int customerZipCode) {
+        this.customerId=customerId;
         this.customerFirstName = customerFirstName;
         this.customerLastName = customerLastName;
         this.customerAddress = customerAddress;
-        this.phoneNumber = phoneNumber;
+        this.customerPhoneNumber = customerPhoneNumber;
         this.customerEmail = customerEmail;
         this.customerCity = customerCity;
         this.customerState = customerState;
         this.customerZipCode = customerZipCode;
-        this.username=username;
-        this.password=password;
+
     }
 
-    public String getUsername() {
-        return username;
+
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getUserId() {
-        return userId;
+    public void setCustomerId(int userId) {
+        this.customerId = userId;
     }
 
     public String getCustomerFirstName() {
@@ -73,12 +58,12 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getCustomerPhoneNumber() {
+        return customerPhoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setCustomerPhoneNumber(String customerPhoneNumber) {
+        this.customerPhoneNumber = customerPhoneNumber;
     }
 
     public String getCustomerEmail() {
