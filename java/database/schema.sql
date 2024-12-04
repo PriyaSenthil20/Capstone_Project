@@ -16,7 +16,7 @@ CREATE TABLE customers (
 	customer_first_name varchar(30) NOT NULL,
 	customer_last_name varchar(30) NOT NULL,
 	customer_address varchar(30) NOT NULL,
-	customer_phone_number int NOT NULL,
+	customer_phone_number varchar(20) NOT NULL,
 	customer_city varchar(30) NOT NULL,
 	customer_state varchar(2) NOT NULL,
 	customer_zip_code int NOT NULL,
