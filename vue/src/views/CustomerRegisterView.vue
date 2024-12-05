@@ -148,10 +148,10 @@ export default {
         customerFirstName: '',
         customerLastName: '',
         customerAddress: '',
-        customerCity: '',
-        customerZipCode: '',
-        customerState: '',
         customerPhoneNumber: '',
+        customerCity: '',
+        customerState: '',
+        customerZipCode: '',
         customerEmailAddress: '',
 //        customerUsername: '', 
  //       customerPassword: '',
@@ -194,6 +194,7 @@ export default {
           .registerCustomer(this.customer)
           .then((response) => {
             if (response.status == 201) {
+              this.$store.commit("SET_CUSTOMER", response.data.customer);
               this.$router.push({
                 path: '/',
                 query: { registration: 'success' },
