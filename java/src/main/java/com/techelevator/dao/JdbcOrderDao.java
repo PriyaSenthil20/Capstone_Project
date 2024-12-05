@@ -16,7 +16,8 @@ import java.util.List;
 @Component
 public class JdbcOrderDao implements OrderDao {
     private final JdbcTemplate jdbcTemplate;
-    private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, name, notes, total_sale, pickup_date, pickup_time, status_id, created_time\n" +
+    private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, " +
+            "name, notes, total_sale, pickup_date, pickup_time, status_id, created_time\n" +
             "\tFROM public.orders;";
     public JdbcOrderDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -77,23 +78,11 @@ public class JdbcOrderDao implements OrderDao {
         }
     }
 
-    public Order updateOrderStatus(Order order, int id) {
+    public Order updateOrderStatus(Order order, int orderId) {
         String updateStatusSql = "UPDATE orders SET status_id=?  WHERE order_id = ?";
-        /*try {
-
-            int rowsAffected= jdbcTemplate.update(updateStatusSql, id, id);
-            if (rowsAffected.next()) {
-                order = mapRowToOrder(rowsAffected);
-            }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
-        } catch (DataIntegrityViolationException e) {
-            throw new DaoException("Data integrity violation", e);
-        }
-        return order;*/
         Order updatedOrder = null;
         try {
-            int rowsAffected = jdbcTemplate.update(updateStatusSql, order.getStatusId(), order.getOrderId());
+            int rowsAffected = jdbcTemplate.update(updateStatusSql, order.getStatusId(), orderId);
             if (rowsAffected != 1) {
                 throw new DaoException("Three things are certain: Death, Taxes and Loss of Data. Guess which has occurred.");
             } else {

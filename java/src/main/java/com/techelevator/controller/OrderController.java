@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/orders")
 @PreAuthorize("isAuthenticated()")
 public class OrderController {
 
@@ -24,9 +23,10 @@ public class OrderController {
     }
 
     // Get all orders
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping("admin/orders")
     @GetMapping
-    public List<Order> getAllOrders() {
+    public List<Order> getAllOrdersAsAdmin() {
         try {
             return orderDao.getOrders();
         } catch (DaoException e) {
@@ -36,7 +36,7 @@ public class OrderController {
 
     // Get order by ID
     @PreAuthorize("hasRole('USER')")
-    @GetMapping("/{id}")
+    @GetMapping("/orders/{id}")
     public Order getOrderById(@PathVariable int id) {
         try {
             return orderDao.getOrderById(id);
@@ -48,22 +48,45 @@ public class OrderController {
     // Create a new order
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
+    @PostMapping("/orders")
     public Order createOrder(@RequestBody Order order) {
-        return null;
+        try {
+            return orderDao.createOrder(order);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("admin/orders")
+    public Order createOrderAsAdmin(@RequestBody Order order) {
+        try {
+            return orderDao.createOrder(order);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Update order status
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}/status")
-    public Order updateOrderStatus(@PathVariable int id, @RequestBody Order order) {
-        return null;
+    @PutMapping("admin/orders/{id}/status/")
+    public Order updateOrderStatusByIdAsAdmin(@PathVariable int orderId, @RequestBody Order order) {
+        try {
+            return orderDao.updateOrderStatus(order,orderId);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Update driver information for an order
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/{id}/driver")
-    public Order updateDriverStatus(@PathVariable int id, @RequestBody Order order) {
-        return null;
+    @PutMapping("admin/orders/{id}/driver")
+    public Order updateOrderDriver(@PathVariable int orderId, @RequestBody Order order) {
+        try {
+            return orderDao.updateDriverStatus(order,orderId);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

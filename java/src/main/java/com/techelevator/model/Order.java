@@ -10,15 +10,10 @@ public class Order {
     private int customerId;
     private int transferId;
     private int driverId;
-    //private int userId;
     private String name;
-
     private String notes;
     private int totalSale;
-
-
     private Date pickUpDate;
-
     private LocalTime pickUpTime;
     private int statusId;
 
@@ -28,14 +23,14 @@ public class Order {
     public Order() {
     }
 
-    public Order(int orderId, int customerId, int transferId, int driverId, String name, int totalSale, String notes, Date pickUpDate, LocalTime pickUpTime, int statusId, LocalDateTime createdTime) {
+    public Order(int orderId, int customerId, int transferId, int driverId, String name,
+                 int totalSale, String notes, Date pickUpDate, LocalTime pickUpTime,
+                 int statusId, LocalDateTime createdTime) {
         this.orderId = orderId;
-        //this.userId = userId;
         this.customerId=customerId;
         this.transferId=transferId;
         this.driverId=driverId;
         this.name = name;
-
         this.totalSale = totalSale;
         this.notes = notes;
         this.pickUpDate=pickUpDate;
