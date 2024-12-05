@@ -14,7 +14,7 @@ public interface ProductOptionDao {
 
     public ProductOption createProductOption(ProductOption productOption);
 
-    public ProductOption setProductAvailabilityById(int id, boolean availability);
+    public ProductOption setProductOptionAvailabilityById(int id, boolean availability);
 
     public ProductOption setOptionPriceById(int id, BigDecimal price);
 

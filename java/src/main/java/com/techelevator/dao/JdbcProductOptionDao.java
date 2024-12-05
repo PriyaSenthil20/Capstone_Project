@@ -90,7 +90,7 @@ public class JdbcProductOptionDao implements ProductOptionDao{
     }
 
     @Override
-    public ProductOption setProductAvailabilityById(int id, boolean availability) {
+    public ProductOption setProductOptionAvailabilityById(int id, boolean availability) {
         ProductOption updatedOption = null;
         String sql = "UPDATE product_options " +
                 "SET option_available = ? " +

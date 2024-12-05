@@ -5,10 +5,10 @@ import com.techelevator.exception.DaoException;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Customer;
 import com.techelevator.model.Product;
-<<<<<<< HEAD
-=======
 
->>>>>>> 165f268ad2f973bb8962fcdadc6b3e690eefcf06
+
+
+
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
