@@ -88,13 +88,51 @@ public class JdbcProductDao implements ProductDao {
     }
 
     @Override
-    public boolean setProductAvailabilityById(int id) {
-       return false;
+    public Product setProductAvailabilityById(int id) {
+        Product updatedProduct = null;
+        String sql = "UPDATE products " +
+                "SET product_available = ? " +
+                "WHERE product_id = ?";
+        try {
+
+            int rowsAffected = jdbcTemplate.update(sql, getProductById(id).getAvailability(), id);
+            if (rowsAffected != 1){
+                throw new DaoException("DaoException");
+            } else {
+                updatedProduct = getProductById(id);
+            }
+
+        }catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return updatedProduct;
     }
 
     @Override
-    public BigDecimal setProductPriceById(int id) {
-        return null;
+    public Product setProductPriceById(int id) {
+        Product updatedProduct = null;
+        String sql = "UPDATE products " +
+                "SET product_price = ? " +
+                "WHERE product_id = ?";
+        try {
+
+            int rowsAffected = jdbcTemplate.update(sql, getProductById(id).getProductPrice(), id);
+            if (rowsAffected != 1){
+                throw new DaoException("DaoException");
+            } else {
+                updatedProduct = getProductById(id);
+            }
+
+        }catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+
+        return updatedProduct;
     }
 
     //Method to map a row from the Products table to a Product model POJO
