@@ -6,8 +6,10 @@ make the welcome page bigger and cleaner <template>
     <div class="welcome-section">
       <welcome />
     </div>
-    <div class="content-section">
-      <specials />
+  <div>
+    </div>
+    <div class="content-section">      
+      <specials v-bind:products="products" />
       <about-us />
     </div>
   </div>
@@ -18,6 +20,7 @@ import NavOptions from '../components/NavOptions.vue';
 import Welcome from '../components/Welcome.vue';
 import Specials from '../components/Specials.vue';
 import AboutUs from '../components/AboutUs.vue';
+import PizzaService from '../services/PizzaService.js';
 
 export default {
   components: {
@@ -26,6 +29,26 @@ export default {
     Specials,
     AboutUs,
   },
+  data() {
+    products: []
+  },
+  methods: {
+      getMenu(){
+      
+      PizzaService.menu()
+      .then(response => {
+        
+        this.products = response.data;
+        
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
+  },
+  created() {
+    this.getMenu();
+  }
 };
 </script>
 

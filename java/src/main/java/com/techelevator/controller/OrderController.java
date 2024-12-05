@@ -39,7 +39,7 @@ public class OrderController {
     @GetMapping("/{id}")
     public Order getOrderById(@PathVariable int id) {
         try {
-            return orderDao.createOrder(order);
+            return orderDao.getOrderById(id);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
