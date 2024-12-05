@@ -166,5 +166,10 @@ VALUES ('Small', 1.3),
 INSERT INTO transfer_type (transfer_name)
 VALUES ('Delivery'),
 ('Pickup');
+
+INSERT INTO product_type (product_name)
+VALUES ('Special Pizza'),
+('Custom Pizza'),
+('Drink');
 	
 COMMIT TRANSACTION;

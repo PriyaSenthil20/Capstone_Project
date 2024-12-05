@@ -3,7 +3,6 @@ package com.techelevator.controller;
 import com.techelevator.dao.PaymentDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Payment;
-import com.techelevator.model.PaymentDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,18 +55,11 @@ public class PaymentController {
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Payment createPayment(@Valid @RequestBody PaymentDto paymentDto) {
+    public Payment createPayment(@Valid @RequestBody Payment payment) {
         try {
-            Payment payment = new Payment();
-            payment.setOrderId(paymentDto.getOrderId());
-            payment.setPaymentType(paymentDto.getPaymentType());
-            payment.setCardNumber(paymentDto.getCardNumber());
-            payment.setCardExpiration(paymentDto.getCardExpiration());
-            payment.setCardCvv(paymentDto.getCardCvv());
-            payment.setCardZipcode(paymentDto.getCardZipCode());
             return paymentDao.createPayment(payment);
         } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to create payment.");
         }
     }
 
@@ -75,18 +67,11 @@ public class PaymentController {
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    public Payment updatePayment(@Valid @RequestBody PaymentDto paymentDto) {
+    public Payment updatePayment(@Valid @RequestBody Payment payment) {
         try {
-            Payment payment = new Payment();
-            payment.setPaymentId(paymentDto.getOrderId());
-            payment.setPaymentType(paymentDto.getPaymentType());
-            payment.setCardNumber(paymentDto.getCardNumber());
-            payment.setCardExpiration(paymentDto.getCardExpiration());
-            payment.setCardCvv(paymentDto.getCardCvv());
-            payment.setCardZipcode(paymentDto.getCardZipCode());
             return paymentDao.createPayment(payment);
         } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to update payment.");
         }
     }
 }
