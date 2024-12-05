@@ -1,6 +1,6 @@
 BEGIN TRANSACTION;
 
-DROP TABLE IF EXISTS users, customers, orders, order_status, products, product_type, size, order_products, orders_selections, product_options, options_type, payment;
+DROP TABLE IF EXISTS users, customers, orders, order_status, products, product_type, size, order_products, orders_selections, product_options, options_type, payment, transfer_type, drivers CASCADE;
 
 CREATE TABLE users (
 	user_id SERIAL,

@@ -76,12 +76,13 @@ public class JdbcCustomerDao implements CustomerDao {
         String insertCustomerSql = "INSERT INTO customers (customer_id, " +
                 "customer_first_name,customer_last_name,customer_address," +
                 "customer_phone_number,customer_state," +
-                "customer_city,customer_email_address,customer_zip_code) values (?,UPPER(TRIM(?)),UPPER(TRIM(?)),?,?,?,LOWER(TRIM(?)),LOWER(TRIM(?)),?) ";
+                "customer_city,customer_email_address,customer_zip_code) " +
+                "values (?,UPPER(TRIM(?)),UPPER(TRIM(?)),?,?,?,LOWER(TRIM(?)),LOWER(TRIM(?)),?) ";
 
         try {
           jdbcTemplate.update(insertCustomerSql,customer.getCustomerId(),
                    customer.getCustomerFirstName(),customer.getCustomerLastName(),
-                   customer.getCustomerAddress(),customer.getCustomerState(),
+                   customer.getCustomerAddress(),customer.getPhoneNumber(),customer.getCustomerState(),
                    customer.getCustomerCity(),customer.getCustomerEmail(),
                    customer.getCustomerZipCode());
          return getCustomerById(customer.getCustomerId());
