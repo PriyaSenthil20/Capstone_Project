@@ -6,11 +6,13 @@ import com.techelevator.dao.UserDao;
 import com.techelevator.model.Customer;
 import com.techelevator.model.Product;
 import com.techelevator.model.ProductDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 
@@ -25,9 +27,9 @@ public class ProductController {
         this.productDao = productDao;
         this.userDao=userDao;
     }
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/products")
-    public List<Product> getProducts(int userId){
+    public List<Product> getProducts(){
         try {
             return productDao.getProducts();
         } catch (DaoException e) {
@@ -43,17 +45,18 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PreAuthorize("hasRole('admin')")
-    public Product getProductById(int id, int userId){
+    @PreAuthorize("hasRole('ADMIN')")
+    public Product getProductById(int id){
         try {
             return productDao.getProductById(id);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PreAuthorize("hasRole('admin')")
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/products")
-    public Product createProduct(Product product, int userId){
+    public Product createProduct(@RequestBody Product product){
         try {
             return productDao.createProduct(product);
         } catch (DaoException e) {
@@ -61,22 +64,22 @@ public class ProductController {
         }
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/products/availability")
-    public Product setProductAvailabilityById(int id){
+    public Product setProductAvailabilityById(@RequestBody Product product){
         try {
-            return productDao.setProductAvailabilityById(id);
+            return productDao.setProductAvailabilityById(product.getProductId(),product.getAvailability());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PreAuthorize("hasRole('admin')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/products/price")
-    public Product setProductPriceById(int id){
+    public Product setProductPriceById(@RequestBody Product product){
 
         try {
-            return productDao.setProductPriceById(id);
+            return productDao.setProductPriceById(product.getProductId(),product.getProductPrice());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -36,8 +36,10 @@ public class CustomerRegisterController {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/customerRegister", method = RequestMethod.POST)
-    public void createCustomer(@Valid @RequestBody CustomerDto customer){
+    public void createCustomer(@Valid @RequestBody CustomerDto customer, Principal principal){
         try {
+            int userId = getCurrentUserId(principal);
+            customer.setCustomerId(userId);
             if (customerDao.getCustomerById(customer.getCustomerId()) != null) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer Record already exists.");
             } else {
@@ -49,9 +51,9 @@ public class CustomerRegisterController {
         }
     }
 
-    private long getCurrentUserId(Principal principal) {
-        return userDao.getUserByUsername(principal.getName()).getId();
-    }
+        private int getCurrentUserId(Principal principal) {
+            return userDao.getUserByUsername(principal.getName()).getId();
+        }
     }
 
 

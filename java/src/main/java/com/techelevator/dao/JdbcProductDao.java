@@ -17,7 +17,7 @@ public class JdbcProductDao implements ProductDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private final String selectProductSql = "SELECT product_id,product_name,product_desc,product_type_id,product_price"+
+    private final String selectProductSql = "SELECT product_id,product_name,product_desc,product_type_id,product_price,"+
             "product_available,size_id ";
 
     public JdbcProductDao(JdbcTemplate jdbcTemplate) {this.jdbcTemplate = jdbcTemplate; }
@@ -71,10 +71,10 @@ public class JdbcProductDao implements ProductDao {
     @Override
     public Product createProduct(Product product) {
         int newProductId;
-        String sql  = "INSERT INTO products (product_name,product_desc,product_type_id,product_price," +
-                "product_available,size_id)" +
-                "VALUES (?,?,?,?,?,?)" +
-                "RETURNING product_id";
+        String sql  = "INSERT INTO products (product_name,product_desc,product_type_id,product_price, " +
+                "product_available,size_id) " +
+                "VALUES (?,?,?,?,?,?) " +
+                "RETURNING product_id ";
         try {
             newProductId = jdbcTemplate.queryForObject(sql, int.class, product.getProductName(),
                     product.getProductDescription(), product.getProductTypeId(), product.getProductPrice(),
@@ -88,14 +88,15 @@ public class JdbcProductDao implements ProductDao {
     }
 
     @Override
-    public Product setProductAvailabilityById(int id) {
+    public Product setProductAvailabilityById(int id, boolean availability) {
         Product updatedProduct = null;
         String sql = "UPDATE products " +
                 "SET product_available = ? " +
                 "WHERE product_id = ?";
         try {
 
-            int rowsAffected = jdbcTemplate.update(sql, getProductById(id).getAvailability(), id);
+            //second argument in update method is just passing the opposite of what the availability currently is
+            int rowsAffected = jdbcTemplate.update(sql, availability, id);
             if (rowsAffected != 1){
                 throw new DaoException("DaoException");
             } else {
@@ -112,14 +113,14 @@ public class JdbcProductDao implements ProductDao {
     }
 
     @Override
-    public Product setProductPriceById(int id) {
+    public Product setProductPriceById(int id, BigDecimal price) {
         Product updatedProduct = null;
         String sql = "UPDATE products " +
                 "SET product_price = ? " +
                 "WHERE product_id = ?";
         try {
 
-            int rowsAffected = jdbcTemplate.update(sql, getProductById(id).getProductPrice(), id);
+            int rowsAffected = jdbcTemplate.update(sql, price, id);
             if (rowsAffected != 1){
                 throw new DaoException("DaoException");
             } else {
