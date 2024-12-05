@@ -5,7 +5,6 @@ import com.techelevator.exception.DaoException;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Customer;
 import com.techelevator.model.Product;
-import com.techelevator.model.ProductDto;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
