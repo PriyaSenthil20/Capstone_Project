@@ -2,9 +2,11 @@ package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
 
 public class CustomerDto {
-    @NotEmpty
+
+    @Positive
     private int customerId;
     @NotEmpty
     private String customerFirstName;
@@ -21,7 +23,7 @@ public class CustomerDto {
     private String customerCity;
     @NotEmpty
     private String customerState;
-    @NotEmpty
+    @Positive
     private int customerZipCode;
 
 
@@ -35,7 +37,6 @@ public class CustomerDto {
         this.customerCity = customerCity;
         this.customerState = customerState;
         this.customerZipCode = customerZipCode;
-
     }
 
     public int getCustomerId() {
