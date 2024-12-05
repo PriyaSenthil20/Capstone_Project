@@ -18,7 +18,6 @@ public class JdbcOrderDao implements OrderDao {
     private final JdbcTemplate jdbcTemplate;
     private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, name, notes, total_sale, pickup_date, pickup_time, status_id, created_time\n" +
             "\tFROM public.orders;";
-
     public JdbcOrderDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

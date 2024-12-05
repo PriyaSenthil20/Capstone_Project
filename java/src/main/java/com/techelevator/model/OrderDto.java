@@ -10,13 +10,9 @@ public class OrderDto {
     private int driverId;
     //private int userId;
     private String name;
-
     private String notes;
     private int totalSale;
-
-
     private Date pickUpDate;
-
     private LocalTime pickUpTime;
     private int statusId;
 
