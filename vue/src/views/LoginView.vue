@@ -23,7 +23,7 @@
       </div>
       <button type="submit">Sign in</button>
       <p>
-      <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
+      <router-link v-bind:to="{ name: 'customerRegister' }">Need an account? Sign up.</router-link></p>
     </form>
   </div>
 </template>
