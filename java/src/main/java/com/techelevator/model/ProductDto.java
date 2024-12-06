@@ -22,7 +22,7 @@ public class ProductDto {
         this.productOptionDtoList = productOptionDtoList;
     }
 
-    public int getProductIdId() {
+    public int getProductId() {
         return productId;
     }
 

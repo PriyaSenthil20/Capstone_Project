@@ -1,9 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Customer;
-import com.techelevator.model.Order;
-import com.techelevator.model.OrderDto;
+import com.techelevator.model.*;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,13 +16,16 @@ import java.util.List;
 public class JdbcOrderDao implements OrderDao {
     private final JdbcTemplate jdbcTemplate;
     private final JdbcProductDao jdbcProductDao;
+
+    private final JdbcProductOptionDao jdbcProductOptionDao;
     private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, " +
             "name, notes, total_sale, pickup_date, pickup_time, status_id, created_time\n" +
             "\tFROM public.orders;";
 
-    public JdbcOrderDao(JdbcTemplate jdbcTemplate, JdbcProductDao jdbcProductDao) {
+    public JdbcOrderDao(JdbcTemplate jdbcTemplate, JdbcProductDao jdbcProductDao, JdbcProductOptionDao jdbcProductOptionDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.jdbcProductDao = jdbcProductDao;
+        this.jdbcProductOptionDao = jdbcProductOptionDao;
     }
 
     @Override
@@ -65,15 +66,18 @@ public class JdbcOrderDao implements OrderDao {
         final int PENDING_STATUS = 1;
         final int DEFAULT_DRIVER_ADMIN = 2;
 
-        int newOrderId;
+        Integer newOrderId;
         Order newOrder = null;
         BigDecimal totalSalePrice = new BigDecimal(0);
+        for (ProductDto productDto : orderDto.getProductDtoList()) {
+            BigDecimal productPrice = jdbcProductDao.getProductById(productDto.getProductId()).getProductPrice();
+            totalSalePrice = totalSalePrice.add(productPrice);
 
-        //grab prices of nested products and options/selections from getProductById product.getprice
-        //And getProductOptionById productOption.getPrice where the IDs are from the orderDto
-
-        //.
-
+            for (ProductOptionDto optionDto : productDto.getProductOptionDtoList()) {
+                BigDecimal optionPrice = jdbcProductOptionDao.getProductOptionById(optionDto.getProductOptionId()).getOptionPrice();
+                totalSalePrice = totalSalePrice.add(optionPrice);
+            }
+        }
 
         String sql = "INSERT INTO orders (customer_id, " +
                 "transfer_id,driver_id,name," +
@@ -82,12 +86,16 @@ public class JdbcOrderDao implements OrderDao {
                 "values (?,?,?,?,?,?,?,?) " + " RETURNING order_id";
 
         try {
-            newOrderId = jdbcTemplate.queryForObject(sql, int.class, newOrder.getCustomerId(),
-                    newOrder.getTransferId(), newOrder.getDriverId(),
-                    newOrder.getNotes(), newOrder.getTotalSale(),
-                    newOrder.getPickUpDate(), newOrder.getPickUpTime(),
-                    newOrder.getStatusId());
-            return getOrderById(newOrder.getOrderId());
+            newOrderId = jdbcTemplate.queryForObject(sql, int.class, customerId,
+                    orderDto.getTransferId(), DEFAULT_DRIVER_ADMIN,
+                    orderDto.getProductDtoList().toString(), totalSalePrice,
+                    orderDto.getPickUpDate(), orderDto.getPickUpTime(),
+                    PENDING_STATUS);
+            if (newOrderId!= null) {
+                return getOrderById(newOrder.getOrderId());
+            } else {
+                throw new DaoException("Failed to create order, orderId is null.");
+            }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {

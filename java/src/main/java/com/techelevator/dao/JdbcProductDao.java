@@ -77,7 +77,7 @@ public class JdbcProductDao implements ProductDao {
                 "VALUES (?,?,?,?,?,?) " +
                 "RETURNING product_id ";
         try {
-            newProductId = jdbcTemplate.queryForObject(sql, int.class, product.getProductName(),
+            newProductId = jdbcTemplate.queryForObject(sql, Integer.class, product.getProductName(),
                     product.getProductDescription(), product.getProductTypeId(), product.getProductPrice(),
                     product.getAvailability(), product.getSizeId());
             return getProductById(newProductId);

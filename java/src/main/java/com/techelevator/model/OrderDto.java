@@ -8,6 +8,7 @@ import java.util.List;
 
 public class OrderDto {
 
+
     private int orderId;
 
     //customerId will be grabbed from principal
@@ -30,6 +31,13 @@ public class OrderDto {
 
     }
 
+    public int getTransferId() {
+        return transferId;
+    }
+
+    public void setTransferId(int transferId) {
+        this.transferId = transferId;
+    }
 
     public Date getPickUpDate() {
         return pickUpDate;
