@@ -46,10 +46,6 @@ public class CustomerRegisterController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User registration failed.");
         }
     }
-
-        private int getCurrentUserId(Principal principal) {
-            return userDao.getUserByUsername(principal.getName()).getId();
-        }
     }
 
 

@@ -33,7 +33,7 @@
 
   
   <div id="customerRegister" class="text-center" v-else>
-    <form v-on:submit.prevent="customerRegister">
+    <form v-on:submit.prevent="registerCustomer">
        <h1>Enter Customer Details for {{customer.customerId}} {{this.$store.state.user.username}}</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -158,6 +158,7 @@ export default {
         customerEmail: 'pz@testmail.com'
       },
       customer: {
+        customerId: '',
         customerFirstName: '',
         customerLastName: '',
         customerAddress: '',
