@@ -53,7 +53,6 @@ CREATE TABLE orders (
 	customer_id int NOT NULL,
 	transfer_id int NOT NULL,
 	driver_id int,
-	name varchar(30) NOT NULL,
 	notes varchar (200),
 	total_sale float NOT NULL,
 	pickup_date DATE NOT NULL,
@@ -129,15 +128,18 @@ CREATE TABLE order_products (
 
 CREATE TABLE orders_selections (
 	order_selection_id serial NOT NULL,
+	order_product_id serial NOT NULL,
 	order_id int NOT NULL,
 	product_id int NOT NULL,
 	option_id int NOT NULL,
 	option_sale_price int NOT NULL,
 
 	CONSTRAINT PK_order_selections PRIMARY KEY (order_selection_id),
+	CONSTRAINT FK_order_selections_order_products FOREIGN KEY (order_product_id) REFERENCES order_products(order_product_id),
 	CONSTRAINT FK_order_selections_order FOREIGN KEY (order_id) REFERENCES orders(order_id),
 	CONSTRAINT FK_order_selections_product FOREIGN KEY (product_id) REFERENCES products(product_id),
 	CONSTRAINT FK_order_selections_option FOREIGN KEY (option_id) REFERENCES product_options(option_id)
+	
 );
 	
 CREATE TABLE payment (
