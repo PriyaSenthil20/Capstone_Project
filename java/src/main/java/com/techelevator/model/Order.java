@@ -10,7 +10,6 @@ public class Order {
     private int customerId;
     private int transferId;
     private int driverId;
-    private String name;
     private String notes;
     private int totalSale;
     private Date pickUpDate;
@@ -30,7 +29,6 @@ public class Order {
         this.customerId=customerId;
         this.transferId=transferId;
         this.driverId=driverId;
-        this.name = name;
         this.totalSale = totalSale;
         this.notes = notes;
         this.pickUpDate=pickUpDate;
@@ -87,16 +85,7 @@ public class Order {
     public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
-  //returns userId
 
-  //getname
-    public String getName() {
-        return name;
-    }
- //setname
-    public void setName(String name) {
-        this.name = name;
-    }
  //return totalsale
     public int getTotalSale() {
         return totalSale;
