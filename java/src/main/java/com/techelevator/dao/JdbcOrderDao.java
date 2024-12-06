@@ -107,7 +107,7 @@ public class JdbcOrderDao implements OrderDao {
 
     public boolean createOrderProduct(int orderId, int productId, BigDecimal productPrice) {
 
-        String sql = "INS"
+        //String sql = "INS"
         return false;
     }
 
