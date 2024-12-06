@@ -15,8 +15,9 @@ public interface OrderDao {
 
     //public Order getOrderByEmail(String customerEmail);
     // may be to insert id of orderdto
-    Order createOrder(Order order);
+    Order createOrder(OrderDto orderDto, int id);
     Order updateOrderStatus(Order order, int id);
     Order updateDriverStatus(Order order,int id);
 
+    Order createOrderAdmin(Order order, int currentUserId);
 }

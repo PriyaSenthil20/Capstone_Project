@@ -10,17 +10,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Component
 public class JdbcOrderDao implements OrderDao {
     private final JdbcTemplate jdbcTemplate;
+    private final JdbcProductDao jdbcProductDao;
     private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, " +
             "name, notes, total_sale, pickup_date, pickup_time, status_id, created_time\n" +
             "\tFROM public.orders;";
-    public JdbcOrderDao(JdbcTemplate jdbcTemplate) {
+
+    public JdbcOrderDao(JdbcTemplate jdbcTemplate, JdbcProductDao jdbcProductDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.jdbcProductDao = jdbcProductDao;
     }
 
     @Override
@@ -56,21 +60,33 @@ public class JdbcOrderDao implements OrderDao {
 
     //public Order getOrderByEmail(String customerEmail);
     // may be to insert id of orderdto
-    public Order createOrder(Order order) {
+    public Order createOrder(OrderDto orderDto, int customerId) {
+
+        final int PENDING_STATUS = 1;
+        final int DEFAULT_DRIVER_ADMIN = 2;
+
+        int newOrderId;
         Order newOrder = null;
-        String insertOrderSql = "INSERT INTO orders (customer_id, " +
+        BigDecimal totalSalePrice = new BigDecimal(0);
+
+        //grab prices of nested products and options/selections from getProductById product.getprice
+        //And getProductOptionById productOption.getPrice where the IDs are from the orderDto
+
+
+
+        String sql = "INSERT INTO orders (customer_id, " +
                 "transfer_id,driver_id,name," +
                 "notes,total_sale," +
-                "pickup_date,pickup_time,status_id,created_time) " +
-                "values (?,?,?,?,?,?,?,?,?,?) " + " RETURNING order_id";
+                "pickup_date,pickup_time,status_id) " +
+                "values (?,?,?,?,?,?,?,?) " + " RETURNING order_id";
 
         try {
-            jdbcTemplate.update(insertOrderSql, order.getCustomerId(),
-                    order.getTransferId(), order.getDriverId(),
-                    order.getName(), order.getNotes(), order.getTotalSale(),
-                    order.getPickUpDate(), order.getPickUpTime(),
-                    order.getStatusId(), order.getCreatedTime());
-            return getOrderById(order.getCustomerId());
+            newOrderId = jdbcTemplate.queryForObject(sql, int.class, newOrder.getCustomerId(),
+                    newOrder.getTransferId(), newOrder.getDriverId(),
+                    newOrder.getNotes(), newOrder.getTotalSale(),
+                    newOrder.getPickUpDate(), newOrder.getPickUpTime(),
+                    newOrder.getStatusId());
+            return getOrderById(newOrder.getOrderId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -115,6 +131,10 @@ public class JdbcOrderDao implements OrderDao {
        return updatedOrder;
    }
 
+    @Override
+    public Order createOrderAdmin(Order order, int currentUserId) {
+        return null;
+    }
 
 
     private Order mapRowToOrder(SqlRowSet rs) {
@@ -123,7 +143,6 @@ public class JdbcOrderDao implements OrderDao {
         order.setCustomerId(rs.getInt("customer_id"));
         order.setTransferId(rs.getInt("transfer_id"));
         order.setDriverId(rs.getInt("driver_id"));
-        order.setName(rs.getString("name"));
         order.setNotes(rs.getString("notes"));
         order.setTotalSale(rs.getInt("total_sale"));
         order.setPickUpDate(rs.getDate("pickup_date"));

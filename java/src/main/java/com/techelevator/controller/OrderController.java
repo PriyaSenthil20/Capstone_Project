@@ -1,13 +1,16 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.OrderDao;
+import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Order;
+import com.techelevator.model.OrderDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.security.Principal;
 import java.util.List;
 
 
@@ -17,9 +20,12 @@ import java.util.List;
 public class OrderController {
 
     private final OrderDao orderDao;
+    private final UserDao userDao;
 
-    public OrderController(OrderDao orderDao) {
+    public OrderController(OrderDao orderDao, UserDao userDao) {
+
         this.orderDao = orderDao;
+        this.userDao = userDao;
     }
 
     // Get all orders
@@ -49,9 +55,9 @@ public class OrderController {
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/orders")
-    public Order createOrder(@RequestBody Order order) {
+    public Order createOrder(@RequestBody OrderDto orderDto, Principal principal) {
         try {
-            return orderDao.createOrder(order);
+            return orderDao.createOrder(orderDto, getCurrentUserId(principal));
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -60,9 +66,9 @@ public class OrderController {
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("admin/orders")
-    public Order createOrderAsAdmin(@RequestBody Order order) {
+    public Order createOrderAsAdmin(@RequestBody Order order, Principal principal) {
         try {
-            return orderDao.createOrder(order);
+            return orderDao.createOrderAdmin(order, getCurrentUserId(principal));
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -88,5 +94,9 @@ public class OrderController {
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private int getCurrentUserId(Principal principal) {
+        return userDao.getUserByUsername(principal.getName()).getId();
     }
 }
