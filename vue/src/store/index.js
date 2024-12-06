@@ -20,7 +20,6 @@ export function createStore(currentToken, currentUser) {
       },
       SET_CUSTOMER(state, customer){
         state.customer = customer;
-        localStorage.setItem('customer', JSON.stringify(customer));
       },
       LOGOUT(state) {
         localStorage.removeItem('token');

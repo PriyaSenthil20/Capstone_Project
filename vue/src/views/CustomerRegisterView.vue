@@ -33,8 +33,8 @@
 
   
   <div id="customerRegister" class="text-center" v-else>
-    <form v-on:submit.prevent="customerRegister">
-       <h1>Enter Customer Details for {{this.$store.state.user.username}}</h1>
+    <form v-on:submit.prevent="registerCustomer">
+       <h1>Enter Customer Details for  {{this.$store.state.user.username}}</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -116,11 +116,11 @@
       </div>
       <div class="form-input-group">
         <label for="customerPhoneNumber">Phone Number</label>
-        <input type="text" id="customerPhoneNumber" v-model="customer.customerPhoneNumber" required />
+        <input type="text" id="customerPhoneNumber" v-model="customer.phoneNumber" required />
       </div>
       <div class="form-input-group">
         <label for="customerEmailAddress">Email Address</label>
-        <input type="email" id="customerEmailAddress" v-model="customer.customerEmailAddress" required />
+        <input type="email" id="customerEmailAddress" v-model="customer.customerEmail" required />
       </div>
       <button type="submit">Submit</button>
     </form>
@@ -148,15 +148,11 @@ export default {
         customerFirstName: '',
         customerLastName: '',
         customerAddress: '',
-        customerPhoneNumber: '',
+        phoneNumber: '',
         customerCity: '',
         customerState: '',
         customerZipCode: '',
-        customerEmailAddress: '',
-//        customerUsername: '', 
- //       customerPassword: '',
- //       customerConfirmPassword: '',
- //       customerRole: 'user', 
+        customerEmail: '',
       },
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this customer.',
@@ -190,11 +186,12 @@ export default {
       }
     },
     registerCustomer() {
+      console.log(this.$store.state.user);
         authService
           .registerCustomer(this.customer)
           .then((response) => {
             if (response.status == 201) {
-              this.$store.commit("SET_CUSTOMER", response.data.customer);
+              this.$store.commit("SET_CUSTOMER", response.data);
               this.$router.push({
                 path: '/',
                 query: { registration: 'success' },
