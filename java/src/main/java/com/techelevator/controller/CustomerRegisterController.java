@@ -16,7 +16,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
 public class CustomerRegisterController {
     private final CustomerDao customerDao;
     private final UserDao userDao;
@@ -24,7 +23,7 @@ public class CustomerRegisterController {
         this.customerDao=customerDao;
         this.userDao=userDao;
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping
     public List<Customer> getListOfCustomers()  {
         List<Customer> customers = null;
@@ -37,15 +36,11 @@ public class CustomerRegisterController {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/customerRegister", method = RequestMethod.POST)
-    public void createCustomer(@Valid @RequestBody CustomerDto customer, Principal principal){
+    public Customer createCustomer(@Valid @RequestBody CustomerDto customer){
         try {
-            int userId = getCurrentUserId(principal);
-            customer.setCustomerId(userId);
-            if (customerDao.getCustomerById(customer.getCustomerId()) != null) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Customer Record already exists.");
-            } else {
                 customerDao.createCustomer(customer);
-            }
+                return customerDao.getCustomerById(customer.getCustomerId());
+
         }
         catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "User registration failed.");
