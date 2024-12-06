@@ -106,9 +106,28 @@ public class JdbcOrderDao implements OrderDao {
     }
 
     public boolean createOrderProduct(int orderId, int productId, BigDecimal productPrice) {
+        String sqlOrderProducts = "INSERT INTO order_products (order_id, product_id, product_sale_price) " +
+                "VALUES (?, ?, ?) RETURNING order_product_id";
+        try {
+            Integer orderProductId = jdbcTemplate.queryForObject(sqlOrderProducts, Integer.class, orderId, productId, productPrice);
+            if (orderProductId == null) {
+                throw new DaoException("Failed to create order product, orderProductId is null.");
+            }
+            List<ProductOption> productOptions = jdbcProductOptionDao.getProductOptions();
+            for (ProductOption option : productOptions) {
+                if (option.isOptionAvailable()) {
+                    String sqlOrderSelections = "INSERT INTO orders_selections (order_product_id, order_id, product_id, option_id, option_sale_price) " +
+                            "VALUES (?, ?, ?, ?, ?)";
 
-        //String sql = "INS"
-        return false;
+                    jdbcTemplate.update(sqlOrderSelections, orderProductId, orderId, productId, option.getOptionId(), option.getOptionPrice());
+                }
+        }
+        return true;
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
     }
 
     public Order updateOrderStatus(Order order, int orderId) {
