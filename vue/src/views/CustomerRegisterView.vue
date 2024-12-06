@@ -33,7 +33,7 @@
 
   
   <div id="customerRegister" class="text-center" v-else>
-    <form v-on:submit.prevent="quickPost">
+    <form v-on:submit.prevent="customerRegister">
        <h1>Enter Customer Details for {{customer.customerId}} {{this.$store.state.user.username}}</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}

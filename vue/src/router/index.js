@@ -56,15 +56,15 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  },
+  }   /*,
   {
     path: "/customerOrder",
     name: "customerOrder",
     component: CustomerOrderView,
     meta: {
       requiresAuth: false
-    }
-  }
+    } 
+  } */
 ];
 
 // Create the router

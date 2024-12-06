@@ -23,8 +23,11 @@
 </template>
 <script>
 //import  from '@vue/composition-api'
+import CustomerOrder from '../components/CustomerOrder.vue'
 
 export default ({
-    
+    components:{
+        CustomerOrder
+    }
 })
 </script>
