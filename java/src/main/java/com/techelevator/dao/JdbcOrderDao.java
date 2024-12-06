@@ -101,6 +101,14 @@ public class JdbcOrderDao implements OrderDao {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
+
+        //loops that call methods
+    }
+
+    public boolean createOrderProduct(int orderId, int productId, BigDecimal productPrice) {
+
+        String sql = "INS"
+        return false;
     }
 
     public Order updateOrderStatus(Order order, int orderId) {
