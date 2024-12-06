@@ -72,6 +72,7 @@ public class JdbcOrderDao implements OrderDao {
         //grab prices of nested products and options/selections from getProductById product.getprice
         //And getProductOptionById productOption.getPrice where the IDs are from the orderDto
 
+        //.
 
 
         String sql = "INSERT INTO orders (customer_id, " +
