@@ -117,22 +117,24 @@ CREATE TABLE products (
 );
 
 CREATE TABLE order_products (
+	order_product_id serial NOT NULL,
 	order_id int NOT NULL,
 	product_id int NOT NULL,
 	product_sale_price float NOT NULL,
 
-	CONSTRAINT PK_order_products PRIMARY KEY (order_id, product_id),
+	CONSTRAINT PK_order_products PRIMARY KEY (order_product_id),
 	CONSTRAINT FK_order_products_order FOREIGN KEY (order_id) REFERENCES orders(order_id),
 	CONSTRAINT FK_order_products_product FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
 CREATE TABLE orders_selections (
+	order_selection_id serial NOT NULL,
 	order_id int NOT NULL,
 	product_id int NOT NULL,
 	option_id int NOT NULL,
 	option_sale_price int NOT NULL,
 
-	CONSTRAINT PK_order_selections PRIMARY KEY (order_id, product_id, option_id),
+	CONSTRAINT PK_order_selections PRIMARY KEY (order_selection_id),
 	CONSTRAINT FK_order_selections_order FOREIGN KEY (order_id) REFERENCES orders(order_id),
 	CONSTRAINT FK_order_selections_product FOREIGN KEY (product_id) REFERENCES products(product_id),
 	CONSTRAINT FK_order_selections_option FOREIGN KEY (option_id) REFERENCES product_options(option_id)

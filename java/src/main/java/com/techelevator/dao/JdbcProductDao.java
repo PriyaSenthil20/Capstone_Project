@@ -17,10 +17,11 @@ public class JdbcProductDao implements ProductDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private final String selectProductSql = "SELECT product_id,product_name,product_desc,product_type_id,product_price,"+
-            "product_available,size_id ";
+    private final String selectProductSql = "SELECT product_id,product_name," +
+            "product_desc,product_type_id,product_price,product_available,size_id ";
 
     public JdbcProductDao(JdbcTemplate jdbcTemplate) {this.jdbcTemplate = jdbcTemplate; }
+
     @Override
     public List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
