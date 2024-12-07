@@ -16,7 +16,6 @@ import java.util.List;
 public class JdbcOrderDao implements OrderDao {
     private final JdbcTemplate jdbcTemplate;
     private final JdbcProductDao jdbcProductDao;
-
     private final JdbcProductOptionDao jdbcProductOptionDao;
     private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, " +
             "name, notes, total_sale, pickup_date, pickup_time, status_id, created_time\n" +
@@ -69,6 +68,13 @@ public class JdbcOrderDao implements OrderDao {
         Integer newOrderId;
         Order newOrder = null;
         BigDecimal totalSalePrice = new BigDecimal(0);
+
+        String sqlOrderInsert = "INSERT INTO orders (customer_id, " +
+                "transfer_id,driver_id,name," +
+                "notes,total_sale," +
+                "pickup_date,pickup_time,status_id) " +
+                "values (?,?,?,?,?,?,?,?,?) " + " RETURNING order_id";
+
         for (ProductDto productDto : orderDto.getProductDtoList()) {
             BigDecimal productPrice = jdbcProductDao.getProductById(productDto.getProductId()).getProductPrice();
             totalSalePrice = totalSalePrice.add(productPrice);
@@ -79,19 +85,30 @@ public class JdbcOrderDao implements OrderDao {
             }
         }
 
-        String sql = "INSERT INTO orders (customer_id, " +
-                "transfer_id,driver_id,name," +
-                "notes,total_sale," +
-                "pickup_date,pickup_time,status_id) " +
-                "values (?,?,?,?,?,?,?,?) " + " RETURNING order_id";
-
         try {
-            newOrderId = jdbcTemplate.queryForObject(sql, int.class, customerId,
+            newOrderId = jdbcTemplate.queryForObject(sqlOrderInsert, Integer.class, customerId,
                     orderDto.getTransferId(), DEFAULT_DRIVER_ADMIN,
                     orderDto.getProductDtoList().toString(), totalSalePrice,
                     orderDto.getPickUpDate(), orderDto.getPickUpTime(),
                     PENDING_STATUS);
             if (newOrderId!= null) {
+
+                for (ProductDto productDto : orderDto.getProductDtoList()) {
+                    int productId = productDto.getProductId();
+                    BigDecimal productPrice = jdbcProductDao.getProductById(productDto.getProductId()).getProductPrice();
+
+                    //calls the method that writes an insert per product of an order
+                    int orderProductId = createOrderProduct(newOrderId,productId,productPrice);
+
+                    for (ProductOptionDto optionDto : productDto.getProductOptionDtoList()) {
+                        int optionId = optionDto.getProductOptionId();
+                        BigDecimal optionPrice = jdbcProductOptionDao.getProductOptionById(optionDto.getProductOptionId()).getOptionPrice();
+
+                        //calls the method that writes an insert per option of an order's product
+                        createOrderSelection(orderProductId,newOrderId,productId,optionId,optionPrice);
+                    }
+                }
+
                 return getOrderById(newOrder.getOrderId());
             } else {
                 throw new DaoException("Failed to create order, orderId is null.");
@@ -101,28 +118,35 @@ public class JdbcOrderDao implements OrderDao {
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-
-        //loops that call methods
     }
 
-    public boolean createOrderProduct(int orderId, int productId, BigDecimal productPrice) {
+    public int createOrderProduct(int orderId, int productId, BigDecimal productPrice) {
         String sqlOrderProducts = "INSERT INTO order_products (order_id, product_id, product_sale_price) " +
                 "VALUES (?, ?, ?) RETURNING order_product_id";
         try {
-            Integer orderProductId = jdbcTemplate.queryForObject(sqlOrderProducts, Integer.class, orderId, productId, productPrice);
+            Integer orderProductId = jdbcTemplate.queryForObject(sqlOrderProducts, Integer.class,
+                    orderId, productId, productPrice);
             if (orderProductId == null) {
                 throw new DaoException("Failed to create order product, orderProductId is null.");
             }
+
+            /*
+            this loop appears to run an insert into orders_selection for every productOption in the product_options
+            table, we want this insert to run for every order product selection/option in the relevant order
+
+
             List<ProductOption> productOptions = jdbcProductOptionDao.getProductOptions();
             for (ProductOption option : productOptions) {
                 if (option.isOptionAvailable()) {
-                    String sqlOrderSelections = "INSERT INTO orders_selections (order_product_id, order_id, product_id, option_id, option_sale_price) " +
+                    String sqlOrderSelections = "INSERT INTO orders_selections (order_product_id, " +
+                            "order_id, product_id, option_id, option_sale_price) " +
                             "VALUES (?, ?, ?, ?, ?)";
 
-                    jdbcTemplate.update(sqlOrderSelections, orderProductId, orderId, productId, option.getOptionId(), option.getOptionPrice());
+                    jdbcTemplate.update(sqlOrderSelections, orderProductId, orderId,
+                            productId, option.getOptionId(), option.getOptionPrice());
                 }
-        }
-        return true;
+        }*/
+        return orderProductId;
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
@@ -130,13 +154,30 @@ public class JdbcOrderDao implements OrderDao {
         }
     }
 
+    public void createOrderSelection(int orderProductId, int orderId,
+                                    int productId, int optionId, BigDecimal optionSalePrice) {
+
+        //SQL INSERT statement for inserting a relevant row for a specific order's product's selection.
+        String sql = "INSERT INTO orders_selections(order_product_id, order_id, " +
+                "product_id, option_id, option_sale_price) VALUES (?, ?, ?, ?, ?);";
+
+        try {
+            jdbcTemplate.update(sql, orderProductId, orderId, productId, optionId, optionSalePrice);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new DaoException("Data integrity violation", e);
+        }
+    }
+
+
     public Order updateOrderStatus(Order order, int orderId) {
         String updateStatusSql = "UPDATE orders SET status_id=?  WHERE order_id = ?";
         Order updatedOrder = null;
         try {
             int rowsAffected = jdbcTemplate.update(updateStatusSql, order.getStatusId(), orderId);
             if (rowsAffected != 1) {
-                throw new DaoException("Three things are certain: Death, Taxes and Loss of Data. Guess which has occurred.");
+                throw new DaoException("Zero or more than one row affected.");
             } else {
                 updatedOrder = getOrderById(order.getOrderId());
             }
@@ -154,7 +195,7 @@ public class JdbcOrderDao implements OrderDao {
        try {
            int rowsAffected = jdbcTemplate.update(updateDriverSql, order.getDriverId(), order.getOrderId());
            if (rowsAffected != 1) {
-               throw new DaoException("Three things are certain: Death, Taxes and Loss of Data. Guess which has occurred.");
+               throw new DaoException("Zero or more than one row affected.");
            } else {
                updatedOrder = getOrderById(order.getOrderId());
            }

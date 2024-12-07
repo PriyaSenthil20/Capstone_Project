@@ -16,11 +16,8 @@ import java.util.List;
 public class JdbcProductOptionDao implements ProductOptionDao{
     private final JdbcTemplate jdbcTemplate;
 
-    private final String SELECTOPTIONSQL = "SELECT option_id ,option_name,option_desc \n" +
-            "\toption_type_id,\n" +
-            "\toption_price,\n" +
-            "\toption_available,\n" +
-            "\t";
+    private final String SELECTOPTIONSQL = "SELECT option_id,option_name,option_desc," +
+            "option_type_id,option_price,option_available ";
 
     public JdbcProductOptionDao(JdbcTemplate jdbcTemplate) {this.jdbcTemplate = jdbcTemplate; }
 

@@ -5,12 +5,17 @@ import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.model.Order;
 import com.techelevator.model.OrderDto;
+import com.techelevator.model.ProductDto;
+import com.techelevator.model.ProductOptionDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -56,11 +61,13 @@ public class OrderController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/orders")
     public Order createOrder(@RequestBody OrderDto orderDto, Principal principal) {
+
         try {
             return orderDao.createOrder(orderDto, getCurrentUserId(principal));
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        
     }
 
     @PreAuthorize("hasRole('ADMIN')")

@@ -71,7 +71,7 @@ public class JdbcProductDao implements ProductDao {
 
     @Override
     public Product createProduct(Product product) {
-        int newProductId;
+        Integer newProductId;
         String sql  = "INSERT INTO products (product_name,product_desc,product_type_id,product_price, " +
                 "product_available,size_id) " +
                 "VALUES (?,?,?,?,?,?) " +
@@ -80,7 +80,14 @@ public class JdbcProductDao implements ProductDao {
             newProductId = jdbcTemplate.queryForObject(sql, Integer.class, product.getProductName(),
                     product.getProductDescription(), product.getProductTypeId(), product.getProductPrice(),
                     product.getAvailability(), product.getSizeId());
-            return getProductById(newProductId);
+
+            // Retrieve and return the created product using the generated productId.
+            if (newProductId != null) {
+                return getProductById(newProductId);
+            } else {
+                throw new DaoException("Failed to create payment, payment ID is null.");
+            }
+
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch(DataIntegrityViolationException e){

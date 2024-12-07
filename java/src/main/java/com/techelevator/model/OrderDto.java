@@ -1,5 +1,6 @@
 package com.techelevator.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class OrderDto {
     //driverId will be auto assigned to admin userId
 
     //totalSale computer from joins on items and products selected
-    private Date pickUpDate;
+    private LocalDate pickUpDate;
 
     private LocalTime pickUpTime;
 
@@ -39,11 +40,11 @@ public class OrderDto {
         this.transferId = transferId;
     }
 
-    public Date getPickUpDate() {
+    public LocalDate getPickUpDate() {
         return pickUpDate;
     }
 
-    public void setPickUpDate(Date pickUpDate) {
+    public void setPickUpDate(LocalDate pickUpDate) {
         this.pickUpDate = pickUpDate;
     }
 

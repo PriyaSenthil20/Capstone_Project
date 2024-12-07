@@ -17,8 +17,9 @@ import java.util.Objects;
 @Component
 public class JdbcCustomerDao implements CustomerDao {
     private final JdbcTemplate jdbcTemplate;
-    private final String CUSTOMER_SELECT="SELECT customer_id,customer_first_name,customer_last_name,customer_address," +
-            "customer_phone_number,customer_state,customer_city,customer_email_address,customer_zip_code ";
+    private final String CUSTOMER_SELECT="SELECT customer_id,customer_first_name," +
+            "customer_last_name,customer_address,customer_phone_number,customer_state," +
+            "customer_city,customer_email_address,customer_zip_code ";
     public JdbcCustomerDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -82,16 +83,15 @@ public class JdbcCustomerDao implements CustomerDao {
         try {
           jdbcTemplate.update(insertCustomerSql,customer.getCustomerId(),
                    customer.getCustomerFirstName(),customer.getCustomerLastName(),
-                   customer.getCustomerAddress(),customer.getPhoneNumber(),customer.getCustomerState(),
-                   customer.getCustomerCity(),customer.getCustomerEmail(),
-                   customer.getCustomerZipCode());
+                   customer.getCustomerAddress(),customer.getPhoneNumber(),
+                   customer.getCustomerState(), customer.getCustomerCity(),
+                   customer.getCustomerEmail(), customer.getCustomerZipCode());
          return getCustomerById(customer.getCustomerId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         } catch (DataIntegrityViolationException e) {
             throw new DaoException("Data integrity violation", e);
         }
-
     }
 
     private Customer mapRowToCustomer(SqlRowSet rs) {
@@ -106,8 +106,5 @@ public class JdbcCustomerDao implements CustomerDao {
         customer.setCustomerZipCode(rs.getInt("customer_zip_code"));
         customer.setCustomerEmail(rs.getString("customer_email_address"));
         return customer;
-
-
-
     }
 }
