@@ -18,8 +18,7 @@ public class JdbcOrderDao implements OrderDao {
     private final JdbcProductDao jdbcProductDao;
     private final JdbcProductOptionDao jdbcProductOptionDao;
     private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, " +
-            "notes, total_sale, pickup_date, pickup_time, status_id, created_time\n" +
-            "\tFROM public.orders;";
+            "notes, total_sale, pickup_date, pickup_time, status_id ";
 
     public JdbcOrderDao(JdbcTemplate jdbcTemplate, JdbcProductDao jdbcProductDao, JdbcProductOptionDao jdbcProductOptionDao) {
         this.jdbcTemplate = jdbcTemplate;
@@ -64,16 +63,19 @@ public class JdbcOrderDao implements OrderDao {
 
         final int PENDING_STATUS = 1;
         final int DEFAULT_DRIVER_ADMIN = 2;
+        String filler = "note";
 
         Integer newOrderId;
-        Order newOrder = null;
         BigDecimal totalSalePrice = new BigDecimal(0);
 
-        String sqlOrderInsert = "INSERT INTO orders (customer_id, " +
-                "transfer_id,driver_id," +
-                "notes,total_sale," +
-                "pickup_date,pickup_time,status_id) " +
-                "values (?,?,?,?,?,?,?,?) " + " RETURNING order_id";
+        String sqlOrderInsert = "INSERT INTO orders(customer_id, transfer_id, driver_id, notes, total_sale, " +
+                "pickup_date, pickup_time, status_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+                "RETURNING order_id";
+
+        if(orderDto == null || orderDto.getProductDtoList() == null || orderDto.getProductDtoList().isEmpty()){
+            throw new IllegalArgumentException("orderDto and ProductDtoList cannot be null or empty");
+        }
 
         for (ProductDto productDto : orderDto.getProductDtoList()) {
             BigDecimal productPrice = jdbcProductDao.getProductById(productDto.getProductId()).getProductPrice();
@@ -85,10 +87,11 @@ public class JdbcOrderDao implements OrderDao {
             }
         }
 
+
         try {
             newOrderId = jdbcTemplate.queryForObject(sqlOrderInsert, Integer.class, customerId,
                     orderDto.getTransferId(), DEFAULT_DRIVER_ADMIN,
-                    orderDto.getProductDtoList(), totalSalePrice,
+                    filler, totalSalePrice,
                     orderDto.getPickUpDate(), orderDto.getPickUpTime(),
                     PENDING_STATUS);
             if (newOrderId != null) {
@@ -109,7 +112,7 @@ public class JdbcOrderDao implements OrderDao {
                     }
                 }
 
-                return getOrderById(newOrder.getOrderId());
+                return getOrderById(newOrderId);
             } else {
                 throw new DaoException("Failed to create order, orderId is null.");
             }
@@ -204,11 +207,12 @@ public class JdbcOrderDao implements OrderDao {
         order.setTransferId(rs.getInt("transfer_id"));
         order.setDriverId(rs.getInt("driver_id"));
         order.setNotes(rs.getString("notes"));
-        order.setTotalSale(rs.getInt("total_sale"));
+        order.setTotalSale(rs.getBigDecimal("total_sale"));
         order.setPickUpDate(rs.getDate("pickup_date"));
         order.setPickUpTime(rs.getTime("pickup_time").toLocalTime());
         order.setStatusId(rs.getInt("status_id"));
-        order.setCreatedTime(LocalDateTime.from(rs.getTime("created_time").toLocalTime()));
+        //deprecated, will revisit
+        //order.setCreatedTime(LocalDateTime.from(rs.getTime("created_time").toLocalTime()));
         return order;
     }
 }

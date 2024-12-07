@@ -23,7 +23,7 @@ CREATE TABLE customers (
 	customer_email_address varchar(40) NOT NULL UNIQUE,
 
 	CONSTRAINT PK_customers PRIMARY KEY (customer_id), 
-	CONSTRAINT FK_customers_user FOREIGN KEY (customer_id) REFERENCES users(user_id)
+	CONSTRAINT FK_customers_user FOREIGN KEY (customer_id) REFERENCES users(user_id)	
 );
 
 CREATE TABLE order_status (
@@ -58,7 +58,6 @@ CREATE TABLE orders (
 	pickup_date DATE NOT NULL,
 	pickup_time TIME NOT NULL,
 	status_id int NOT NULL,
-	created_time timestamp NOT NULL,
 
 	CONSTRAINT PK_orders PRIMARY KEY (order_id), 
 	CONSTRAINT FK_orders_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id), 
@@ -154,6 +153,7 @@ CREATE TABLE payment (
 	CONSTRAINT PK_payment PRIMARY KEY (payment_id), 
 	CONSTRAINT FK_payment_order FOREIGN KEY (order_id) REFERENCES orders(order_id)
 );
+
 
 INSERT INTO order_status (status_type)
 VALUES ('Pending'),

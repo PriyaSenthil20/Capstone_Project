@@ -1,6 +1,6 @@
 package com.techelevator.model;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
@@ -11,7 +11,7 @@ public class Order {
     private int transferId;
     private int driverId;
     private String notes;
-    private int totalSale;
+    private BigDecimal totalSale;
     private Date pickUpDate;
     private LocalTime pickUpTime;
     private int statusId;
@@ -23,7 +23,7 @@ public class Order {
     }
 
     public Order(int orderId, int customerId, int transferId, int driverId, String name,
-                 int totalSale, String notes, Date pickUpDate, LocalTime pickUpTime,
+                 BigDecimal totalSale, String notes, Date pickUpDate, LocalTime pickUpTime,
                  int statusId, LocalDateTime createdTime) {
         this.orderId = orderId;
         this.customerId=customerId;
@@ -87,11 +87,11 @@ public class Order {
     }
 
  //return totalsale
-    public int getTotalSale() {
+    public BigDecimal getTotalSale() {
         return totalSale;
     }
   //set totalsale
-    public void setTotalSale(int totalSale) {
+    public void setTotalSale(BigDecimal totalSale) {
         this.totalSale = totalSale;
     }
 //returns notes
