@@ -56,7 +56,17 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  }   /*,
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: AdminView,
+    meta: {
+      requiresAuth: false
+    }
+  }
+  
+  /*,
   {
     path: "/customerOrder",
     name: "customerOrder",

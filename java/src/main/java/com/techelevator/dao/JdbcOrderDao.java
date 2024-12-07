@@ -18,7 +18,7 @@ public class JdbcOrderDao implements OrderDao {
     private final JdbcProductDao jdbcProductDao;
     private final JdbcProductOptionDao jdbcProductOptionDao;
     private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, " +
-            "name, notes, total_sale, pickup_date, pickup_time, status_id, created_time\n" +
+            "notes, total_sale, pickup_date, pickup_time, status_id, created_time\n" +
             "\tFROM public.orders;";
 
     public JdbcOrderDao(JdbcTemplate jdbcTemplate, JdbcProductDao jdbcProductDao, JdbcProductOptionDao jdbcProductOptionDao) {
@@ -70,10 +70,10 @@ public class JdbcOrderDao implements OrderDao {
         BigDecimal totalSalePrice = new BigDecimal(0);
 
         String sqlOrderInsert = "INSERT INTO orders (customer_id, " +
-                "transfer_id,driver_id,name," +
+                "transfer_id,driver_id," +
                 "notes,total_sale," +
                 "pickup_date,pickup_time,status_id) " +
-                "values (?,?,?,?,?,?,?,?,?) " + " RETURNING order_id";
+                "values (?,?,?,?,?,?,?,?) " + " RETURNING order_id";
 
         for (ProductDto productDto : orderDto.getProductDtoList()) {
             BigDecimal productPrice = jdbcProductDao.getProductById(productDto.getProductId()).getProductPrice();
@@ -88,10 +88,10 @@ public class JdbcOrderDao implements OrderDao {
         try {
             newOrderId = jdbcTemplate.queryForObject(sqlOrderInsert, Integer.class, customerId,
                     orderDto.getTransferId(), DEFAULT_DRIVER_ADMIN,
-                    orderDto.getProductDtoList().toString(), totalSalePrice,
+                    orderDto.getProductDtoList(), totalSalePrice,
                     orderDto.getPickUpDate(), orderDto.getPickUpTime(),
                     PENDING_STATUS);
-            if (newOrderId!= null) {
+            if (newOrderId != null) {
 
                 for (ProductDto productDto : orderDto.getProductDtoList()) {
                     int productId = productDto.getProductId();
@@ -129,23 +129,6 @@ public class JdbcOrderDao implements OrderDao {
             if (orderProductId == null) {
                 throw new DaoException("Failed to create order product, orderProductId is null.");
             }
-
-            /*
-            this loop appears to run an insert into orders_selection for every productOption in the product_options
-            table, we want this insert to run for every order product selection/option in the relevant order
-
-
-            List<ProductOption> productOptions = jdbcProductOptionDao.getProductOptions();
-            for (ProductOption option : productOptions) {
-                if (option.isOptionAvailable()) {
-                    String sqlOrderSelections = "INSERT INTO orders_selections (order_product_id, " +
-                            "order_id, product_id, option_id, option_sale_price) " +
-                            "VALUES (?, ?, ?, ?, ?)";
-
-                    jdbcTemplate.update(sqlOrderSelections, orderProductId, orderId,
-                            productId, option.getOptionId(), option.getOptionPrice());
-                }
-        }*/
         return orderProductId;
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
