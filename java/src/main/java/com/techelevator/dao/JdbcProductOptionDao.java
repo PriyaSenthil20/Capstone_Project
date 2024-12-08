@@ -54,6 +54,24 @@ public class JdbcProductOptionDao implements ProductOptionDao{
     }
 
     @Override
+    public List<ProductOption> getAvailableOptionsByOptionTypeId(int id) {
+        List<ProductOption> productOptions = new ArrayList<>();
+
+        String sql  = SELECTOPTIONSQL + " FROM product_options WHERE option_available = true AND option_type_id = ?";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+            while (results.next()) {
+                ProductOption productOption = mapRowToProductOption(results);
+                productOptions.add(productOption);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+
+        return productOptions;
+    }
+
+    @Override
     public ProductOption getProductOptionById(int id) {
         ProductOption productOption = null;
         String sql  = SELECTOPTIONSQL + " FROM product_options WHERE option_id = ?";

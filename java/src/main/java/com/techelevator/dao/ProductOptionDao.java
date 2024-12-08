@@ -10,6 +10,8 @@ public interface ProductOptionDao {
 
     public List<ProductOption> getAvailableProductOptions();
 
+    List<ProductOption> getAvailableOptionsByOptionTypeId(int id);
+
     public ProductOption getProductOptionById(int id);
 
     public ProductOption createProductOption(ProductOption productOption);

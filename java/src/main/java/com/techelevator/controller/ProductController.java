@@ -48,6 +48,17 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/orders/products/{typeId}/{sizeId}")
+    public List<Product> getAvailableProductsByTypeAndSize(
+            @PathVariable int typeId, @PathVariable int sizeId){
+        try {
+            return productDao.getAvailableProductsByTypeAndSize(typeId, sizeId);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     public Product getProductById(int id){
         try {

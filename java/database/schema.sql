@@ -185,7 +185,13 @@ INSERT INTO product_options(option_name, option_desc, option_type_id, option_pri
 VALUES ('Pepperoni', 'Pepperoni', 1, 2.00, true),
 ('Onions', 'Onions', 1, 2.00, true),
 ('Green Pepper', 'Green Pepper', 1, 2.00, true),
-('Sausage', 'Sausage', 1, 2.00, true);
+('Sausage', 'Sausage', 1, 2.00, true),
+('Marinara', 'Marinara', 2, 0.00, true),
+('Alfredo', 'Alfredo', 2, 0.00, true),
+('Pesto', 'Pesto', 2, 0.00, true),
+('Traditional','Traditional', 3, 0.00, true),
+('Deep Dish','Deep Dish', 3, 2.00, true);
+
 
 INSERT INTO products(product_name, product_desc, product_type_id, product_price, product_available, size_id)
 VALUES ('Custom Pizza', 'Small Custom Pizza', 2, 10, true, 1),
@@ -193,7 +199,7 @@ VALUES ('Custom Pizza', 'Small Custom Pizza', 2, 10, true, 1),
 ('Custom Pizza', 'Large Custom Pizza', 2, 10, true, 3),
 ('Coca Cola', 'Regular Coca Cola', 3, 4, true, 2),
 ('Coca Cola', 'Large Coca Cola', 3, 4, true, 3),
-('Rocco Special', 'Medium Special Pizza', 2, 15, true, 2),
-('Rocco Special', 'Large Special Pizza', 2, 15, true, 3);
+('Rocco Special', 'Medium Special Pizza', 1, 15, true, 2),
+('Rocco Special', 'Large Special Pizza', 1, 15, true, 3);
 	
 COMMIT TRANSACTION;

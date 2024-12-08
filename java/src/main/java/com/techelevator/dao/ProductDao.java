@@ -11,6 +11,8 @@ public interface ProductDao {
 
     public List<Product> getAvailableProducts();
 
+    List<Product> getAvailableProductsByTypeAndSize(int typeId, int sizeId);
+
     public Product getProductById(int id);
 
     public Product createProduct(Product product);
