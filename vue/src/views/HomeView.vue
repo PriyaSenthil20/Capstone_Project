@@ -22,6 +22,7 @@ import Specials from '../components/Specials.vue';
 import AboutUs from '../components/AboutUs.vue';
 import PizzaService from '../services/PizzaService.js';
 
+
 export default {
   components: {
     NavOptions,

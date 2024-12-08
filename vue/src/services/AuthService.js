@@ -16,12 +16,9 @@ export default {
 
   registerCustomer(customer){
     console.log(customer)
-    alert(customer.phoneNumber)
+    alert(this.$store.state.user)
     return http.post('/customerRegister', customer)
-  },
-  quickPost(qp){
-    alert(qp.phoneNumber)
-    return http.post('/customerRegister', qp)
   }
+  
 
 }
