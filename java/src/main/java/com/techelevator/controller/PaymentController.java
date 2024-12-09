@@ -28,7 +28,7 @@ public class PaymentController {
     public PaymentController(PaymentDao paymentDao) {
         this.paymentDao = paymentDao;
     }
-
+   //method_12
     // Retrieves a list of all payments for a specific order
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/order/{orderId}")
@@ -39,7 +39,7 @@ public class PaymentController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_13
     // Retrieves a payment by its unique identifier
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/{paymentId}")
@@ -50,7 +50,7 @@ public class PaymentController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_14
     // Creates a new payment for an order
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.CREATED)
@@ -62,7 +62,7 @@ public class PaymentController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to create payment.");
         }
     }
-
+  //method_15
     // Updates an existing payment
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
