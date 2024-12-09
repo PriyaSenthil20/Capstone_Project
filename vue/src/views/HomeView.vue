@@ -1,4 +1,4 @@
-make the welcome page bigger and cleaner <template>
+<template>
   <div class="home">
     <nav class="navbar">
       <nav-options />
@@ -31,7 +31,9 @@ export default {
     AboutUs,
   },
   data() {
-    products: []
+    return{ 
+      products: []
+    };
   },
   methods: {
       getMenu(){
@@ -40,7 +42,7 @@ export default {
       .then(response => {
         
         this.products = response.data;
-        
+        console.log(response.data);
       })
       .catch(error => {
         console.log(error);
@@ -61,6 +63,7 @@ export default {
   align-items: center;
   background-color: #f4f4f4;
   font-family: Arial, sans-serif;
+  
   /*
   display: flex;
   flex-direction: column;
@@ -69,7 +72,6 @@ export default {
   font-family: Arial, sans-serif;
   */
 }
-
 
 .navbar {
   width: 100%;
@@ -111,4 +113,5 @@ export default {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
 }
+
 </style>

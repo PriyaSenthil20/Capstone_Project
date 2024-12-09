@@ -17,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
 @CrossOrigin
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
