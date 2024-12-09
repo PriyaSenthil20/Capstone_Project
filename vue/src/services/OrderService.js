@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { HttpProxy } from 'vite';
+
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_REMOTE_API
