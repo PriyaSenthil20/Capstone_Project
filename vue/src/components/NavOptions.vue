@@ -32,7 +32,9 @@
             -->
 
             <!-- If the user is not signed this should prompt them to sign in or register -->
-            <button class="navBtn orderBtn">Start Order</button>
+            <router-link v-bind:to="{ name: 'customerOrder' }">
+              <button class="navBtn orderBtn">Start Order</button>
+            </router-link>
             
         </div>
         <img v-bind:src="this.logoUrl"/>

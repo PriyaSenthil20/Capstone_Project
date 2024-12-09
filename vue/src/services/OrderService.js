@@ -11,25 +11,14 @@ export default {
     alert(this.$store.state.user);
     return http.post('/customerOrder', order);
   },
-  getCrusts() {
-    return axios.get('/menu/crusts');
+  getPizzaOptions() {
+    return axios.get('/options');
   },
-  
-  getToppings() {
-    return axios.get('/menu/toppings');
+  getPizzas() {
+    return axios.get('/menu');
   },
-  getSauces() {
-    return axios.get('/menu/sauces');
-  },
-  getCheeses() {
-    return axios.get('/menu/cheeses');
-  },
-  
   getSizes() {
-    return axios.get('/menu/sizes');
-  },
-  getSpecialtyPizzas() {
-    return axios.get('/menu/specialtyPizzas');
+    return axios.get('/sizes');
   }
 
 

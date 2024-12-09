@@ -46,6 +46,7 @@ public class JdbcProductOptionDao implements ProductOptionDao{
             while (results.next()) {
                 ProductOption productOption = mapRowToProductOption(results);
                 productOptions.add(productOption);
+                System.out.println(productOption);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -164,4 +165,5 @@ public class JdbcProductOptionDao implements ProductOptionDao{
         productOption.setOptionAvailable(rs.getBoolean("option_available"));
         return productOption;
     }
+
 }

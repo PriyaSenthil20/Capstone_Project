@@ -6,7 +6,8 @@ export function createStore(currentToken, currentUser) {
     state: {
       token: currentToken || '',
       user: currentUser || {},
-      customer: {}
+      customer: {},
+      order:{}
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -29,7 +30,7 @@ export function createStore(currentToken, currentUser) {
         axios.defaults.headers.common = {};
       },
       CUSTOMER_ORDER(state,order){
-        state.orders.push(order);
+        state.order.push(order);
       }
     },
   });

@@ -15,15 +15,9 @@ import CustomerOrders from "../components/CustomerOrder.vue";
 export default {
 
  
-    methods:{
-        customerOrder(){
-            this.$store.commit('CUSTOMER_ORDER',this.order)
-    
-        }
-    },
-  components: {
+components: {
     CustomerOrders
 }
-};
+}
 </script>
 

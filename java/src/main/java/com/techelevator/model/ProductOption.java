@@ -3,6 +3,8 @@ package com.techelevator.model;
 import java.math.BigDecimal;
 
 public class ProductOption {
+
+
     private int optionId;
     private String optionName;
     private String optionDesc;
