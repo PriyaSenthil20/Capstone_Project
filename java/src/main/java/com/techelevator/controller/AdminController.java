@@ -17,7 +17,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
 @CrossOrigin
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
@@ -87,10 +86,38 @@ public class AdminController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to add product.", e);
         }
     }
-//  public ProductOption changeProductOptionAvailability() {}
-//  public ProductOption addProductOption() {}
-//  public List<Order> viewPendingOrders() {}
-//  public Order changeOrderStatus() {}
+    @PutMapping("/product-options/availability")
+    public ProductOption changeProductOptionAvailability(@RequestBody ProductOption productOption) {
+        try {
+            return productOptionDao.setProductOptionAvailabilityById(productOption.getOptionId(), productOption.isOptionAvailable());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update product option availability.", e);
+        }
+    }
+    @PostMapping("/product-options")
+    public ProductOption addProductOption(@RequestBody ProductOption productOption) {
+        try {
+            return productOptionDao.createProductOption(productOption);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to add product option.", e);
+        }
+    }
+    @GetMapping("/orders/pending")
+    public List<Order> viewPendingOrders() {
+        try {
+            return orderDao.getOrders(); // Modify to filter for pending orders if needed.
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to fetch pending orders.", e);
+        }
+    }
+    @PutMapping("/orders/{id}/status")
+    public Order changeOrderStatus(@PathVariable int id, @RequestBody Order order) {
+        try {
+            return orderDao.updateOrderStatus(order, id);
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update order status.", e);
+        }
+    }
 //  public List<Order> getHistoricalReport() {}
 //  public List<Order> searchOrders() {}
 

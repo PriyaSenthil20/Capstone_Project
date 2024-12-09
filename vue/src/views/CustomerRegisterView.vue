@@ -34,7 +34,7 @@
   
   <div id="customerRegister" class="text-center" v-else>
     <form v-on:submit.prevent="registerCustomer">
-       <h1>Enter Customer Details for  {{this.$store.state.user.username}}</h1>
+       <h1>Enter Customer Details for {{customer.customerId}} {{this.$store.state.user.username}}</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -143,8 +143,19 @@ export default {
         confirmPassword: '',
         role: 'user',
       },
+      qp:{
+                customerId: 3,
+        customerFirstName: 'pi',
+        customerLastName: 'za',
+        customerAddress: '321 new rd.',
+        customerCity: 'Newark',
+        customerZipCode: 19701,
+        customerState: 'DE',
+        phoneNumber: '1111111112',
+        customerEmail: 'pz@testmail.com'
+      },
       customer: {
-        customerId: this.$store.state.user.id,
+        customerId: '',
         customerFirstName: '',
         customerLastName: '',
         customerAddress: '',
@@ -168,6 +179,7 @@ export default {
           .register(this.user)
           .then((response) => {
             if (response.status == 201) {
+              
               authService.login(this.user).then((response) => {
               if (response.status == 200){
                 this.$store.commit("SET_AUTH_TOKEN", response.data.token);
@@ -192,10 +204,10 @@ export default {
           .then((response) => {
             if (response.status == 201) {
               this.$store.commit("SET_CUSTOMER", response.data);
-              this.$router.push({
+              /* this.$router.push({
                 path: '/',
                 query: { registration: 'success' },
-              });
+              });*/
             }
           })
           .catch((error) => {
@@ -212,6 +224,9 @@ export default {
       this.registrationErrorMsg = 'There were problems registering this user.';
     },
   },
+  created(){
+    this.customer.customerId= this.$store.state.user.id;
+  }
 };
 </script>
 

@@ -4,20 +4,20 @@
       <nav-options />
     </nav>
     <div>
+      <topbar />
     </div>
   </div>
 </template>
 
 <script>
 import NavOptions from '../components/NavOptions.vue';
+import Topbar from '../components/Topbar.vue';
 
 
 export default {
   components: {
     NavOptions,
-    Welcome,
-    Specials,
-    AboutUs,
+    Topbar,
   },
   data() {
     products: []

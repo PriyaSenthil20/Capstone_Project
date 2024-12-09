@@ -1,6 +1,7 @@
 import { createStore as _createStore } from 'vuex';
 import axios from 'axios';
 import OrderService from '../services/OrderService';
+import AuthService from '../services/AuthService';
 
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
@@ -89,7 +90,17 @@ export function createStore(currentToken, currentUser) {
         .catch(error => {
           console.error('Error fetching pizza options:', error);
         });
-    }
+    },
+    addCustomer({commit}, customer){
+      
+        AuthService.addCustomer(customer) 
+          .then(response => {
+            this.commit('SET_CUSTOMER', customer);
+          })
+          .catch(error => {
+            console.log(error);
+        }); 
+      }
     }
   });
   return store;

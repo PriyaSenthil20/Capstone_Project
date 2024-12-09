@@ -3,37 +3,24 @@
     <nav class="navbar">
       <nav-options />
     </nav>
-    <div class="welcome-section">
-      <welcome />
-    </div>
-  <div>
-    </div>
-    <div class="content-section">      
-      <specials v-bind:products="products" />
-      <about-us />
+    <div>
+      <topbar />
     </div>
   </div>
 </template>
 
 <script>
 import NavOptions from '../components/NavOptions.vue';
-import Welcome from '../components/Welcome.vue';
-import Specials from '../components/Specials.vue';
-import AboutUs from '../components/AboutUs.vue';
-import PizzaService from '../services/PizzaService.js';
+import Topbar from '../components/Topbar.vue';
 
 
 export default {
   components: {
     NavOptions,
-    Welcome,
-    Specials,
-    AboutUs,
+    Topbar,
   },
   data() {
-    return{ 
-      products: []
-    };
+    products: []
   },
   methods: {
       getMenu(){
@@ -42,7 +29,7 @@ export default {
       .then(response => {
         
         this.products = response.data;
-        console.log(response.data);
+        
       })
       .catch(error => {
         console.log(error);
@@ -63,7 +50,6 @@ export default {
   align-items: center;
   background-color: #f4f4f4;
   font-family: Arial, sans-serif;
-  
   /*
   display: flex;
   flex-direction: column;
@@ -72,6 +58,7 @@ export default {
   font-family: Arial, sans-serif;
   */
 }
+
 
 .navbar {
   width: 100%;
@@ -113,5 +100,4 @@ export default {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
 }
-
 </style>
