@@ -18,9 +18,6 @@ export default {
   components: {
     NavOptions,
     Topbar,
-    Welcome,
-    Specials,
-    AboutUs,
   },
   data() {
     products: []

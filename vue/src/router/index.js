@@ -8,6 +8,8 @@ import LogoutView from '../views/LogoutView.vue';
 import RegisterView from '../views/RegisterView.vue';
 import CustomerRegisterView from '../views/CustomerRegisterView.vue';
 import CustomerOrderView from '../views/CustomerOrderView.vue';
+import AdminInventoryView from '../views/AdminInventoryView.vue';
+import AdminOrderView from '../views/AdminOrderView.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component

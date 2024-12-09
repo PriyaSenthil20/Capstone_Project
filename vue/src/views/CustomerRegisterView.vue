@@ -125,9 +125,6 @@
       <button type="submit">Submit</button>
     </form>
   </div>
-  <div>
-    <button v-on:click="quickPost">Quick Post</button>
-    </div>
 </template>
 
 <script>
@@ -207,10 +204,10 @@ export default {
           .then((response) => {
             if (response.status == 201) {
               this.$store.commit("SET_CUSTOMER", response.data);
-              this.$router.push({
+              /* this.$router.push({
                 path: '/',
                 query: { registration: 'success' },
-              });
+              });*/
             }
           })
           .catch((error) => {
@@ -221,17 +218,6 @@ export default {
             }
           });
       
-    },
-    quickPost() {
-      authService.quickPost(this.customer).then((response) => {
-            if (response.status == 201) {
-              this.$store.commit("SET_CUSTOMER", response.data);
-              this.$router.push({
-                path: '/',
-                query: { registration: 'success' },
-              });
-            }
-          })
     },
     clearErrors() {
       this.registrationErrors = false;
