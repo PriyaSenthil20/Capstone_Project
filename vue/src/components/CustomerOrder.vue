@@ -20,31 +20,32 @@
 
       <!-- Pizza Options -->
       <div class="pizza-options">
+        
+        <h3>Custom Pizza</h3>
+        <select v-model="selectedCustom" id="custom" class="dropdown" :disabled="isCustomDisabled" required>
+          <option v-for="customPizza in this.$store.state.customPizzas" :key="customPizza.productId" :value="custom">{{ customPizza.productName }}</option>
+        </select>
+
         <h3>Specialty Pizza</h3>
         <select v-model="selectedSpecialty" id="specialty" class="dropdown" :disabled="isSpecialtyDisabled">
-          <option v-for="specialtyPizza in specialtyPizzas" :key="specialtyPizza" :value="specialtyPizza">
-            {{ specialtyPizza }}
+          <option v-for="specialtyPizza in this.$store.state.specialtyPizzas" :key="specialtyPizza.productId" :value="specialtyPizza">
+            {{ specialtyPizza.productName }}
           </option>
         </select>
 
         <h3>Crust</h3>
         <select v-model="selectedCrust" id="crust" class="dropdown" :disabled="isCrustDisabled" required>
-          <option v-for="crust in crusts" :key="crust" :value="crust">{{ crust }}</option>
+          <option v-for="crust in this.$store.state.crusts" :key="crust.optionId" :value="crust">{{ crust.optionName }}</option>
         </select>
 
         <h3>Topping</h3>
         <select v-model="selectedTopping" id="toppings" class="dropdown" :disabled="isToppingDisabled" required>
-          <option v-for="topping in toppings" :key="topping" :value="topping">{{ topping }}</option>
+          <option v-for="topping in this.$store.state.toppings" :key="topping.optionId" :value="topping">{{ topping.optionName }}</option>
         </select>
 
         <h3>Sauce</h3>
         <select v-model="selectedSauce" id="sauces" class="dropdown" :disabled="isSauceDisabled" required>
-          <option v-for="sauce in sauces" :key="sauce" :value="sauce">{{ sauce }}</option>
-        </select>
-
-        <h3>Sizes</h3>
-        <select v-model="selectedSize" id="size" class="dropdown" :disabled="isSizeDisabled" required>
-          <option v-for="size in sizes" :key="size" :value="size">{{ size }}</option>
+          <option v-for="sauce in this.$store.state.sauces" :key="sauce.optionId" :value="sauce">{{ sauce.optionName }}</option>
         </select>
 
         <!-- Delivery Option -->
@@ -83,37 +84,34 @@ import OrderService from '../services/OrderService';
 
 export default {
   data() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() + 45);
+    const defaultPickUpDate = now.toISOString().split('T')[0]; 
+    const defaultPickUpTime = now.toTimeString().split(' ')[0];
     return {
       order: {
-        orderUserId: this.$store.state.user.id,
-        productList: [
-          {
-            product_name: '',
-            specialty_pizza_name: '',
-            crust: '',
-            toppings: [],
-            sauce: '',
-            quantity: 0,
-          },
-        ],
+        orderId: null,
+        pickUpDate: defaultPickUpDate,
+        pickUpTime: defaultPickUpTime,
+        productDtoList: []
       },
-      specialtyPizzas: [],
-      crusts: [],
-      toppings: [],
-      sauces: [],
-      sizes: [],
-      selectedPizzaType: null, // 'custom' or 'specialty'
       selectedSpecialty: null,
       selectedCrust: null,
       selectedTopping: null,
       selectedSauce: null,
-      selectedSize: null,
-      orderQuantity: 1, // Default quantity
-      cart: [], // Cart to hold added items
+      selectedCustom: null,
+      specialtyPizzas: [],
+      crusts: [],
+      toppings: [],
+      sauces: [],
+      
+      selectedPizzaType: null,
+      deliveryOption: null,
+      orderQuantity: 1,
+      cart: [],
     };
-  },
-  computed: {
-    // Dynamically disable dropdowns based on pizza type selection
+    },
+    computed: {
     isSpecialtyDisabled() {
       return this.selectedPizzaType !== 'specialty';
     },
@@ -126,98 +124,56 @@ export default {
     isSauceDisabled() {
       return this.selectedPizzaType === 'specialty';
     },
-    isSizeDisabled() {
-      return this.selectedPizzaType === null;
+    isCustomDisabled() {
+      return this.selectedPizzaType !== 'custom';
     },
     cartItemCount() {
       return this.cart.length;
-    },
+    }
   },
-  mounted() {
+  
+    methods: {
    
-    this.getSpecialtyList();
-    this.getPizzaOptions();
-  },
-  methods: {
-    getSpecialtyList() {
-      OrderService.getPizzas().then(response => {
-        const products = response.data;
-        this.specialtyPizzas = products
-          .filter(product => product.product_type_id === 1) 
-          .map(product => product.product_name);
-      }).catch(error => {
-        console.error("Error fetching specialty pizzas:", error);
-      });
-    },
-    getPizzaOptions() {
-      OrderService.getPizzaOptions() .then(response => {
-        const options = response.data;
-        
-        this.crusts = options
-          .filter(option => option.option_type_id === 3) 
-          .map(option => option.option_name);
+      selectPizza(type) {
+        this.selectedPizzaType = type; 
+      },
 
-        this.toppings = options
-          .filter(option => option.option_type_id === 1)
-          .map(option => option.option_name);
+      addToCart() {
+        const product = {
+          productId: this.selectedSpecialty,
+          productName: this.selectedProduct.productName,
+            options: {
+              crust: this.selectedCrust,
+              toppings: this.selectedTopping,
+              sauce: this.selectedSauce,
+            },
+          size: this.selectedSize,
+          quantity: this.orderQuantity
+        };
+        console.log('Product being added:', product);
+        this.cart.push(product);
+        console.log('Updated Cart:', this.cart);
+      },
 
-        this.sauces = options
-          .filter(option => option.option_type_id === 2) 
-          .map(option => option.option_name);
-      })
-      .catch(error => {
-        console.error('Error fetching pizza options:', error);
-      });
-    },
+      proceedToCheckout() {
+      this.order.productDtoList = this.cart;
+      OrderService.createOrder(this.order)
+        .then(() => {
+          alert("Order successfully created!");
+        })
+        .catch((error) => console.error(error));
+      },
+
+      customerOrder() {
+       this.$store.commit('CUSTOMER_ORDER', this.order);
+      },
+
+      
+   
+  }
+
+  
     
-    getSizeList() {
-      OrderService.getSizes().then((response) => {
-      this.sizes = response.data.map(size => size.size_style);
-    })
-    },
-    customerOrder() {
-      this.$store.commit('CUSTOMER_ORDER', this.order);
-    },
-    selectPizza(type) {
-      this.selectedPizzaType = type; // 'custom' or 'specialty'
-    },
-    addToCart() {
-      // Create the order item based on the current selections
-      const orderItem = {
-        pizzaType: this.selectedPizzaType,
-        specialty: this.selectedSpecialty,
-        crust: this.selectedCrust,
-        toppings: this.selectedTopping,
-        sauce: this.selectedSauce,
-        size: this.selectedSize,
-        quantity: this.orderQuantity,
-      };
-
-      // Add the item to the cart
-      this.cart.push(orderItem);
-
-      // Optionally, clear selections after adding to cart
-      this.resetSelections();
-
-      // Log the cart to console for debugging
-      console.log('Current cart:', this.cart);
-    },
-    resetSelections() {
-      this.selectedPizzaType = null;
-      this.selectedSpecialty = null;
-      this.selectedCrust = null;
-      this.selectedTopping = null;
-      this.selectedSauce = null;
-      this.selectedSize = null;
-      this.orderQuantity = 1; // Reset quantity
-    },
-    proceedToCheckout() {
-      // Handle the checkout logic here (redirect to checkout page)
-      console.log('Proceeding to checkout', this.cart);
-      // You can use Vue Router to navigate to a checkout page, for example:
-      this.$router.push('/checkout');
-    },
-  },
 };
 </script>
 <style scoped>

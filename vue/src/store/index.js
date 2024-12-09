@@ -1,5 +1,6 @@
 import { createStore as _createStore } from 'vuex';
 import axios from 'axios';
+import OrderService from '../services/OrderService';
 
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
@@ -7,7 +8,13 @@ export function createStore(currentToken, currentUser) {
       token: currentToken || '',
       user: currentUser || {},
       customer: {},
-      order:{}
+      order:{},
+      crusts:[],
+      toppings:[],
+      sauces:[],
+      specialtyPizzas:[],
+      customPizzas:[]
+
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -22,6 +29,21 @@ export function createStore(currentToken, currentUser) {
       SET_CUSTOMER(state, customer){
         state.customer = customer;
       },
+      SET_CRUSTS(state, crusts){
+        state.crusts = crusts;
+      },
+      SET_TOPPINGS(state, toppings){
+        state.toppings= toppings;
+      },
+      SET_SAUCES(state, sauces){
+        state.sauces=sauces;
+      },
+      SET_SPECIALTY_PIZZAS(state, specialtyPizzas){
+        state.specialtyPizzas=specialtyPizzas;
+      },
+      SET_CUSTOM_PIZZAS(state, customPizzas){
+        state.customPizzas=customPizzas;
+      },
       LOGOUT(state) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -33,6 +55,39 @@ export function createStore(currentToken, currentUser) {
         state.order.push(order);
       }
     },
+    actions:{
+      loadData({commit,dispatch}) {
+        dispatch('getPizzas');
+        dispatch('getOptions');
+      },
+      getPizzas({ commit }) {
+      OrderService.getPizzas().then(response => {
+        const products = response.data;
+    
+        this.commit('SET_SPECIALTY_PIZZAS',products
+        .filter(product => product.productTypeId === 1));
+        this.commit('SET_CUSTOM_PIZZAS',products
+        .filter(product => product.productTypeId === 2));
+  
+      }).catch(error => {
+        console.error("Error fetching pizzas:", error);
+      });
+    },
+      getOptions({commit}){
+        OrderService.getPizzaOptions().then((response) => {
+          const options = response.data;
+          this.commit('SET_CRUSTS',options
+            .filter(option => option.optionTypeId=== 3));
+            this.commit('SET_TOPPINGS',options
+            .filter(option => option.optionTypeId=== 1));
+            this.commit('SET_SAUCES',options
+              .filter(option => option.optionTypeId=== 2));
+          })
+        .catch(error => {
+          console.error('Error fetching pizza options:', error);
+        });
+    }
+    }
   });
   return store;
 }

@@ -1,5 +1,7 @@
 <template>
-
+    <div>
+        <nav-options />
+        </div>
 
       <div>
       <customer-orders />
@@ -11,13 +13,21 @@
 
 
 import CustomerOrders from "../components/CustomerOrder.vue";
+import NavOptions from "../components/NavOptions.vue";
 
 export default {
 
  
 components: {
-    CustomerOrders
+    CustomerOrders,
+    NavOptions
+},
+created(){
+        
+        this.$store.dispatch('loadData');
+    }
+
 }
-}
+
 </script>
 
