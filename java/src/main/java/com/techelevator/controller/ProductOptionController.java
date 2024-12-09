@@ -14,11 +14,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.List;
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 2ea9265b8190d8b807c81ddbf91fdbb06fb933e4
 @RestController
 @CrossOrigin
 public class ProductOptionController {
@@ -50,10 +45,9 @@ public class ProductOptionController {
         }
     }
 
-<<<<<<< HEAD
-=======
+
 //method_18
->>>>>>> 2ea9265b8190d8b807c81ddbf91fdbb06fb933e4
+
     @GetMapping("/options/{id}")
     public List<ProductOption> getAvailableOptionsByOptionTypeId(@PathVariable int id){
         try {
@@ -63,10 +57,9 @@ public class ProductOptionController {
         }
     }
 
-<<<<<<< HEAD
-=======
+
    //method_19
->>>>>>> 2ea9265b8190d8b807c81ddbf91fdbb06fb933e4
+
     @PreAuthorize("hasRole('ADMIN')")
     public ProductOption getProductOptionById(int id){
         try {
