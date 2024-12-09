@@ -9,7 +9,7 @@ export function createStore(currentToken, currentUser) {
       token: currentToken || '',
       user: currentUser || {},
       customer: {},
-      order:{},
+      order:[],
       crusts:[],
       toppings:[],
       sauces:[],

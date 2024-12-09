@@ -159,20 +159,21 @@ export default {
         productDtoList:this.cart
         };
         this.order=newOrder;
-        OrderService.customerOrder(this.order)
-        .then(() => {
-          alert("Order successfully created!");
+        this.customerOrder();
+        alert("Order successfully created!");
           this.cart = [];
           this.order = {
           transferId: null,
           pickUpDate: this.date,
           pickUpTime: this.time,
           productDtoList: []
-        };
-      
-        })
-        .catch((error) => console.error(error));
-      },
+        }},
+        customerOrder() {
+      this.$store.commit('CUSTOMER_ORDER', this.order);
+      alert("Order successfully saved in store!");
+      console.log("Order stored in Vuex:", this.$store.state.order);
+
+      }
       
     }
       
