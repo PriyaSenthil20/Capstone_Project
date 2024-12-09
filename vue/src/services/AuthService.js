@@ -16,7 +16,7 @@ export default {
 
   registerCustomer(customer){
     console.log(customer)
-    alert(this.$store.state.user)
+    alert("bonk")
     return http.post('/customerRegister', customer)
   }
   

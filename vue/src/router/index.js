@@ -65,7 +65,15 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  }
+  } /*,
+  {
+    path: "/Admin",
+    name: "Admin",
+    component: AdminView,
+    meta: {
+      requiresAuth: true
+    }
+  } */
 ];
 
 // Create the router
