@@ -65,15 +65,23 @@ const routes = [
     meta: {
       requiresAuth: false
     }
-  } /*,
+  },
   {
-    path: "/Admin",
-    name: "Admin",
-    component: AdminView,
+    path: "/AdminInventory",
+    name: "AdminInventory",
+    component: AdminInventoryView,
     meta: {
       requiresAuth: true
     }
-  } */
+  },
+  {
+    path: "/AdminOrder",
+    name: "AdminOrder",
+    component: AdminOrderView,
+    meta: {
+      requiresAuth: true
+    }
+  }
 ];
 
 // Create the router
