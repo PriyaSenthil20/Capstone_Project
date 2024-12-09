@@ -22,41 +22,41 @@
       <div class="pizza-options">
         
         <h3>Custom Pizza</h3>
-        <select v-model="selectedCustom" id="custom" class="dropdown" :disabled="isCustomDisabled" required>
-          <option v-for="customPizza in this.$store.state.customPizzas" :key="customPizza.productId" :value="custom">{{ customPizza.productName }}</option>
+        <select v-model="selectedProduct" id="custom" class="dropdown" :disabled="isCustomDisabled" required>
+          <option v-for="customPizza in this.$store.state.customPizzas" :key="customPizza.productId" :value="customPizza.productId">{{ customPizza.productName }}</option>
         </select>
 
         <h3>Specialty Pizza</h3>
-        <select v-model="selectedSpecialty" id="specialty" class="dropdown" :disabled="isSpecialtyDisabled">
-          <option v-for="specialtyPizza in this.$store.state.specialtyPizzas" :key="specialtyPizza.productId" :value="specialtyPizza">
+        <select v-model="selectedProduct" id="specialty" class="dropdown" :disabled="isSpecialtyDisabled">
+          <option v-for="specialtyPizza in this.$store.state.specialtyPizzas" :key="specialtyPizza.productId" :value="specialtyPizza.productId">
             {{ specialtyPizza.productName }}
           </option>
         </select>
 
         <h3>Crust</h3>
         <select v-model="selectedCrust" id="crust" class="dropdown" :disabled="isCrustDisabled" required>
-          <option v-for="crust in this.$store.state.crusts" :key="crust.optionId" :value="crust">{{ crust.optionName }}</option>
+          <option v-for="crust in this.$store.state.crusts" :key="crust.optionId" :value="crust.optionId">{{ crust.optionName }}</option>
         </select>
 
         <h3>Topping</h3>
         <select v-model="selectedTopping" id="toppings" class="dropdown" :disabled="isToppingDisabled" required>
-          <option v-for="topping in this.$store.state.toppings" :key="topping.optionId" :value="topping">{{ topping.optionName }}</option>
+          <option v-for="topping in this.$store.state.toppings" :key="topping.optionId" :value="topping.optionId">{{ topping.optionName }}</option>
         </select>
 
         <h3>Sauce</h3>
         <select v-model="selectedSauce" id="sauces" class="dropdown" :disabled="isSauceDisabled" required>
-          <option v-for="sauce in this.$store.state.sauces" :key="sauce.optionId" :value="sauce">{{ sauce.optionName }}</option>
+          <option v-for="sauce in this.$store.state.sauces" :key="sauce.optionId" :value="sauce.optionId">{{ sauce.optionName }}</option>
         </select>
 
         <!-- Delivery Option -->
         <div class="delivery-options">
           <h3>Delivery Option</h3>
           <label>
-            <input type="radio" v-model="deliveryOption" value="pickup" />
+            <input type="radio" v-model="deliveryOption" value="2" />
             Pick-up
           </label>
           <label>
-            <input type="radio" v-model="deliveryOption" value="delivery" />
+            <input type="radio" v-model="deliveryOption" value="1" />
             Delivery
           </label>
         </div>
@@ -90,25 +90,24 @@ export default {
     const defaultPickUpTime = now.toTimeString().split(' ')[0];
     return {
       order: {
-        orderId: null,
+        transferId: null,
         pickUpDate: defaultPickUpDate,
         pickUpTime: defaultPickUpTime,
         productDtoList: []
       },
-      selectedSpecialty: null,
+      time:defaultPickUpDate,
+      date:defaultPickUpTime,
+      selectedProduct: null,
+      selectedPizzaType:null,
       selectedCrust: null,
       selectedTopping: null,
       selectedSauce: null,
-      selectedCustom: null,
-      specialtyPizzas: [],
-      crusts: [],
-      toppings: [],
-      sauces: [],
-      
-      selectedPizzaType: null,
       deliveryOption: null,
       orderQuantity: 1,
-      cart: [],
+      cart:[ {
+            productId:'',
+            productOptionDtoList:[]   
+      }]
     };
     },
     computed: {
@@ -137,43 +136,46 @@ export default {
       selectPizza(type) {
         this.selectedPizzaType = type; 
       },
-
       addToCart() {
-        const product = {
-          productId: this.selectedSpecialty,
-          productName: this.selectedProduct.productName,
-            options: {
-              crust: this.selectedCrust,
-              toppings: this.selectedTopping,
-              sauce: this.selectedSauce,
-            },
-          size: this.selectedSize,
-          quantity: this.orderQuantity
+      for (let i = 0; i < this.orderQuantity; i++) {
+      const product = {
+        
+        productDtoList: {
+          productId: this.selectedProduct,
+          productOptionDtoList: [this.selectedCrust, this.selectedTopping, this.selectedSauce]
+        },
         };
-        console.log('Product being added:', product);
         this.cart.push(product);
+        }
+        alert(`Added ${this.orderQuantity} of ${this.selectedProduct} to the cart.`);
         console.log('Updated Cart:', this.cart);
-      },
-
+        },
+  
       proceedToCheckout() {
-      this.order.productDtoList = this.cart;
-      OrderService.createOrder(this.order)
+        const newOrder={
+        transferId: this.deliveryOption,
+        pickUpDate: this.date,
+        pickUpTime: this.time,
+        productDtoList:this.cart
+        };
+        this.order=newOrder;
+        OrderService.customerOrder(this.order)
         .then(() => {
           alert("Order successfully created!");
+          this.cart = [];
+          this.order = {
+          transferId: null,
+          pickUpDate: this.date,
+          pickUpTime: this.time,
+          productDtoList: []
+        };
+      
         })
         .catch((error) => console.error(error));
       },
-
-      customerOrder() {
-       this.$store.commit('CUSTOMER_ORDER', this.order);
-      },
-
       
-   
-  }
-
-  
-    
+    }
+      
 };
 </script>
 <style scoped>

@@ -13,8 +13,8 @@ export function createStore(currentToken, currentUser) {
       toppings:[],
       sauces:[],
       specialtyPizzas:[],
-      customPizzas:[]
-
+      customPizzas:[],
+      cart:{}
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -43,6 +43,9 @@ export function createStore(currentToken, currentUser) {
       },
       SET_CUSTOM_PIZZAS(state, customPizzas){
         state.customPizzas=customPizzas;
+      },
+      ADD_CART(state, cart){
+        state.cart.push(cart);
       },
       LOGOUT(state) {
         localStorage.removeItem('token');

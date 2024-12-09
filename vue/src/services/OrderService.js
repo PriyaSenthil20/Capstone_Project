@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { HttpProxy } from 'vite';
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_REMOTE_API
@@ -11,16 +12,14 @@ export default {
     alert(this.$store.state.user);
     return http.post('/customerOrder', order);
   },
+    
   getPizzaOptions() {
-    return axios.get('/options');
+    return http.get('/options');
   },
   getPizzas() {
-    return axios.get('/menu');
-  },
-  getSizes() {
-    return axios.get('/sizes');
+    return http.get('/menu');
   }
-
+ 
 
  
 
