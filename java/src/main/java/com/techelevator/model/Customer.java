@@ -14,7 +14,6 @@ public class Customer {
 
     public Customer(int customerId,String customerFirstName, String customerLastName, String customerAddress, String customerPhoneNumber, String customerEmail, String customerCity, String customerState, int customerZipCode) {
         this.customerId=customerId;
-        this.customerFirstName = customerFirstName;
         this.customerLastName = customerLastName;
         this.customerAddress = customerAddress;
         this.customerPhoneNumber = customerPhoneNumber;
