@@ -23,7 +23,7 @@ public class CustomerRegisterController {
         this.customerDao=customerDao;
         this.userDao=userDao;
     }
-
+   //method_3
     @GetMapping
     public List<Customer> getListOfCustomers()  {
         List<Customer> customers = null;
@@ -34,6 +34,7 @@ public class CustomerRegisterController {
         }
         return customers;
     }
+    //method_4
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "/customerRegister", method = RequestMethod.POST)
     public Customer createCustomer(@Valid @RequestBody CustomerDto customer){

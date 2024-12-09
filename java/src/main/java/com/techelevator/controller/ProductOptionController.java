@@ -14,6 +14,11 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2ea9265b8190d8b807c81ddbf91fdbb06fb933e4
 @RestController
 @CrossOrigin
 public class ProductOptionController {
@@ -25,6 +30,7 @@ public class ProductOptionController {
         this.optionDao = optionDao;
         this.userDao=userDao;
     }
+    //method_16
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/options")
     public List<ProductOption> getOptions(){
@@ -34,7 +40,7 @@ public class ProductOptionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+  //method_17
     @GetMapping("/options")
     public List<ProductOption> getAvailableOptions(){
         try {
@@ -44,6 +50,10 @@ public class ProductOptionController {
         }
     }
 
+<<<<<<< HEAD
+=======
+//method_18
+>>>>>>> 2ea9265b8190d8b807c81ddbf91fdbb06fb933e4
     @GetMapping("/options/{id}")
     public List<ProductOption> getAvailableOptionsByOptionTypeId(@PathVariable int id){
         try {
@@ -53,6 +63,10 @@ public class ProductOptionController {
         }
     }
 
+<<<<<<< HEAD
+=======
+   //method_19
+>>>>>>> 2ea9265b8190d8b807c81ddbf91fdbb06fb933e4
     @PreAuthorize("hasRole('ADMIN')")
     public ProductOption getProductOptionById(int id){
         try {
@@ -61,7 +75,7 @@ public class ProductOptionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+  //method_20
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/options")
     public ProductOption createProductOption(@RequestBody ProductOption productOption){
@@ -71,7 +85,7 @@ public class ProductOptionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+  //method_21
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/options/availability")
     public ProductOption setProductOptionAvailabilityById(@RequestBody ProductOption productOption){
@@ -81,7 +95,7 @@ public class ProductOptionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    //method_22
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/options/price")
     public ProductOption setProductOptionPriceById(@RequestBody ProductOption productOption){
@@ -92,7 +106,7 @@ public class ProductOptionController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_23
     private int getCurrentUserId(Principal principal) {
         return userDao.getUserByUsername(principal.getName()).getId();
     }

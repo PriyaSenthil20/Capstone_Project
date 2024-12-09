@@ -33,7 +33,7 @@ public class OrderController {
         this.userDao = userDao;
     }
 
-    // Get all orders
+    // method_5
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("admin/orders")
     @GetMapping
@@ -44,7 +44,7 @@ public class OrderController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_6
     // Get order by ID
     @PreAuthorize("hasRole('USER')")
     @GetMapping("/orders/{id}")
@@ -55,7 +55,7 @@ public class OrderController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+  // method_7
     // Create a new order
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.CREATED)
@@ -69,7 +69,7 @@ public class OrderController {
         }
         
     }
-
+   //method_8
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("admin/orders")
@@ -80,7 +80,7 @@ public class OrderController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_9
     // Update order status
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("admin/orders/{id}/status/")
@@ -91,7 +91,7 @@ public class OrderController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    //method_10
     // Update driver information for an order
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("admin/orders/{id}/driver")
@@ -102,7 +102,7 @@ public class OrderController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+  //method_11
     private int getCurrentUserId(Principal principal) {
         return userDao.getUserByUsername(principal.getName()).getId();
     }

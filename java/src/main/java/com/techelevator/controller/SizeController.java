@@ -21,6 +21,7 @@ public class SizeController {
         this.sizeDao = sizeDao;
         this.userDao = userDao;
     }
+    //method_24
     @GetMapping("/sizes")
     public List<Size> getSizes(){
         try {
@@ -29,6 +30,7 @@ public class SizeController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //method_25
     @PreAuthorize("hasRole('ADMIN')")
     public Size getSizeById(int id){
         try {
@@ -37,7 +39,7 @@ public class SizeController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_26
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/sizes")
     public Size setSizeById(@RequestBody Size size){
@@ -48,6 +50,7 @@ public class SizeController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //method_27
     private int getCurrentUserId(Principal principal) {
         return userDao.getUserByUsername(principal.getName()).getId();
     }
