@@ -20,7 +20,7 @@ export default {
   getPizzas() {
     return http.get('/menu');
   }
- 
+  
 
  
 

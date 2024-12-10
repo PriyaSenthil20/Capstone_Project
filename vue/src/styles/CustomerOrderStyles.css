@@ -1,0 +1,233 @@
+
+/* General Styling */
+.customer-products {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #2e2e2e;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.customer-order {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Pizza List Styling */
+.pizza-list {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding: 0;
+  margin-bottom: 30px;
+  list-style: none;
+}
+
+.pizza-list li {
+  flex: 1;
+  text-align: center;
+}
+
+.pizza-img-container {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.pizza-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Dropdowns and Inputs */
+.dropdown, .quantity {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 5px;
+  color: #fff;
+}
+
+/* Delivery Option */
+.delivery-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    padding: 0;
+    margin-bottom: 30px;
+    list-style: none;
+  }
+  
+  .delivery-options li {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .option-container {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .option-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+
+.add-to-cart, .proceed-to-checkout,.continue,.cancel {
+  padding: 15px 25px;
+  background-color: #d84d22;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-to-cart:hover, .proceed-to-checkout:hover,.continue,.cancel {
+  background-color: #c13c18;
+  transform: scale(1.05);
+}
+.selected {
+  border: 5px solid #d84d22;  
+  transform: scale(1.05);      
+}
+.cart-icon {
+  margin-right: 10px;
+}
+/* Order Confirmation Styling */
+.order-confirmation {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    margin-top: 30px;
+  }
+  
+  .order-confirmation h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #d84d22;
+  }
+  
+  .order-confirmation h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    font-weight: 600;
+  }
+  
+  .order-confirmation ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .order-confirmation ul li {
+    margin-bottom: 10px;
+  }
+  
+  .order-confirmation ul li strong {
+    font-weight: bold;
+  }
+  
+  .order-confirmation ul li ul {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+  
+  .order-confirmation ul li ul li {
+    font-size: 0.9rem;
+    color: #ddd;
+  }
+  
+  /* Order Details Section */
+  .order-details {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #444;
+    border-radius: 8px;
+  }
+  
+  .order-details h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .order-details p {
+    font-size: 1rem;
+    margin: 5px 0;
+  }
+  
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .pizza-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pizza-img-container {
+    max-width: 200px;
+  }
+
+  .pizza-img {
+    width: 100%;
+    height: auto;
+  }
+  .order-confirmation {
+    padding: 15px;
+  }
+  }
+  .add-to-cart, .proceed-to-checkout{
+    width: 100%;
+    padding: 20px;
+  }
+  .continue,.cancel{
+    width: 30%;
+    padding: 20px;
+  }
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .checkbox-group label {
+    margin-right: 10px;
+  }
+  .customer-order {
+    flex-grow: 1;
+  }
+  
+  .order-confirmation {
+    flex-grow: 0;
+  }
+  
