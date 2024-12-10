@@ -53,8 +53,14 @@ export function createStore(currentToken, currentUser) {
       SET_DRIVERS(state, drivers){
         state.drivers = drivers;
       },
+      SET_ORDER_DETAILS(state,orderDetails){
+        state.orderDetails=orderDetails;
+      },
       ADD_CART(state, cart){
-        state.cart.push(cart);
+        state.cart=cart;
+      },
+      CLEAR_CART(state){
+        state.cart=null;
       },
       LOGOUT(state) {
         localStorage.removeItem('token');
@@ -63,8 +69,8 @@ export function createStore(currentToken, currentUser) {
         state.user = {};
         axios.defaults.headers.common = {};
       },
-      CUSTOMER_ORDER(state,order){
-        state.order.push(order);
+      SET_ORDER(state,order){
+        state.order=order;
       }
     },
     actions:{
@@ -130,8 +136,17 @@ export function createStore(currentToken, currentUser) {
           .catch(error => {
             console.log(error);
         }); 
-      }
-    }
+      },
+    createCustomerOrder({commit}){
+      alert("Before Service Call");
+      OrderService.customerOrder(this.state.order,this.state.user)
+      .then(response=>{
+        this.commit('SET_ORDER_DETAILS',response.data);
+      })
+      .catch(error => {
+        console.log(error);
+    });
+    }}
   });
   return store;
 }
