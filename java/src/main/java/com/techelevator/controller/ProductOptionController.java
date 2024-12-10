@@ -26,7 +26,6 @@ public class ProductOptionController {
         this.userDao=userDao;
     }
     //method_16
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/options")
     public List<ProductOption> getOptions(){
         try {
@@ -59,8 +58,6 @@ public class ProductOptionController {
 
 
    //method_19
-
-    @PreAuthorize("hasRole('ADMIN')")
     public ProductOption getProductOptionById(int id){
         try {
             return optionDao.getProductOptionById(id);
@@ -79,7 +76,6 @@ public class ProductOptionController {
         }
     }
   //method_21
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/options/availability")
     public ProductOption setProductOptionAvailabilityById(@RequestBody ProductOption productOption){
         try {
@@ -89,7 +85,6 @@ public class ProductOptionController {
         }
     }
     //method_22
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/options/price")
     public ProductOption setProductOptionPriceById(@RequestBody ProductOption productOption){
 

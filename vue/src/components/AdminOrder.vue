@@ -5,7 +5,7 @@
         <h3>Select Order</h3>
         <select v-model="selectedOrder" class="dropdown" required>
           <option disabled selected>Select an Order</option>
-          <option v-for="order in adminOrders" :key="order.orderId" :value="order">
+          <option v-for="order in this.$store.state.adminOrders" :key="order.orderId" :value="order.orderId">
             Order #{{ order.orderId }} - {{ order.customerName }}
           </option>
         </select>
@@ -53,6 +53,7 @@
 import AdminService from "../services/AdminService";
 
 export default {
+  
   data() {
     return {
       selectedOrder: null,
@@ -62,10 +63,10 @@ export default {
   },
   computed: {
     adminOrders() {
-      return this.$store.state.adminOrders;
+      let localOrders = this.$store.state.adminOrders;
     },
     drivers() {
-      return this.$store.state.drivers;
+      let localDrivers = this.$store.state.drivers;
     }
   },
   methods: {
@@ -74,6 +75,7 @@ export default {
     updateOrderStatus() { 
   },
   created() {
+    this.$store.dispatch('getAdminOrders');
   }
 },}
 </script>

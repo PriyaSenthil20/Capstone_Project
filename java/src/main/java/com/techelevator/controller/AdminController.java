@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
     private final DriverDao driverDao;

@@ -19,7 +19,6 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/payments")
-@PreAuthorize("isAuthenticated()")
 public class PaymentController {
 
     private final PaymentDao paymentDao;
@@ -30,7 +29,7 @@ public class PaymentController {
     }
    //method_12
     // Retrieves a list of all payments for a specific order
-    @PreAuthorize("hasRole('USER')")
+
     @GetMapping("/order/{orderId}")
     public List<Payment> getPaymentsByOrderId(@PathVariable int orderId) {
         try {
@@ -41,7 +40,7 @@ public class PaymentController {
     }
    //method_13
     // Retrieves a payment by its unique identifier
-    @PreAuthorize("hasRole('USER')")
+
     @GetMapping("/{paymentId}")
     public Payment getPaymentById(@PathVariable int paymentId) {
         try {
@@ -52,7 +51,7 @@ public class PaymentController {
     }
    //method_14
     // Creates a new payment for an order
-    @PreAuthorize("hasRole('USER')")
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Payment createPayment(@Valid @RequestBody Payment payment) {
@@ -64,7 +63,7 @@ public class PaymentController {
     }
   //method_15
     // Updates an existing payment
-    @PreAuthorize("hasRole('USER')")
+
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
     public Payment updatePayment(@Valid @RequestBody Payment payment) {

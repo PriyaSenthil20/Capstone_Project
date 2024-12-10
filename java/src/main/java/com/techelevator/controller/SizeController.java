@@ -31,7 +31,6 @@ public class SizeController {
         }
     }
     //method_25
-    @PreAuthorize("hasRole('ADMIN')")
     public Size getSizeById(int id){
         try {
             return sizeDao.getSizeById(id);
@@ -40,7 +39,6 @@ public class SizeController {
         }
     }
    //method_26
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/sizes")
     public Size setSizeById(@RequestBody Size size){
 

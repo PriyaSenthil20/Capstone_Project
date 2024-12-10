@@ -3,7 +3,10 @@
     <nav class="navbar">
       <nav-options />
     </nav>
-    <div>
+     <div>
+    </div>
+    <div class="content-section">      
+      <admin-order/>
     </div>
   </div>
 </template>
@@ -11,30 +14,23 @@
 <script>
 import NavOptions from '../components/NavOptions.vue';
 import AdminOrder from '../components/AdminOrder.vue';
+import AdminService from '../services/AdminService';
 
 export default {
   components: {
     NavOptions,
+    AdminOrder
   },
   data() {
     products: []
   },
   methods: {
-      getMenu(){
-      
-      PizzaService.menu()
-      .then(response => {
-        
-        this.products = response.data;
-        
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    getMenu(){
+
     }
   },
   created() {
-    this.getMenu();
+    this.$store.dispatch('getAdminOrders');
   }
 };
 </script>

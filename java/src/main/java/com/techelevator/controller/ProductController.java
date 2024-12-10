@@ -35,7 +35,7 @@ public class ProductController {
         this.userDao = userDao;
     }
     //method_28
-    @PreAuthorize("hasRole('ADMIN')")
+
     @GetMapping("/admin/products")
     public List<Product> getProducts(){
         try {
@@ -64,7 +64,6 @@ public class ProductController {
         }
     }
    //method_31
-    @PreAuthorize("hasRole('ADMIN')")
     public Product getProductById(int id){
         try {
             return productDao.getProductById(id);
@@ -73,7 +72,6 @@ public class ProductController {
         }
     }
    //method_32
-    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/products")
     public Product createProduct(@RequestBody Product product){
         try {
@@ -83,7 +81,6 @@ public class ProductController {
         }
     }
    //method_33
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/products/availability")
     public Product setProductAvailabilityById(@RequestBody Product product){
         try {
@@ -93,7 +90,6 @@ public class ProductController {
         }
     }
    //method_34
-    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/products/price")
     public Product setProductPriceById(@RequestBody Product product){
 

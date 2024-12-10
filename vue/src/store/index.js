@@ -2,6 +2,7 @@ import { createStore as _createStore } from 'vuex';
 import axios from 'axios';
 import OrderService from '../services/OrderService';
 import AuthService from '../services/AuthService';
+import AdminService from '../services/AdminService';
 
 export function createStore(currentToken, currentUser) {
   let store = _createStore({

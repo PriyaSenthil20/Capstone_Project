@@ -29,7 +29,6 @@ public class OrderController {
     }
 
     // method_5
-    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping("admin/orders")
     @GetMapping
     public List<Order> getAllOrdersAsAdmin() {
@@ -41,7 +40,7 @@ public class OrderController {
     }
    //method_6
     // Get order by ID
-    @PreAuthorize("hasRole('USER')")
+
     @GetMapping("/orders/{id}")
     public Order getOrderById(@PathVariable int id) {
         try {
@@ -65,7 +64,7 @@ public class OrderController {
         
     }
    //method_8
-    @PreAuthorize("hasRole('ADMIN')")
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("admin/orders")
     public Order createOrderAsAdmin(@RequestBody Order order, Principal principal) {
@@ -77,7 +76,7 @@ public class OrderController {
     }
    //method_9
     // Update order status
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PutMapping("admin/orders/{id}/status/")
     public Order updateOrderStatusByIdAsAdmin(@PathVariable int orderId, @RequestBody Order order) {
         try {
@@ -88,7 +87,7 @@ public class OrderController {
     }
     //method_10
     // Update driver information for an order
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PutMapping("admin/orders/{id}/driver")
     public Order updateOrderDriver(@PathVariable int orderId, @RequestBody Order order) {
         try {
