@@ -4,7 +4,7 @@
       <h3>Select Delivery Option</h3>
     <ul class="delivery-options">
     <li>Pick Up
-      <div class="option-container" @click="selectDeliveryOption('pick-up')">
+      <div class="option-container" value='2' @click="selectDeliveryOption('pick-up') ">
         <img 
         src="../assets/pickup-icon.png" 
         alt="Pick-up Option" 
@@ -15,7 +15,7 @@
       </div>
     </li>
     <li>Delivery 
-    <div class="option-container" @click="selectDeliveryOption('delivery')">
+    <div class="option-container value='1'"  @click="selectDeliveryOption('delivery') ">
       <img 
         src="../assets/delivery-icon.png" 
         alt="Delivery Option" 
@@ -132,24 +132,29 @@
 import OrderService from '../services/OrderService';
 
 export default {
-
+  created(){
+    
+  },
   data() {
     const now = new Date();
     now.setMinutes(now.getMinutes() + 45);
     const defaultPickUpDate = now.toISOString().split('T')[0]; 
     const defaultPickUpTime = now.toTimeString().split(' ')[0];
     return {
+      user: {
+        username: '',
+        password: '',
+        confirmPassword: '',
+        role: 'user',
+      },
       order: {
-        transferId: '',
-        pickUpDate: defaultPickUpDate,
-        pickUpTime: defaultPickUpTime,
+        transferId:null,
+        pickUpDate: null,
+        pickUpTime: null,
         productDtoList: []
       },
-      productOption:[],
-      productDtoList:[{
-        productId:'',
-        productOptionDtoList:[] 
-      }],
+   
+    
       time:defaultPickUpDate,
       date:defaultPickUpTime,
       selectedProduct: null,
@@ -159,100 +164,58 @@ export default {
       selectedSauce: null,
       deliveryOption: null,
       showConfirmation :false,
-      orderQuantity: 1,
-      cart:{
-           productList:[] 
-          }
+      orderQuantity: 1
+      
     };
     },
    computed: {
         totalCartItems() {
-            return this.$store.state.cart.length;
+            return this.order.productDtoList.length;
           }
         },
 
     methods: {
       selectDeliveryOption(option) {
-      this.deliveryOption = option; 
+        if (option === 'delivery') {
+            this.deliveryOption = 1; 
+        } else if (option === 'pick-up') {
+            this.deliveryOption = 2; 
+        }
       },
       selectPizza(type) {
         this.selectedPizzaType = type; 
       },
-      /*addToCart() {
-      for (let i = 0; i < this.orderQuantity; i++) {
-      
-        const product = {
-        
-        productDtoList: {
-          productId: this.selectedProduct,
-          productOptionDtoList: [this.selectedCrust, ...this.selectedToppings, this.selectedSauce]
-        },
-        };
-        alert(product.productDtoList.productId);
-        this.cart.push(product);
-        }
-        alert(`Added ${this.orderQuantity} of ${this.selectedProduct} to the cart.`);
-        console.log('Updated Cart:', this.cart);
-        },*/
         addToCart(){
+          let productOptions=[];
           for (let i = 0; i < this.orderQuantity; i++) {
           if(this.selectedCrust){
-            this.productOption.push(this.selectedCrust)
+            productOptions.push({productOptionId:this.selectedCrust})
           }
           for(let i=0;i<this.selectedToppings.length;i++){
           
-            this.productOption.push(this.selectedToppings[i]);
+            productOptions.push({productOptionId:this.selectedToppings[i]});
           }
           if(this.selectedSauce){
-            this.productOption.push(this.selectedSauce)
+            productOptions.push({productOptionId:this.selectedSauce});
           }       
-        }
-        this.productDtoList.push(
+        
+        this.order.productDtoList.push(
           {
             productId:this.selectedProduct,
-            productOptionDtoList:this.productOption
+            productOptionDtoList:productOptions
           });
-          this.cart={
-            productList:this.productDtoList
-          }
-          alert("before");
-          this.$store.commit('ADD_CART',this.cart);
-          alert(this.$store.state.cart.productList.length);
+        }
+        
+         alert("Products added to the order");
+        //  this.$store.commit('ADD_CART',this.cart);
+         // alert("after add cart");
+        ////  console.log("cart",this.$store.state.cart);
       },
        
-      /*proceedToCheckout() {
-        if(this.cart.length<=0){
-          this.addToCart();
-        }
-        const newOrder={
-        transferId: this.deliveryOption,
-        pickUpDate: this.date,
-        pickUpTime: this.time,
-        productDtoList:this.cart
-        };
-        this.showConfirmation=true;
-        this.order=newOrder;
-        this.customerOrder();
-        alert("Order successfully created!");
-        
-          this.cart = [];
-          this.order = {
-          transferId: null,
-          pickUpDate: this.date,
-          pickUpTime: this.time,
-          productDtoList: []
-        }},*/
         proceedToCheckout(){
-          if(this.$store.state.cart.length<=0){
-            this.addToCart();
-          }
-          this.order={
-            transferId:this.deliveryOption,
-            pickUpDate:this.defaultPickUpDate,
-            pickUpTime:this.defaultPickUpTime,
-            productDtoList:this.productDtoList
-          }
-          this.showConfirmation=true;
+          this.order.transferId=this.deliveryOption;
+          this.order.pickUpDate='2023-12-12';
+          this.order.pickUpTime='17:00:01';
           try{
           this.$store.commit('SET_ORDER', this.order);
           alert(this.$store.state.order.transferId);
@@ -260,26 +223,24 @@ export default {
           
           console.log("Order stored in Vuex:", this.$store.state.order);
           this.showConfirmation = true;
+          this.initializeOrder();
           }catch (error) {
           console.error("Error processing customer order:", error);
           }
         },
-        /*customerOrder() {
-          try{
-          this.$store.commit('SET_ORDER', this.order);
-          alert(this.$store.state.order.transferId);
-          this.$store.dispatch('createCustomerOrder');
-          
-          console.log("Order stored in Vuex:", this.$store.state.order);
-          this.showConfirmation = true;
-          }catch (error) {
-          console.error("Error processing customer order:", error);
-          }*/
-          
-      
-      
+        initializeOrder(){
+          this.order= {
+            transferId:null,
+            pickUpDate: null,
+            pickUpTime: null,
+            productDtoList: []
+           };
+         this.cart={
+            productList:[] 
+           }
+        
+        }
     }
-      
 };
 </script>
 <style src="../styles/CustomerOrderStyles.css">

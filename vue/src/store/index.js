@@ -112,7 +112,8 @@ export function createStore(currentToken, currentUser) {
       },
     createCustomerOrder({commit}){
       alert("Before Service Call");
-      OrderService.customerOrder(this.state.order,this.state.user)
+      alert(this.state.user.id);
+      OrderService.customerOrder(this.state.order,this.state.user.id)
       .then(response=>{
         this.commit('SET_ORDER_DETAILS',response.data);
       })

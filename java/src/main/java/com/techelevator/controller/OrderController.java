@@ -3,10 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.OrderDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Order;
-import com.techelevator.model.OrderDto;
-import com.techelevator.model.ProductDto;
-import com.techelevator.model.ProductOptionDto;
+import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +18,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
 public class OrderController {
 
     private final OrderDao orderDao;
@@ -56,13 +52,13 @@ public class OrderController {
     }
   // method_7
     // Create a new order
-    @PreAuthorize("hasRole('USER')")
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/orders")
-    public Order createOrder(@RequestBody OrderDto orderDto, Principal principal) {
+    public Order createOrder(@RequestBody OrderDto orderDto, Integer user) {
 
         try {
-            return orderDao.createOrder(orderDto, getCurrentUserId(principal));
+            return orderDao.createOrder(orderDto, user);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
