@@ -14,6 +14,8 @@ public class OrderDto {
 
     //customerId will be grabbed from principal
 
+    private int customerId;
+
     private int transferId;
 
     //driverId will be auto assigned to admin userId
@@ -30,6 +32,14 @@ public class OrderDto {
 
     public OrderDto() {
 
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public int getTransferId() {

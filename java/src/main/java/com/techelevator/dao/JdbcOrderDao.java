@@ -59,7 +59,7 @@ public class JdbcOrderDao implements OrderDao {
 
     //public Order getOrderByEmail(String customerEmail);
     // may be to insert id of orderdto
-    public Order createOrder(OrderDto orderDto, int customerId) {
+    public Order createOrder(OrderDto orderDto) {
 
         final int PENDING_STATUS = 1;
         final int DEFAULT_DRIVER_ADMIN = 2;
@@ -89,7 +89,7 @@ public class JdbcOrderDao implements OrderDao {
 
 
         try {
-            newOrderId = jdbcTemplate.queryForObject(sqlOrderInsert, Integer.class, customerId,
+            newOrderId = jdbcTemplate.queryForObject(sqlOrderInsert, Integer.class, orderDto.getCustomerId(),
                     orderDto.getTransferId(), DEFAULT_DRIVER_ADMIN,
                     filler, totalSalePrice,
                     orderDto.getPickUpDate(), orderDto.getPickUpTime(),

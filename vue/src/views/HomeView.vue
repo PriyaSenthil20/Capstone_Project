@@ -42,6 +42,15 @@ export default {
       .then(response => {
         
         this.products = response.data;
+
+        for(let i = 0; i < products.length; i++){
+          for(let j = 0; j < products.length; i++){
+            if(products[i].productName == products[j].productName){
+              products.splice(j, 1);
+            }
+          }
+        }
+
         console.log(response.data);
       })
       .catch(error => {

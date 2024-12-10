@@ -55,10 +55,10 @@ public class OrderController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/orders")
-    public Order createOrder(@RequestBody OrderDto orderDto, Integer user) {
+    public Order createOrder(@RequestBody OrderDto orderDto) {
 
         try {
-            return orderDao.createOrder(orderDto, user);
+            return orderDao.createOrder(orderDto);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
