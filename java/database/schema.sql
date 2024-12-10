@@ -55,8 +55,8 @@ CREATE TABLE orders (
 	driver_id int,
 	notes varchar (200),
 	total_sale float NOT NULL,
-	pickup_date DATE NOT NULL,
-	pickup_time TIME NOT NULL,
+	pickup_date varchar (10) NOT NULL,
+	pickup_time varchar (10) NOT NULL,
 	status_id int NOT NULL,
 
 	CONSTRAINT PK_orders PRIMARY KEY (order_id), 
@@ -146,7 +146,7 @@ CREATE TABLE payment (
 	order_id int NOT NULL,
 	payment_type varchar (10) NOT NULL,
 	card_number varchar (16) NOT NULL,
-	card_expiration DATE NOT NULL,
+	card_expiration varchar (10) NOT NULL,
 	card_cvv int NOT NULL,
 	card_zipcode int NOT NULL,
 	

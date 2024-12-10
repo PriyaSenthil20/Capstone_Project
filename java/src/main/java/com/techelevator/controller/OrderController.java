@@ -99,6 +99,7 @@ public class OrderController {
     }
   //method_11
     private int getCurrentUserId(Principal principal) {
+
         return userDao.getUserByUsername(principal.getName()).getId();
     }
 }

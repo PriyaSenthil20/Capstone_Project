@@ -21,9 +21,9 @@ public class OrderDto {
     //driverId will be auto assigned to admin userId
 
     //totalSale computer from joins on items and products selected
-    private LocalDate pickUpDate;
+    private String pickUpDate;
 
-    private LocalTime pickUpTime;
+    private String pickUpTime;
 
     //statusId auto set to pending
 
@@ -50,19 +50,19 @@ public class OrderDto {
         this.transferId = transferId;
     }
 
-    public LocalDate getPickUpDate() {
+    public String getPickUpDate() {
         return pickUpDate;
     }
 
-    public void setPickUpDate(LocalDate pickUpDate) {
+    public void setPickUpDate(String pickUpDate) {
         this.pickUpDate = pickUpDate;
     }
 
-    public LocalTime getPickUpTime() {
+    public String getPickUpTime() {
         return pickUpTime;
     }
 
-    public void setPickUpTime(LocalTime pickUpTime) {
+    public void setPickUpTime(String pickUpTime) {
         this.pickUpTime = pickUpTime;
     }
 

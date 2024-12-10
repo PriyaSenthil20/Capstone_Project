@@ -208,8 +208,8 @@ public class JdbcOrderDao implements OrderDao {
         order.setDriverId(rs.getInt("driver_id"));
         order.setNotes(rs.getString("notes"));
         order.setTotalSale(rs.getBigDecimal("total_sale"));
-        order.setPickUpDate(rs.getDate("pickup_date"));
-        order.setPickUpTime(rs.getTime("pickup_time").toLocalTime());
+        order.setPickUpDate(rs.getString("pickup_date"));
+        order.setPickUpTime(rs.getString("pickup_time"));
         order.setStatusId(rs.getInt("status_id"));
         //deprecated, will revisit
         //order.setCreatedTime(LocalDateTime.from(rs.getTime("created_time").toLocalTime()));

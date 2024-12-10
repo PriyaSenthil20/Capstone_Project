@@ -12,8 +12,8 @@ public class Order {
     private int driverId;
     private String notes;
     private BigDecimal totalSale;
-    private Date pickUpDate;
-    private LocalTime pickUpTime;
+    private String pickUpDate;
+    private String pickUpTime;
     private int statusId;
 
 
@@ -23,18 +23,18 @@ public class Order {
     }
 
     public Order(int orderId, int customerId, int transferId, int driverId, String name,
-                 BigDecimal totalSale, String notes, Date pickUpDate, LocalTime pickUpTime,
+                 BigDecimal totalSale, String notes, String pickUpDate, String pickUpTime,
                  int statusId, LocalDateTime createdTime) {
         this.orderId = orderId;
-        this.customerId=customerId;
-        this.transferId=transferId;
-        this.driverId=driverId;
+        this.customerId = customerId;
+        this.transferId = transferId;
+        this.driverId = driverId;
         this.totalSale = totalSale;
         this.notes = notes;
-        this.pickUpDate=pickUpDate;
+        this.pickUpDate = pickUpDate;
         this.pickUpTime = pickUpTime;
         this.statusId = statusId;
-        this.createdTime=createdTime;
+        this.createdTime = createdTime;
     }
 
     public int getCustomerId() {
@@ -61,11 +61,11 @@ public class Order {
         this.driverId = driverId;
     }
 
-    public Date getPickUpDate() {
+    public String getPickUpDate() {
         return pickUpDate;
     }
 
-    public void setPickUpDate(Date pickUpDate) {
+    public void setPickUpDate(String pickUpDate) {
         this.pickUpDate = pickUpDate;
     }
 
@@ -103,11 +103,11 @@ public class Order {
         this.notes = notes;
     }
  //return pickuptime
-    public LocalTime getPickUpTime() {
+    public String getPickUpTime() {
         return pickUpTime;
     }
  //set pickuptime
-    public void setPickUpTime(LocalTime pickUpTime) {
+    public void setPickUpTime(String pickUpTime) {
         this.pickUpTime = pickUpTime;
     }
  //get statusid
