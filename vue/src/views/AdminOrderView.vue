@@ -14,7 +14,6 @@
 <script>
 import NavOptions from '../components/NavOptions.vue';
 import AdminOrder from '../components/AdminOrder.vue';
-import AdminService from '../services/AdminService';
 
 export default {
   components: {
@@ -31,6 +30,8 @@ export default {
   },
   created() {
     this.$store.dispatch('getAdminOrders');
+    this.$store.dispatch('getDrivers');
+    this.$store.dispatch('getOrdersStatuses');
   }
 };
 </script>

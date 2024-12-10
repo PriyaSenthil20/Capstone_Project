@@ -1,14 +1,8 @@
 package com.techelevator.controller;
 
-import com.techelevator.dao.DriverDao;
-import com.techelevator.dao.OrderDao;
-import com.techelevator.dao.ProductDao;
-import com.techelevator.dao.ProductOptionDao;
+import com.techelevator.dao.*;
 import com.techelevator.exception.DaoException;
-import com.techelevator.model.Driver;
-import com.techelevator.model.Order;
-import com.techelevator.model.Product;
-import com.techelevator.model.ProductOption;
+import com.techelevator.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,19 +19,33 @@ public class AdminController {
     private final ProductOptionDao productOptionDao;
     private final OrderDao orderDao;
 
-    public AdminController(DriverDao driverDao, ProductDao productDao, ProductOptionDao productOptionDao, OrderDao orderDao) {
+    private final OrderStatusDao orderStatusDao;
+
+    public AdminController(DriverDao driverDao, ProductDao productDao,
+                           ProductOptionDao productOptionDao, OrderDao orderDao,
+                           OrderStatusDao orderStatusDao) {
         this.driverDao = driverDao;
         this.productDao = productDao;
         this.productOptionDao = productOptionDao;
         this.orderDao = orderDao;
+        this.orderStatusDao = orderStatusDao;
     }
 
-    @GetMapping("/drivers")
+    @GetMapping("admin/drivers")
     public List<Driver> getAllDrivers() {
         try {
             return driverDao.getAllDrivers();
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to fetch drivers.", e);
+        }
+    }
+
+    @GetMapping("admin/statuses")
+    public List<OrderStatus> getAllOrderStatuses() {
+        try {
+            return orderStatusDao.getOrdersStatuses();
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

@@ -23,7 +23,7 @@ public class JdbcDriverDao implements DriverDao {
     @Override
     public List<Driver> getAllDrivers() {
         List<Driver> drivers = new ArrayList<>();
-        String sql = "SELECT driver_id, driver_name, active FROM drivers";
+        String sql = "SELECT driver_id, driver_name FROM drivers";
 
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
@@ -96,7 +96,6 @@ public class JdbcDriverDao implements DriverDao {
         Driver driver = new Driver();
         driver.setDriverId(rs.getInt("driver_id"));
         driver.setDriverName(rs.getString("driver_name"));
-        driver.setActive(rs.getBoolean("active"));
         return driver;
     }
 }

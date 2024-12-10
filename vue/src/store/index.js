@@ -12,6 +12,7 @@ export function createStore(currentToken, currentUser) {
       customer: {},
       order: [],
       adminOrders: [],
+      orderStatuses: [],
       drivers: [],
       crusts: [],
       toppings: [],
@@ -53,6 +54,9 @@ export function createStore(currentToken, currentUser) {
       },
       SET_DRIVERS(state, drivers){
         state.drivers = drivers;
+      },
+      SET_ORDER_STATUSES(state, orderStatuses){
+        state.orderStatuses = orderStatuses;
       },
       SET_ORDER_DETAILS(state,orderDetails){
         state.orderDetails=orderDetails;
@@ -127,6 +131,16 @@ export function createStore(currentToken, currentUser) {
     .catch(error => {
       console.error('Error fetching all Drivers:', error);
     });
+},
+getOrdersStatuses({commit}){
+  AdminService.getStatuses()
+  .then((response) => {
+    const orderStatuses = response.data;
+    this.commit('SET_ORDER_STATUSES', orderStatuses);
+    })
+  .catch(error => {
+    console.error('Error fetching all Drivers:', error);
+  });
 },
     addCustomer({commit}, customer){
       
