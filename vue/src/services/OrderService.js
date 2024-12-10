@@ -10,7 +10,7 @@ export default {
   customerOrder(order){
     console.log(order);
     alert(this.$store.state.user);
-    return http.post('/customerOrder', order);
+    return http.post('/orders', order);
   },
     
   getPizzaOptions() {
