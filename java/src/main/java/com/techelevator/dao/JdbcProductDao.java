@@ -168,7 +168,6 @@ public class JdbcProductDao implements ProductDao {
         product.setProductName(rs.getString("product_name"));
         product.setProductDescription(rs.getString("product_desc"));
         product.setProductTypeId(rs.getInt("product_type_id"));
-        //may need to address this further for the float to big decimal conversion
         product.setProductPrice(BigDecimal.valueOf(rs.getFloat("product_price")));
         product.setAvailability(rs.getBoolean("product_available"));
         product.setSizeId(rs.getInt("size_id"));

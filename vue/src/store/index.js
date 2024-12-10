@@ -1,6 +1,7 @@
 import { createStore as _createStore } from 'vuex';
 import axios from 'axios';
 import OrderService from '../services/OrderService';
+import AuthService from '../services/AuthService';
 
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
@@ -8,13 +9,13 @@ export function createStore(currentToken, currentUser) {
       token: currentToken || '',
       user: currentUser || {},
       customer: {},
-      order:{},
+      order:[],
       crusts:[],
       toppings:[],
       sauces:[],
       specialtyPizzas:[],
-      customPizzas:[]
-
+      customPizzas:[],
+      cart:{}
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -44,6 +45,9 @@ export function createStore(currentToken, currentUser) {
       SET_CUSTOM_PIZZAS(state, customPizzas){
         state.customPizzas=customPizzas;
       },
+      ADD_CART(state, cart){
+        state.cart.push(cart);
+      },
       LOGOUT(state) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -61,7 +65,8 @@ export function createStore(currentToken, currentUser) {
         dispatch('getOptions');
       },
       getPizzas({ commit }) {
-      OrderService.getPizzas().then(response => {
+      OrderService.getPizzas()
+      .then(response => {
         const products = response.data;
     
         this.commit('SET_SPECIALTY_PIZZAS',products
@@ -74,7 +79,8 @@ export function createStore(currentToken, currentUser) {
       });
     },
       getOptions({commit}){
-        OrderService.getPizzaOptions().then((response) => {
+        OrderService.getPizzaOptions()
+        .then((response) => {
           const options = response.data;
           this.commit('SET_CRUSTS',options
             .filter(option => option.optionTypeId=== 3));
@@ -86,7 +92,17 @@ export function createStore(currentToken, currentUser) {
         .catch(error => {
           console.error('Error fetching pizza options:', error);
         });
-    }
+    },
+    addCustomer({commit}, customer){
+      
+        AuthService.addCustomer(customer) 
+          .then(response => {
+            this.commit('SET_CUSTOMER', customer);
+          })
+          .catch(error => {
+            console.log(error);
+        }); 
+      }
     }
   });
   return store;

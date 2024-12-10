@@ -28,7 +28,6 @@ public class OrderController {
     private final UserDao userDao;
 
     public OrderController(OrderDao orderDao, UserDao userDao) {
-
         this.orderDao = orderDao;
         this.userDao = userDao;
     }
