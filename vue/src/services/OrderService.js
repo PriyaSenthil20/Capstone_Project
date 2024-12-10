@@ -7,9 +7,9 @@ const http = axios.create({
 
 export default {
 
-  customerOrder(order,user){
+  customerOrder(order){
     console.log(order);
-    return http.post('/orders', order,user);
+    return http.post('/orders', order);
   },
     
   getPizzaOptions() {

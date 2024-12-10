@@ -113,7 +113,8 @@
    
   <div v-if="showConfirmation" class="order-confirmation">
     <h2>Order Summary</h2>
-    <p>{{this.$store.state.orderDetails.orderId}}</p>
+    <p>Testing</p>
+    <!--<p>{{this.$store.state.orderDetails.orderId}}</p>-->
 
     <div class="action-buttons">
     <button type="button" class="continue" >
@@ -148,7 +149,8 @@ export default {
         role: 'user',
       },
       order: {
-        transferId:null,
+        customerId: null,
+        transferId: null,
         pickUpDate: null,
         pickUpTime: null,
         productDtoList: []
@@ -213,6 +215,7 @@ export default {
       },
        
         proceedToCheckout(){
+          this.order.customerId=this.$store.state.user.id
           this.order.transferId=this.deliveryOption;
           this.order.pickUpDate='2023-12-12';
           this.order.pickUpTime='17:00:01';
