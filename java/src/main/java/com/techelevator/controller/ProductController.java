@@ -34,6 +34,7 @@ public class ProductController {
         this.productOptionDao = productOptionDao;
         this.userDao = userDao;
     }
+    //method_28
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/products")
     public List<Product> getProducts(){
@@ -43,7 +44,7 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    //method_29
     @GetMapping("/menu")
     public List<Product> getAvailableProducts(){
         try {
@@ -52,7 +53,7 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_30
     @GetMapping("/orders/products/{typeId}/{sizeId}")
     public List<Product> getAvailableProductsByTypeAndSize(
             @PathVariable int typeId, @PathVariable int sizeId){
@@ -62,7 +63,7 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_31
     @PreAuthorize("hasRole('ADMIN')")
     public Product getProductById(int id){
         try {
@@ -71,7 +72,7 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_32
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/products")
     public Product createProduct(@RequestBody Product product){
@@ -81,7 +82,7 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_33
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/products/availability")
     public Product setProductAvailabilityById(@RequestBody Product product){
@@ -91,7 +92,7 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_34
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/products/price")
     public Product setProductPriceById(@RequestBody Product product){
@@ -102,7 +103,7 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+   //method_35
     private int getCurrentUserId(Principal principal) {
         return userDao.getUserByUsername(principal.getName()).getId();
     }
