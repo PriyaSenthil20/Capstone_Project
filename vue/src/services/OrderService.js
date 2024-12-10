@@ -16,6 +16,7 @@ export default {
   getPizzaOptions() {
     return http.get('/options');
   },
+  
   getPizzas() {
     return http.get('/menu');
   }

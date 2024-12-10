@@ -6,49 +6,21 @@
         <li>
           <h3>Custom Pizza</h3>
           <div class="pizza-img-container" @click="selectPizza('custom')">
-            <img src="../assets/PizzaPic.png" id="custom-pizza" value="custom-pizza" class="pizza-img"  :class="{ 'selected': selectedPizzaType === 'custom' }"/>
+            <img src="../assets/PizzaPic.png" id="custom-pizza" value="custom-pizza" 
+            class="pizza-img"  :class="{ 'selected': selectedPizzaType === 'custom' }"/>
 
           </div>
         </li>
         <li>
           <h3>Specialty Pizza</h3>
           <div class="pizza-img-container" @click="selectPizza('specialty')">
-            <img src="../assets/PizzaPic.png" id="specialty-pizza" value="specialty-pizza" class="pizza-img"  :class="{ 'selected': selectedPizzaType === 'specialty' }"/>
+            <img src="../assets/PizzaPic.png" id="specialty-pizza" value="specialty-pizza" 
+            class="pizza-img"  :class="{ 'selected': selectedPizzaType === 'specialty' }"/>
           </div>
         </li>
       </ul>
 
-      <!-- Pizza Options -->
-      <div class="pizza-options">
-        
-        <h3>Custom Pizza</h3>
-        <select v-model="selectedProduct" id="custom" class="dropdown" :disabled="isCustomDisabled" required>
-          <option v-for="customPizza in this.$store.state.customPizzas" :key="customPizza.productId" :value="customPizza.productId">{{ customPizza.productName }}</option>
-        </select>
-
-        <h3>Specialty Pizza</h3>
-        <select v-model="selectedProduct" id="specialty" class="dropdown" :disabled="isSpecialtyDisabled">
-          <option v-for="specialtyPizza in this.$store.state.specialtyPizzas" :key="specialtyPizza.productId" :value="specialtyPizza.productId">
-            {{ specialtyPizza.productName }}
-          </option>
-        </select>
-
-        <h3>Crust</h3>
-        <select v-model="selectedCrust" id="crust" class="dropdown" :disabled="isCrustDisabled" required>
-          <option v-for="crust in this.$store.state.crusts" :key="crust.optionId" :value="crust.optionId">{{ crust.optionName }}</option>
-        </select>
-
-        <h3>Topping</h3>
-        <select v-model="selectedTopping" id="toppings" class="dropdown" :disabled="isToppingDisabled" required>
-          <option v-for="topping in this.$store.state.toppings" :key="topping.optionId" :value="topping.optionId">{{ topping.optionName }}</option>
-        </select>
-
-        <h3>Sauce</h3>
-        <select v-model="selectedSauce" id="sauces" class="dropdown" :disabled="isSauceDisabled" required>
-          <option v-for="sauce in this.$store.state.sauces" :key="sauce.optionId" :value="sauce.optionId">{{ sauce.optionName }}</option>
-        </select>
-
-        <!-- Delivery Option -->
+                      <!-- Delivery Option -->
         <div class="delivery-options">
           <h3>Delivery Option</h3>
           <label>
@@ -61,9 +33,52 @@
           </label>
         </div>
 
+      <!-- Pizza Options -->
+      <div class="pizza-options">
+        
+        <h3>Custom Pizza</h3>
+        <select v-model="selectedProduct" id="custom" class="dropdown" 
+        :disabled="isCustomDisabled" required>
+          <option v-for="customPizza in this.$store.state.customPizzas" 
+          :key="customPizza.productTypeId" :value="customPizza.productId">
+            {{ customPizza.productName }}
+          </option>
+        </select>
+
+        <h3>Specialty Pizza</h3>
+        <select v-model="selectedProduct" id="specialty" class="dropdown" 
+        :disabled="isSpecialtyDisabled">
+          <option v-for="specialtyPizza in this.$store.state.specialtyPizzas" 
+          :key="specialtyPizza.productTypeId" :value="specialtyPizza.productId">
+            {{ specialtyPizza.productName }}
+          </option>
+        </select>
+
+        <h3>Crust</h3>
+        <select v-model="selectedCrust" id="crust" class="dropdown" 
+        :disabled="isCrustDisabled" required>
+          <option v-for="crust in this.$store.state.crusts" 
+          :key="crust.optionId" :value="crust.optionId">{{ crust.optionName }}</option>
+        </select>
+
+        <h3>Topping</h3>
+        <select v-model="selectedTopping" id="toppings" class="dropdown" 
+        :disabled="isToppingDisabled" required>
+          <option v-for="topping in this.$store.state.toppings" 
+          :key="topping.optionId" :value="topping.optionId">{{ topping.optionName }}</option>
+        </select>
+
+        <h3>Sauce</h3>
+        <select v-model="selectedSauce" id="sauces" class="dropdown" 
+        :disabled="isSauceDisabled" required>
+          <option v-for="sauce in this.$store.state.sauces" 
+          :key="sauce.optionId" :value="sauce.optionId">{{ sauce.optionName }}</option>
+        </select>
+
         <!-- Quantity Input -->
         <h3>Quantity</h3>
-        <input class="quantity" name="quantity" type="number" v-model="orderQuantity" placeholder="Quantity" min="1"/>
+        <input class="quantity" name="quantity" type="number" 
+        v-model="orderQuantity" placeholder="Quantity" min="1"/>
 
         <!-- Buttons -->
         <div class="action-buttons">
@@ -98,7 +113,7 @@ export default {
       time:defaultPickUpDate,
       date:defaultPickUpTime,
       selectedProduct: null,
-      selectedPizzaType:null,
+      selectedPizzaType: null,
       selectedCrust: null,
       selectedTopping: null,
       selectedSauce: null,
@@ -229,7 +244,7 @@ export default {
 
 /* Dropdowns and Inputs */
 .dropdown, .quantity {
-  width: 100%;
+  width: 50%;
   padding: 12px;
   font-size: 1rem;
   margin-bottom: 15px;
@@ -242,12 +257,8 @@ export default {
 /* Delivery Option */
 .delivery-options {
   display: flex;
+  width: 50%;
   justify-content: space-between;
-  gap: 20px;
-}
-
-.delivery-options label {
-  font-size: 1.1rem;
 }
 
 .delivery-options input[type="radio"] {

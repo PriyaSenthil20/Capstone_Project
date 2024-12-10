@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.ProductDao;
+import com.techelevator.dao.ProductOptionDao;
 import com.techelevator.exception.DaoException;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Customer;
@@ -25,10 +26,13 @@ public class ProductController {
 
     private final ProductDao productDao;
     private final UserDao userDao;
+    private final ProductOptionDao productOptionDao;
 
-    public ProductController(ProductDao productDao,  UserDao userDao) {
+    public ProductController(ProductDao productDao,
+                             ProductOptionDao productOptionDao, UserDao userDao) {
         this.productDao = productDao;
-        this.userDao=userDao;
+        this.productOptionDao = productOptionDao;
+        this.userDao = userDao;
     }
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/admin/products")

@@ -65,7 +65,8 @@ export function createStore(currentToken, currentUser) {
         dispatch('getOptions');
       },
       getPizzas({ commit }) {
-      OrderService.getPizzas().then(response => {
+      OrderService.getPizzas()
+      .then(response => {
         const products = response.data;
     
         this.commit('SET_SPECIALTY_PIZZAS',products
@@ -78,7 +79,8 @@ export function createStore(currentToken, currentUser) {
       });
     },
       getOptions({commit}){
-        OrderService.getPizzaOptions().then((response) => {
+        OrderService.getPizzaOptions()
+        .then((response) => {
           const options = response.data;
           this.commit('SET_CRUSTS',options
             .filter(option => option.optionTypeId=== 3));
