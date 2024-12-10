@@ -9,13 +9,15 @@ export function createStore(currentToken, currentUser) {
       token: currentToken || '',
       user: currentUser || {},
       customer: {},
-      order:[],
-      crusts:[],
-      toppings:[],
-      sauces:[],
-      specialtyPizzas:[],
-      customPizzas:[],
-      cart:{}
+      order: [],
+      adminOrders: [],
+      drivers: [],
+      crusts: [],
+      toppings: [],
+      sauces: [],
+      specialtyPizzas: [],
+      customPizzas: [],
+      cart: {}
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -34,16 +36,22 @@ export function createStore(currentToken, currentUser) {
         state.crusts = crusts;
       },
       SET_TOPPINGS(state, toppings){
-        state.toppings= toppings;
+        state.toppings = toppings;
       },
       SET_SAUCES(state, sauces){
-        state.sauces=sauces;
+        state.sauces = sauces;
       },
       SET_SPECIALTY_PIZZAS(state, specialtyPizzas){
-        state.specialtyPizzas=specialtyPizzas;
+        state.specialtyPizzas = specialtyPizzas;
       },
       SET_CUSTOM_PIZZAS(state, customPizzas){
-        state.customPizzas=customPizzas;
+        state.customPizzas = customPizzas;
+      },
+      SET_ADMIN_ORDERS(state, adminOrders){
+        state.adminOrders = adminOrders;
+      },
+      SET_DRIVERS(state, drivers){
+        state.drivers = drivers;
       },
       ADD_CART(state, cart){
         state.cart.push(cart);
@@ -93,6 +101,26 @@ export function createStore(currentToken, currentUser) {
           console.error('Error fetching pizza options:', error);
         });
     },
+    getAdminOrders({commit}){
+      AdminService.getOrders()
+      .then((response) => {
+        const adminOrders = response.data;
+        this.commit('SET_ADMIN_ORDERS', adminOrders);
+        })
+      .catch(error => {
+        console.error('Error fetching Admin Orders:', error);
+      });
+  },
+  getDrivers({commit}){
+    AdminService.getDrivers()
+    .then((response) => {
+      const drivers = response.data;
+      this.commit('SET_DRIVERS', drivers);
+      })
+    .catch(error => {
+      console.error('Error fetching all Drivers:', error);
+    });
+},
     addCustomer({commit}, customer){
       
         AuthService.addCustomer(customer) 
