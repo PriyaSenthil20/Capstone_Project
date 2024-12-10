@@ -26,6 +26,11 @@ export default {
     return http.put(`/admin/orders/${orderId}/driver`, { driverId });
   },
 
+  //Get list of All Products Available or Otherwise
+  Products() {
+    return http.get('/admin/products')
+  },
+
   // Change product availability
   updateProductAvailability(productId, availability) {
     return http.put(`/admin/products/availability`, {

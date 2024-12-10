@@ -3,42 +3,53 @@
     <nav class="navbar">
       <nav-options />
     </nav>
-    <div>
-      <topbar />
+     <div>
+    </div>
+    <div class="content-section">      
+      <inventory-product v-bind:products="products" />
+      <about-us />
+    </div>
+    <div class="content-section">      
+      <inventory-product v-bind:productOptions="productOptions" />
+      <about-us />
     </div>
   </div>
 </template>
 
 <script>
 import NavOptions from '../components/NavOptions.vue';
-import Topbar from '../components/Topbar.vue';
-
+import AdminService from '../services/AdminService';
+import InventoryProduct from '../components/InventoryProduct.vue';
 
 export default {
   components: {
     NavOptions,
-    Topbar,
+    InventoryProduct,
   },
   data() {
-    products: []
+    return{
+    products: [],
+    productOptions: [],
+  }
   },
   methods: {
-      getMenu(){
+  getProducts(){
       
-      PizzaService.menu()
+      AdminService.Products()
       .then(response => {
         
-        this.products = response.data;
+        this.productOptions = response.data;
         
       })
       .catch(error => {
         console.log(error);
       })
-    }
-  },
+    },
   created() {
     this.getMenu();
+    this.getProducts();
   }
+}
 };
 </script>
 

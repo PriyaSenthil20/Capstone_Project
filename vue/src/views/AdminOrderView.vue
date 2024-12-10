@@ -4,20 +4,17 @@
       <nav-options />
     </nav>
     <div>
-      <topbar />
     </div>
   </div>
 </template>
 
 <script>
 import NavOptions from '../components/NavOptions.vue';
-import Topbar from '../components/Topbar.vue';
 import AdminOrder from '../components/AdminOrder.vue';
 
 export default {
   components: {
     NavOptions,
-    Topbar,
   },
   data() {
     products: []
