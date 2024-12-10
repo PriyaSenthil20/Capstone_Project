@@ -18,7 +18,6 @@ export default {
   components: {
     NavOptions,
     Topbar,
-    AdminOrder,
   },
   data() {
     products: []
