@@ -92,7 +92,7 @@
         </div>
       </form>
     </div>
-    <div v-if="submitSuccess">
+    <div name="paymentConfirmationPage" v-if="submitSuccess">
       <label>Order SuccessFul</label>
       <label> Your Payment Confirmation Id: {{this.paymentConfirmation}}</label>
       <label> Enjoy Your Pizza!!!</label>

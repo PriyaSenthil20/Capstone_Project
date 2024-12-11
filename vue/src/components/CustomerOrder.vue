@@ -88,7 +88,7 @@
         <h3>Specialty Pizza Options</h3>
         <select v-model="selectedProduct" class="dropdown" required>
           <option v-for="specialtyPizza in this.$store.state.specialtyPizzas" :key="specialtyPizza.productId" :value="specialtyPizza.productId">
-            {{ specialtyPizza.productDescription }}
+            {{ specialtyPizza.productDesc }}
           </option>
         </select>
      
