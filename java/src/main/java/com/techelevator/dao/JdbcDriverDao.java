@@ -76,7 +76,7 @@ public class JdbcDriverDao implements DriverDao {
 
     @Override
     public Driver updateDriver(Driver driver) {
-        String sql = "UPDATE drivers SET driver_name = ?, active = ? WHERE driver_id = ?";
+        String sql = "UPDATE drivers SET driver_name = ? WHERE driver_id = ?";
 
         try {
             int rowsAffected = jdbcTemplate.update(sql,

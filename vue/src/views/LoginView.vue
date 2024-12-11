@@ -5,7 +5,7 @@
     </nav>
   </div>
   <div id="login">
-    <form v-on:submit.prevent="login">
+    <form id="loginform" v-on:submit.prevent="login">
       <h1 >Please Sign In</h1>
       <div role="alert" v-if="invalidCredentials">
         Invalid username and password!
@@ -69,10 +69,34 @@ export default {
 </script>
 
 <style scoped>
+#login {
+  background-image: url('../assets/login1.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#loginform{
+  background-color: rgba(149, 180, 230, 0.1 );
+  
+  
+  
+}
 .form-input-group {
   margin-bottom: 1rem;
 }
 label {
   margin-right: 0.5rem;
+}
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #808080; 
+}
+label {
+  color: #808080;
 }
 </style>

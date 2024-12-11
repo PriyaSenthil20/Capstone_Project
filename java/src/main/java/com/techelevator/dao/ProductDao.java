@@ -7,19 +7,23 @@ import java.util.List;
 
 public interface ProductDao {
 
-    public List<Product> getProducts();
+    List<Product> getProducts();
 
-    public List<Product> getAvailableProducts();
+    List<Product> getAvailableProducts();
 
     List<Product> getAvailableProductsByTypeAndSize(int typeId, int sizeId);
 
-    public Product getProductById(int id);
+    Product getProductById(int id);
 
-    public Product createProduct(Product product);
+    Product createProduct(Product product);
 
-    public Product setProductAvailableById(int id, boolean productAvailable);
+<<<<<<< HEAD
+    public Product setProductAvailabilityById(int id, boolean availability);
+=======
+    Product setProductAvailabilityById(int id, boolean availability);
+>>>>>>> 5ac39bf7191a4fc1b25abc92e306b080377db82d
 
-    public Product setProductPriceById(int id, BigDecimal price);
+    Product setProductPriceById(int id, BigDecimal price);
 
 
 }
