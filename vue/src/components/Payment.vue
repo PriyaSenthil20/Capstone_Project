@@ -1,7 +1,43 @@
 <template>
-    <div class="payment-form">
+    <div class="payment-form" v-if="!submitSuccess">
       <h3>Payment Information</h3>
-      <form v-on:submit.prevent="submitPayment">
+      <form v-on:submit.prevent="submitPayment" >
+        <div class="form-group">
+          <label name="orderId">Your Order Id:&nbsp;&nbsp; {{this.$store.state.orderDetails.orderId}}</label>
+        </div>
+        <div class="form-group">
+          <label name="price">Total Payment:&nbsp;&nbsp;${{this.$store.state.orderDetails.totalSale}}</label>  
+        </div>
+
+        <div class="form-group" v-if="this.$store.state.orderDetails.transferId=='1'">
+          <label for="deliveryAddress">Enter Delivery Address</label>
+          <input
+            type="text"
+            id="deliveryAddress"
+            v-model="deliveryAddress"
+            required
+            maxlength="100"
+            placeholder="Enter Street Name and Door Number"
+          />
+          <label for="City">City</label>
+          <input
+            type="text"
+            id="City"
+            v-model="cityName"
+            required
+            maxlength="10"
+            placeholder="Enter City Name"
+          />
+          <label for="State">State</label>
+          <input
+            type="text"
+            id="State"
+            v-model="stateName"
+            required
+            maxlength="2"
+            placeholder="Enter State Abbreviation"
+          />
+        </div>
         <div class="form-group">
           <label for="paymentType">Payment Type</label>
           <select v-model="payment.paymentType" id="paymentType" required>
@@ -52,9 +88,26 @@
           />
         </div>
         <div class="form-group">
-          <button type="submit" >Submit Payment</button>
+          <button type="submit">Submit Payment</button>
         </div>
       </form>
+    </div>
+    <div v-if="submitSuccess">
+      <label>Order SuccessFul</label>
+      <label> Your Payment Confirmation Id: {{this.paymentConfirmation}}</label>
+      <label> Enjoy Your Pizza!!!</label>
+      <div v-if="this.$store.state.orderDetails.transferId===1">
+        <label>Your Pizza Will be delivered to:</label>
+        <p>{{this.deliveryAddress}}, <br>{{this.cityName}}, {{this.stateName}}</p>
+      </div>
+      <div v-if="this.$store.state.orderDetails.transferId===2">
+        <label>Please Pick Your Pizza At:</label>
+        <p><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rocco's Pizza Place,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java Purple,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NLR-2024.
+        </p>
+        <p>{{this.deliveryAddress}}, <br>{{this.cityName}}, {{this.stateName}}</p>
+      </div>
     </div>
   </template>
   <script>
@@ -66,28 +119,33 @@
         payment: {
           paymentId: null,
           orderId: null,
-          paymentType: "Credit Card",
+          paymentType: "",
           cardNumber: "",
           cardExpiration: "",
           cardCvv: "",
           cardZipcode: ""
-        }
+        },
+        deliveryAddress:'',
+        cityName:'',
+        stateName:'',
+        submitSuccess:false,
+        paymentConfirmation:0
       };
     },
     methods: {
       submitPayment() {
-        this.payment.orderId=this.$route.query.orderId;
-        alert(this.payment.orderId);
+        this.payment.orderId=this.$store.state.orderDetails.orderId;
+      
         console.log("Payment submitted with data:", this.payment);
         PaymentService.submitPayment(this.payment)
         .then(response => {
-        const paymentConfirmation = response.data;
-        alert("Payment Successful"+paymentConfirmation.paymentId);
+        this.paymentConfirmation = response.data.paymentId;
         })
         .catch(error => {
             console.log(error);
         }); 
         alert("Payment Successful");
+        this.submitSuccess=true;
         this.resetForm();
       },
    
@@ -95,7 +153,7 @@
         this.payment = {
           paymentId: null,
           orderId: null,
-          paymentType: "Credit Card",
+          paymentType: "",
           cardNumber: "",
           cardExpiration: "",
           cardCvv: "",
