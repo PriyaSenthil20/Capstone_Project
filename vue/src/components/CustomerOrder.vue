@@ -60,7 +60,7 @@
         <h3>Custom Pizzas</h3>
         <select v-model="selectedProduct" class="dropdown" required>
           <option v-for="customPizza in this.$store.state.customPizzas" :key="customPizza.productId" :value="customPizza.productId">
-            {{ customPizza.productDescription }}
+            {{ customPizza.productDesc }}
           </option>
         </select>
         <h3>Crust</h3>
