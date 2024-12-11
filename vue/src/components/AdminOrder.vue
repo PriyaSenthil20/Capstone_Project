@@ -1,5 +1,15 @@
 <template>
   <div class="admin-orders">
+
+  <div>
+        <ul>
+          <li v-for="order in this.pendingOrders" :key="order.orderId">
+            Order #{{ order.orderId }} Pending 
+          </li>
+        </ul>  
+    </div>
+  </div>
+
     <form class="admin-order form">
 
       <div>
@@ -50,7 +60,8 @@
         </ul>
       </div>
     </form>
-  </div>
+
+    
 </template>
 
 <script>
@@ -59,20 +70,33 @@ import AdminService from "../services/AdminService";
 export default {
   data() {
     return {
+      orders: [],
       selectedOrder: null,
       selectedDriver: null,
       selectedStatus: null,
     };
   },
   computed: {
-    adminOrders() {
-      return this.$store.state.adminOrders;
-    },
-    drivers() {
-      return this.$store.state.drivers;
-    },
+  filteredList() {
+    let pendingOrders = this.orders;
+    if (this.pendingOrders.statusId = 1) {
+      pendingOrders = pendingOrders.filter((order) =>
+        order.statusId
+      );
+
+    return pendingOrders;
+  }
   },
   methods: {
+    getOrders() {
+      AdminService.getOrders()
+      .then(response => {
+        this.orders = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    },
     assignDriver() {
       if (this.selectedOrder && this.selectedDriver) {
         const orderId = this.selectedOrder.orderId;
@@ -120,8 +144,10 @@ export default {
     this.$store.dispatch("getAdminOrders");
     this.$store.dispatch("getDrivers");
     this.$store.dispatch("getOrderStatuses");
+    this.getOrders();
   },
-};
+},
+}
 </script>
 <style src="../styles/AdminOrderStyles.css">
 </style>

@@ -7,6 +7,8 @@ import java.util.List;
 public interface OrderDao {
     List<Order> getOrders();
 
+    List<Order> getPendingOrders();
+
     Order getOrderById(int id);
 
 
