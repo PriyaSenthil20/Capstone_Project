@@ -84,7 +84,7 @@ public class ProductController {
     @PutMapping("/admin/products/availability")
     public Product setProductAvailabilityById(@RequestBody Product product){
         try {
-            return productDao.setProductAvailabilityById(product.getProductId(),product.getAvailability());
+            return productDao.setProductAvailableById(product.getProductId(),product.getProductAvailable());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }

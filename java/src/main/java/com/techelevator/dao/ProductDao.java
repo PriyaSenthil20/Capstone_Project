@@ -17,7 +17,7 @@ public interface ProductDao {
 
     public Product createProduct(Product product);
 
-    public Product setProductAvailabilityById(int id, boolean availability);
+    public Product setProductAvailableById(int id, boolean productAvailable);
 
     public Product setProductPriceById(int id, BigDecimal price);
 

@@ -82,7 +82,7 @@ public class AdminController {
     @PutMapping("/products/availability")
     public Product changeProductAvailability(@RequestBody Product product) {
         try {
-            return productDao.setProductAvailabilityById(product.getProductId(), product.getAvailability());
+            return productDao.setProductAvailableById(product.getProductId(), product.getProductAvailable());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update product availability.", e);
         }
