@@ -21,7 +21,7 @@ export default {
     AdminOrder
   },
   data() {
-    products: []
+    
   },
   methods: {
     getMenu(){
@@ -31,7 +31,7 @@ export default {
   created() {
     this.$store.dispatch('getAdminOrders');
     this.$store.dispatch('getDrivers');
-    this.$store.dispatch('getOrdersStatuses');
+    this.$store.dispatch('getOrderStatuses');
   }
 };
 </script>

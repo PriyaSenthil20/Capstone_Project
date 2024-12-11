@@ -17,13 +17,17 @@ public class JdbcOrderDao implements OrderDao {
     private final JdbcTemplate jdbcTemplate;
     private final JdbcProductDao jdbcProductDao;
     private final JdbcProductOptionDao jdbcProductOptionDao;
+
+    private final JdbcDriverDao jdbcDriverDao;
     private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, " +
             "notes, total_sale, pickup_date, pickup_time, status_id ";
 
-    public JdbcOrderDao(JdbcTemplate jdbcTemplate, JdbcProductDao jdbcProductDao, JdbcProductOptionDao jdbcProductOptionDao) {
+    public JdbcOrderDao(JdbcTemplate jdbcTemplate, JdbcProductDao jdbcProductDao,
+                        JdbcProductOptionDao jdbcProductOptionDao, JdbcDriverDao jdbcDriverDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.jdbcProductDao = jdbcProductDao;
         this.jdbcProductOptionDao = jdbcProductOptionDao;
+        this.jdbcDriverDao = jdbcDriverDao;
     }
 
     @Override
@@ -175,11 +179,12 @@ public class JdbcOrderDao implements OrderDao {
         }
         return updatedOrder;
     }
-   public Order updateDriverStatus(Order order,int id){
-       String updateDriverSql = "UPDATE orders SET driver_id=?  WHERE order_id = ?";
+   public Order updateOrderDriver(OrderDriverDto order){
+       String updateDriverSql = "UPDATE orders SET driver_id = ?  WHERE order_id = ?";
        Order updatedOrder = null;
        try {
-           int rowsAffected = jdbcTemplate.update(updateDriverSql, order.getDriverId(), order.getOrderId());
+           int rowsAffected = jdbcTemplate.update(updateDriverSql,
+                   order.getDriverId(), order.getOrderId());
            if (rowsAffected != 1) {
                throw new DaoException("Zero or more than one row affected.");
            } else {

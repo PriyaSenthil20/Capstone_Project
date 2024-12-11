@@ -7,12 +7,12 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface SizeDao {
-    public List<Size> getSizes();
+    List<Size> getSizes();
 
 
-    public Size getSizeById(int id);
+    Size getSizeById(int id);
 
-    public Size createSize(Size newSize);
+    Size createSize(Size newSize);
 
-    public Size setSizeMultiplierById(int id, BigDecimal price);
+    Size setSizeMultiplierById(int id, BigDecimal price);
 }

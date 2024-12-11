@@ -42,6 +42,7 @@ public class AdminController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("admin/statuses")
     public List<OrderStatus> getAllOrderStatuses() {
         try {
@@ -70,10 +71,11 @@ public class AdminController {
         }
     }
 
-    @PutMapping("/drivers")
-    public Driver updateDriver(@RequestBody Driver driver) {
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("admin/driver")
+    public Order updateOrderDriver(@RequestBody OrderDriverDto order) {
         try {
-            return driverDao.updateDriver(driver);
+            return orderDao.updateOrderDriver(order);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update driver.", e);
         }
