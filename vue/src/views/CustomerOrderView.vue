@@ -23,7 +23,6 @@ components: {
     NavOptions
 },
 created(){
-        this.$store.commit('CLEAR_CART');
        this.$store.dispatch('loadData');
     }
 

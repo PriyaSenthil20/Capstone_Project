@@ -4,25 +4,25 @@
       <h3>Select Delivery Option</h3>
     <ul class="delivery-options">
     <li>Pick Up
-      <div class="option-container" value='2' @click="selectDeliveryOption('pick-up') ">
+      <div class="option-container" value='2' @click="selectDeliveryOption('2') ">
         <img 
         src="../assets/pickup-icon.png" 
         alt="Pick-up Option" 
         class="option-img" 
-        :class="{ 'selected': deliveryOption === 'pick-up' }"
+        :class="{ 'selected': deliveryOption === '2' }"
         />
-      <p v-if="deliveryOption === 'pick-up'">Pick-up Selected</p>
+      <p v-if="deliveryOption === '2'">Pick-up Selected</p>
       </div>
     </li>
     <li>Delivery 
-    <div class="option-container value='1'"  @click="selectDeliveryOption('delivery') ">
+    <div class="option-container value='1'"  @click="selectDeliveryOption('1') ">
       <img 
         src="../assets/delivery-icon.png" 
         alt="Delivery Option" 
         class="option-img" 
-        :class="{ 'selected': deliveryOption === 'delivery' }"
+        :class="{ 'selected': deliveryOption === '1' }"
        />
-      <p v-if="deliveryOption === 'delivery'">Delivery Selected</p>
+      <p v-if="deliveryOption === '1'">Delivery Selected</p>
       </div>
       </li>
       </ul>
@@ -113,16 +113,29 @@
    
   <div v-if="showConfirmation" class="order-confirmation">
     <h2>Order Summary</h2>
-    <p>Testing</p>
-    <!--<p>{{this.$store.state.orderDetails.orderId}}</p>-->
+    <ul>
+      <li>Order Id:&nbsp;&nbsp;{{this.$store.state.orderDetails.orderId}}</li>
+      <li>Order Details:</li>
 
+        <li v-for="product in orderProducts" >
+          &nbsp;&nbsp;{{ product }}
+        </li>
+        <li v-for="option in orderOptions" >
+          &nbsp;&nbsp;{{ option }}
+        </li>
+        <li>&nbsp;&nbsp;Total Sales Price: ${{this.$store.state.orderDetails.totalSale}}</li>
+        <li v-if="this.deliveryOption === '1'">&nbsp;&nbsp;Driver Licence Id: {{this.$store.state.orderDetails.driverId}}</li>
+        <li v-if="this.deliveryOption === '2'">&nbsp;&nbsp;Pick Up Date and Time: {{this.$store.state.orderDetails.pickUpDate}}&nbsp;{{this.$store.state.orderDetails.pickUpTime}}</li>
+  </ul>
     <div class="action-buttons">
-    <button type="button" class="continue" >
+  
+    <button v-on:click="goToPayment" type="button" class="continue" >
       Continue
     </button>
+    <router-link v-bind:to="{ name: 'customerOrder' }">
     <button type="button" class="cancel" >
       Cancel
-    </button>
+    </button></router-link>
     </div>
   </div>
 </form>
@@ -142,23 +155,17 @@ export default {
     const defaultPickUpDate = now.toISOString().split('T')[0]; 
     const defaultPickUpTime = now.toTimeString().split(' ')[0];
     return {
-      user: {
-        username: '',
-        password: '',
-        confirmPassword: '',
-        role: 'user',
-      },
       order: {
         customerId: null,
         transferId: null,
         pickUpDate: null,
         pickUpTime: null,
         productDtoList: []
-      },
-   
-    
-      time:defaultPickUpDate,
-      date:defaultPickUpTime,
+      }, 
+      orderProducts:[],
+      orderOptions:[],
+      time:defaultPickUpTime,
+      date:defaultPickUpDate,
       selectedProduct: null,
       selectedPizzaType: null,
       selectedCrust: null,
@@ -178,18 +185,22 @@ export default {
 
     methods: {
       selectDeliveryOption(option) {
-        if (option === 'delivery') {
-            this.deliveryOption = 1; 
-        } else if (option === 'pick-up') {
-            this.deliveryOption = 2; 
-        }
+        this.deliveryOption=option;
       },
       selectPizza(type) {
         this.selectedPizzaType = type; 
       },
+      goToPayment() {
+        const orderId = this.$store.state.orderDetails.orderId;
+        this.$router.push({ name: 'payments', query: { orderId } });
+      },
         addToCart(){
           let productOptions=[];
-          for (let i = 0; i < this.orderQuantity; i++) {
+          
+          if(this.selectPizza==='specialty'){
+            productOptions.push({productOptionId:'0'});
+          }
+          else{
           if(this.selectedCrust){
             productOptions.push({productOptionId:this.selectedCrust})
           }
@@ -200,25 +211,23 @@ export default {
           if(this.selectedSauce){
             productOptions.push({productOptionId:this.selectedSauce});
           }       
-        
-        this.order.productDtoList.push(
+          }
+          for (let i = 0; i < this.orderQuantity; i++) {
+          
+           this.order.productDtoList.push(
           {
             productId:this.selectedProduct,
             productOptionDtoList:productOptions
           });
-        }
-        
-         alert("Products added to the order");
-        //  this.$store.commit('ADD_CART',this.cart);
-         // alert("after add cart");
-        ////  console.log("cart",this.$store.state.cart);
+          }       
+         alert("Products added to the order");       
       },
        
         proceedToCheckout(){
           this.order.customerId=this.$store.state.user.id
           this.order.transferId=this.deliveryOption;
-          this.order.pickUpDate='2023-12-12';
-          this.order.pickUpTime='17:00:01';
+          this.order.pickUpDate=this.date;
+          this.order.pickUpTime=this.time;
           try{
           this.$store.commit('SET_ORDER', this.order);
           alert(this.$store.state.order.transferId);
@@ -227,6 +236,7 @@ export default {
           console.log("Order stored in Vuex:", this.$store.state.order);
           this.showConfirmation = true;
           this.initializeOrder();
+          this.fillOrderDetails();
           }catch (error) {
           console.error("Error processing customer order:", error);
           }
@@ -238,11 +248,35 @@ export default {
             pickUpTime: null,
             productDtoList: []
            };
-         this.cart={
-            productList:[] 
-           }
+         this.order.productDtoList.forEach(product => {
+            product.productOptionDtoList.forEach(option => {
+              option=null;
         
-        }
+            });         
+         });
+        
+        },
+        fillOrderDetails(){
+          let temp=this.$store.state.products;
+          for(let i=0;i<temp.length;i++){
+             if(temp[i].productId===this.selectedProduct){
+                this.orderProducts.push(temp[i].productDescription);
+              }
+            }
+          temp=this.$store.state.options;
+          for(let i=0;i<temp.length;i++){
+              if(temp[i].optionId===this.selectedCrust)
+                {
+                  this.orderOptions.push(temp[i].optionName);
+                }
+                else if(temp[i].optionId===this.selectedSauce){
+                  this.orderOptions.push(temp[i].optionName);
+                }
+                if (this.selectedToppings.includes(temp[i].optionId)) {
+                   this.orderOptions.push(temp[i].optionName);
+                }
+          }
+          }
     }
 };
 </script>
