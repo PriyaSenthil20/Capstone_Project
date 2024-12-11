@@ -13,7 +13,7 @@ public interface OrderDao {
     //public Order getOrderByEmail(String customerEmail);
     // may be to insert id of orderdto
     Order createOrder(OrderDto orderDto);
-    Order updateOrderStatus(Order order, int id);
+    Order updateOrderStatus(OrderStatusDto order);
     Order updateOrderDriver(OrderDriverDto order);
 
     Order createOrderAdmin(Order order, int currentUserId);

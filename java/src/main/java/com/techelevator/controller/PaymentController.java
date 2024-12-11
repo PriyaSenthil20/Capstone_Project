@@ -54,7 +54,7 @@ public class PaymentController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Payment createPayment(@Valid @RequestBody Payment payment) {
+    public Payment createPayment( @RequestBody Payment payment) {
         try {
             return paymentDao.createPayment(payment);
         } catch (DaoException e) {
