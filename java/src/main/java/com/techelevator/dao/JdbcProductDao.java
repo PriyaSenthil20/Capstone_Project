@@ -94,8 +94,8 @@ public class JdbcProductDao implements ProductDao {
                 "RETURNING product_id ";
         try {
             newProductId = jdbcTemplate.queryForObject(sql, Integer.class, product.getProductName(),
-                    product.getProductDescription(), product.getProductTypeId(), product.getProductPrice(),
-                    product.getAvailability(), product.getSizeId());
+                    product.getproductDesc(), product.getProductTypeId(), product.getProductPrice(),
+                    product.getProductAvailable(), product.getSizeId());
 
             // Retrieve and return the created product using the generated productId.
             if (newProductId != null) {
@@ -112,7 +112,7 @@ public class JdbcProductDao implements ProductDao {
     }
 
     @Override
-    public Product setProductAvailabilityById(int id, boolean availability) {
+    public Product setProductAvailableById(int id, boolean productAvailable) {
         Product updatedProduct = null;
         String sql = "UPDATE products " +
                 "SET product_available = ? " +
@@ -120,7 +120,7 @@ public class JdbcProductDao implements ProductDao {
         try {
 
             //second argument in update method is just passing the opposite of what the availability currently is
-            int rowsAffected = jdbcTemplate.update(sql, availability, id);
+            int rowsAffected = jdbcTemplate.update(sql, productAvailable, id);
             if (rowsAffected != 1){
                 throw new DaoException("DaoException");
             } else {
@@ -166,12 +166,12 @@ public class JdbcProductDao implements ProductDao {
         Product product = new Product();
         product.setProductId(rs.getInt("product_id"));
         product.setProductName(rs.getString("product_name"));
-        product.setProductDescription(rs.getString("product_desc"));
+        product.setproductDesc(rs.getString("product_desc"));
         product.setProductTypeId(rs.getInt("product_type_id"));
         product.setProductPrice(BigDecimal.valueOf(rs.getFloat("product_price")));
-        product.setAvailability(rs.getBoolean("product_available"));
+        product.setProductAvailable(rs.getBoolean("product_available"));
         product.setSizeId(rs.getInt("size_id"));
 
         return product;
     }
-};
+}

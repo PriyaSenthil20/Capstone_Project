@@ -117,10 +117,10 @@
       <li>Order Id:&nbsp;&nbsp;{{this.$store.state.orderDetails.orderId}}</li>
       <li>Order Details:</li>
 
-        <li v-for="product in orderProducts" >
+        <li v-for="product in orderProducts">
           &nbsp;&nbsp;{{ product }}
         </li>
-        <li v-for="option in orderOptions" >
+        <li v-for="option in orderOptions">
           &nbsp;&nbsp;{{ option }}
         </li>
         <li>&nbsp;&nbsp;Total Sales Price: ${{this.$store.state.orderDetails.totalSale}}</li>

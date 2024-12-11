@@ -23,13 +23,13 @@ export default {
   },
 
   // Update order status
-  updateOrderStatus(orderId, status) {
-    return http.put(`/admin/orders/${orderId}/status`, { status });
+  updateOrderStatus(orderStatusDto) {
+    return http.put('/admin/order/status', orderStatusDto);
   },
 
   // Assign driver to an order
-  assignDriver(orderId, driverId) {
-    return http.put(`/admin/orders/${orderId}/driver`, { driverId });
+  assignDriver(orderDriverDto) {
+    return http.put('/admin/driver',orderDriverDto);
   },
 
   //Get list of All Products Available or Otherwise

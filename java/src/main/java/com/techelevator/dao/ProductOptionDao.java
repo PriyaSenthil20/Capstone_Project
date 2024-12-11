@@ -6,18 +6,18 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductOptionDao {
-    public List<ProductOption> getProductOptions();
+    List<ProductOption> getProductOptions();
 
-    public List<ProductOption> getAvailableProductOptions();
+    List<ProductOption> getAvailableProductOptions();
 
     List<ProductOption> getAvailableOptionsByOptionTypeId(int id);
 
-    public ProductOption getProductOptionById(int id);
+    ProductOption getProductOptionById(int id);
 
-    public ProductOption createProductOption(ProductOption productOption);
+    ProductOption createProductOption(ProductOption productOption);
 
-    public ProductOption setProductOptionAvailabilityById(int id, boolean availability);
+    ProductOption setProductOptionAvailabilityById(int id, boolean availability);
 
-    public ProductOption setOptionPriceById(int id, BigDecimal price);
+    ProductOption setOptionPriceById(int id, BigDecimal price);
 
 }

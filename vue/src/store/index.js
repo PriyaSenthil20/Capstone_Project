@@ -21,7 +21,9 @@ export function createStore(currentToken, currentUser) {
       customPizzas: [],
       products:[],
       options:[],
-      orderDetails:{}
+      orderDetails:{},
+      currentOrderDriver: {},
+      currentOrderStatus: {}
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -56,6 +58,12 @@ export function createStore(currentToken, currentUser) {
       },
       SET_DRIVERS(state, drivers){
         state.drivers = drivers;
+      },
+      SET_CURRENT_ORDER_DRIVER(state, currentOrderDriver){
+        state.currentOrderDriver = currentOrderDriver;
+      },
+      SET_CURRENT_ORDER_STATUS(state, currentOrderStatus){
+        state.currentOrderStatus = currentOrderStatus;
       },
       SET_ORDER_STATUSES(state, orderStatuses){
         state.orderStatuses = orderStatuses;
@@ -135,6 +143,16 @@ export function createStore(currentToken, currentUser) {
       .catch(error => {
       console.error('Error fetching all Drivers:', error);
     });
+    },
+    getOrderStatuses({commit}){
+      AdminService.getStatuses()
+      .then((response) => {
+        const orderStatuses = response.data;
+        this.commit('SET_ORDER_STATUSES', orderStatuses);
+        })
+      .catch(error => {
+        console.error('Error fetching all Statuses:', error);
+      });
     },
     addCustomer({commit}, customer){
       

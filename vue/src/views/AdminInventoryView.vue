@@ -31,13 +31,13 @@ contains:
             <input type="checkbox" id="selectAllProducts" v-on:change="selectAllProducts($event)" v-bind:checked="selectedProducts.length === products.length" />
           </td>
           <td>
-            <input type="text" id="ProductDescriptionFilter" v-model="filter.productDescription" />
+            <input type="text" id="productDescFilter" v-model="filter.productDesc" />
           </td>
           <td>
             <input type="text" id="productPriceFilter" v-model="filter.productPrice" />
           </td>
           <td>
-            <select id="availabilityFilter" v-model="filter.availability">
+            <select id="productAvailableFilter" v-model="filter.productAvailable">
               <option value>Show All</option>
               <option value="true">Available</option>
               <option value="false">Unavailable</option>
@@ -47,26 +47,28 @@ contains:
         </tr>
         <tr
           v-for="product in filteredList"
-          v-bind:key="product.productID"
-          v-bind:class="{ deactivated: product.availability === 'false' }"
+          v-bind:key="product.productId"
+          v-bind:class="{ deactivated: product.productAvailable === 'false' }"
         >
           <td>
             <input
               type="checkbox"
-              v-bind:id="product.productID"
-              v-bind:value="product.productID"
+              v-bind:id="'checkbox' + product.productId"
+              v-bind:value="product.productId"
               v-model="selectedProducts"
             />
           </td>
-          <td>{{ product.productDescription }}</td>
-          <td>{{ product.productPrice }}</td>
+          <td>{{ product.productDesc }}</td>
+          <td><input type="text" v-bind:id="'price' + product.productId" v-bind:placeholder="product.productPrice" /></td>
+          <!-- To-do. Add price update functionality, make input fields with placeholder of price and tie them to
+           update quantity method that posts to db, button disabled if filtered list price matches product price in db -->
           <td>{{ product.productAvailable }}</td>
           
           <td>
             <button
               class="btnActivateDeactivate"
               v-on:click="flipStatus(product.productId)"
-            >{{ product.availability === 'true' ? 'false' : 'true' }}</button>
+            >{{ product.productAvailable === 'true' ? 'false' : 'true' }}</button>
           </td>
         </tr>
       </tbody>
@@ -145,9 +147,9 @@ export default {
     products: [],
     productOptions: [],
     filter: {
-        productName: "",
+        productDesc: "",
         productPrice: "",
-        availability: ""
+        productAvailable: ""
       },
       showForm: false,
       newProduct: {
@@ -200,25 +202,25 @@ export default {
     flipStatus(id) {
       const index = this.findProductById(id);
       alert(index)
-      this.products[index].availability =
-        this.products[index].availability === "true" ? "false" : "true";
+      this.products[index].productAvailable =
+        this.products[index].productAvailable === "true" ? "false" : "true";
     },
     selectAllProducts(event) {
       if (event.target.checked) {
-        this.selectedProducts = this.products.map(product=>product.id);
+        this.selectedProducts = this.filteredList.map(product=>product.productId);
       } else {
         this.selectedProducts = [];
       }
     },
     activateSelectedProducts() {
       this.selectedProducts.forEach((id) => {
-        this.products[this.findProductById(id)].availability = "true";
+        this.products[this.findProductById(id)].productAvailable = "true";
       });
       this.clearSelectedProducts();
     },
     deactivateSelectedProducts() {
       this.selectedProducts.forEach((id) => {
-        this.products[this.findProductById(id)].availability = "false";
+        this.products[this.findProductById(id)].productAvailable = "false";
       });
       this.clearSelectedProducts();
     },
@@ -236,11 +238,11 @@ export default {
   computed: {
     filteredList() {
       let filteredProducts = this.products;
-      if (this.filter.productName != "") {
+      if (this.filter.productDesc != "") {
         filteredProducts = filteredProducts.filter((product) =>
-          product.productName
+          product.productDesc
             .toLowerCase()
-            .includes(this.filter.productName.toLowerCase())
+            .includes(this.filter.productDesc.toLowerCase())
         );
       }
       if (this.filter.productPrice != "") {
@@ -250,9 +252,9 @@ export default {
             .includes(this.filter.productPrice.toLowerCase())
         );
       }
-      if (this.filter.availability != "") {
+      if (this.filter.productAvailable != "") {
         filteredProducts = filteredProducts.filter((product) =>
-          product.availability === this.filter.availability
+          product.productAvailable === this.filter.productAvailable
         );
       }
       return filteredProducts;

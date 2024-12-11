@@ -74,28 +74,8 @@ public class OrderController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-   //method_9
-    // Update order status
 
-    @PutMapping("admin/orders/{id}/status/")
-    public Order updateOrderStatusByIdAsAdmin(@PathVariable int orderId, @RequestBody Order order) {
-        try {
-            return orderDao.updateOrderStatus(order,orderId);
-        } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    //method_10
-    // Update driver information for an order
 
-    @PutMapping("admin/orders/{id}/driver")
-    public Order updateOrderDriver(@PathVariable int orderId, @RequestBody Order order) {
-        try {
-            return orderDao.updateDriverStatus(order,orderId);
-        } catch (DaoException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
   //method_11
     private int getCurrentUserId(Principal principal) {
 
