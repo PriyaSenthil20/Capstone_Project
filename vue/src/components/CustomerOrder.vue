@@ -103,7 +103,7 @@
           <button type="button" class="add-to-cart" @click="addToCart">
             <span class="cart-icon">&#128722;</span> Add to Cart
           
-            <span class="cart-badge">{{ totalCartItems }}</span> 
+            <span v-if="totalCartItems>0" class="cart-badge">{{ totalCartItems }}</span> 
           </button>
           <button type="button" class="proceed-to-checkout" @click="proceedToCheckout">
             Proceed to Checkout
@@ -124,18 +124,25 @@
           &nbsp;&nbsp;{{ option }}
         </li>
         <li>&nbsp;&nbsp;Total Sales Price: ${{this.$store.state.orderDetails.totalSale}}</li>
-        <li v-if="this.deliveryOption === '1'">&nbsp;&nbsp;Driver Licence Id: {{this.$store.state.orderDetails.driverId}}</li>
-        <li v-if="this.deliveryOption === '2'">&nbsp;&nbsp;Pick Up Date and Time: {{this.$store.state.orderDetails.pickUpDate}}&nbsp;{{this.$store.state.orderDetails.pickUpTime}}</li>
+        <li v-if="this.deliveryOption === '2'"><br>
+          <ul><li>Pick Up Date and Time:
+            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{this.$store.state.orderDetails.pickUpDate}}&nbsp;{{this.$store.state.orderDetails.pickUpTime}}</li>
+            <li>Pickup Address: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rocco's Pizza Place,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java Purple,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NLR-2024.
+
+            </li>
+        </ul></li>
   </ul>
     <div class="action-buttons">
-  
-    <button v-on:click="goToPayment" type="button" class="continue" >
+      <router-link v-bind:to="{ name: 'payments' }">
+    <button type="button" class="continue" >
       Continue
-    </button>
-    <router-link v-bind:to="{ name: 'customerOrder' }">
-    <button type="button" class="cancel" >
-      Cancel
     </button></router-link>
+    
+    <button type="button" class="cancel" v-on:click="cancelOrder">
+      Cancel
+    </button>
     </div>
   </div>
 </form>
@@ -173,7 +180,9 @@ export default {
       selectedSauce: null,
       deliveryOption: null,
       showConfirmation :false,
-      orderQuantity: 1
+      orderQuantity : 1,
+      errorMessage :[],
+      cartCheck : false
       
     };
     },
@@ -190,11 +199,33 @@ export default {
       selectPizza(type) {
         this.selectedPizzaType = type; 
       },
-      goToPayment() {
-        const orderId = this.$store.state.orderDetails.orderId;
-        this.$router.push({ name: 'payments', query: { orderId } });
-      },
+      checkForSelection()
+        {   
+          let result=true;
+        if (!this.selectedProduct) {
+          this.errorMessage.push("Please select a product.");
+          result=false;
+        }
+        if (this.selectedPizzaType === 'custom') {
+          if (!this.selectedCrust) {
+            this.errorMessage.push("Please select a crust.");
+            result=false;
+          }
+          if (!this.selectedSauce) {
+            this.errorMessage.push("Please select a sauce.");
+            result=false;
+          }
+          if (this.selectedToppings.length === 0) {
+            this.errorMessage.push("Please select at least one topping.");
+            result=false;
+          }
+        }
+        return result; 
+        },      
+       
         addToCart(){
+          if(this.checkForSelection()===true){
+            this.cartCheck=true;
           let productOptions=[];
           
           if(this.selectPizza==='specialty'){
@@ -220,40 +251,61 @@ export default {
             productOptionDtoList:productOptions
           });
           }       
-         alert("Products added to the order");       
+         alert("Products added to the order"); 
+          
+         }  
+         else{
+          alert("Please fill the appropriate fields: "+ this.errorMessage.pop());
+         }
       },
-       
         proceedToCheckout(){
+          if(this.checkForSelection() === true){
+            if(this.cartCheck===false){
+                this.addToCart();
+              }
           this.order.customerId=this.$store.state.user.id
           this.order.transferId=this.deliveryOption;
           this.order.pickUpDate=this.date;
           this.order.pickUpTime=this.time;
           try{
           this.$store.commit('SET_ORDER', this.order);
-          alert(this.$store.state.order.transferId);
-          this.$store.dispatch('createCustomerOrder');
-          
+          this.$store.dispatch('createCustomerOrder'); 
           console.log("Order stored in Vuex:", this.$store.state.order);
           this.showConfirmation = true;
           this.initializeOrder();
           this.fillOrderDetails();
           }catch (error) {
           console.error("Error processing customer order:", error);
+          }}
+          else{
+            alert("Please fill the appropriate fields: "+ this.errorMessage.pop());
           }
         },
         initializeOrder(){
+            this.order= {
+              transferId:null,
+              pickUpDate: null,
+              pickUpTime: null,
+              productDtoList: []
+            };
+          this.order.productDtoList.forEach(product => {
+            product.productOptionDtoList.forEach(option => {
+              option=null;
+        
+            }); 
+            this.errorMessage=[];      
+         });
+        
+        },
+        cancelOrder(){
           this.order= {
             transferId:null,
             pickUpDate: null,
             pickUpTime: null,
             productDtoList: []
-           };
-         this.order.productDtoList.forEach(product => {
-            product.productOptionDtoList.forEach(option => {
-              option=null;
-        
-            });         
-         });
+           }; 
+           this.errorMessage=[];
+            this.showConfirmation=false;    
         
         },
         fillOrderDetails(){
