@@ -65,7 +65,7 @@ contains:
           <td>
             <button
               class="btnActivateDeactivate"
-              v-on:click="flipStatus(product.productID)"
+              v-on:click="flipStatus(product.productId)"
             >{{ product.availability === 'true' ? 'false' : 'true' }}</button>
           </td>
         </tr>
@@ -199,10 +199,11 @@ export default {
     },
     flipStatus(id) {
       const index = this.findProductById(id);
+      alert(index)
       this.products[index].availability =
         this.products[index].availability === "true" ? "false" : "true";
     },
-    selectAll(event) {
+    selectAllProducts(event) {
       if (event.target.checked) {
         this.selectedProducts = this.products.map(product=>product.id);
       } else {
@@ -225,7 +226,7 @@ export default {
       this.selectedProducts = [];
     },
     findProductById(id) {
-      return this.products.findIndex((product) => product.id == id);
+      return this.products.findIndex((product) => product.productId === id);
     }
   },
   created() {
