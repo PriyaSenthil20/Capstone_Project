@@ -231,10 +231,28 @@ export default {
 </script>
 
 <style scoped>
+#register {
+  background-image: url('../assets/register1.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .form-input-group {
   margin-bottom: 1rem;
 }
 label {
   margin-right: 0.5rem;
+}
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #808080; 
+}
+label {
+  color: #808080;
 }
 </style>
