@@ -45,6 +45,8 @@ export default {
     });
   },
 
+  
+
   // Add a new product (e.g., specialty pizza)
   createProduct(product) {
     return http.post(`/admin/products`, product);
@@ -73,6 +75,7 @@ export default {
     return http.get(`/admin/orders?status=Pending`);
   },
 
+  // Get type information based on table in database: option_type, product_type, size (Stretch Goal)
   // Historical report of orders (Planned Feature)
   // Search for orders (Planned Feature)
 };
