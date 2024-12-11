@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-// Set up axios instance with the base URL
+const userToken = localStorage.getItem('token')
+
 const http = axios.create({
-  baseURL: import.meta.env.VITE_REMOTE_API
+  baseURL: import.meta.env.VITE_REMOTE_API,
+  headers: {Authorization: `Bearer ${userToken}`}
 });
 
 export default {
