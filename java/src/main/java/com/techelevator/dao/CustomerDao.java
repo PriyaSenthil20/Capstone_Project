@@ -8,9 +8,9 @@ import com.techelevator.model.User;
 import java.util.List;
 
 public interface CustomerDao {
-    public List<Customer> getCustomers();
+    List<Customer> getCustomers();
 
-    public Customer getCustomerById(int id);
+    Customer getCustomerById(int id);
 
 
     Customer getCustomerByEmail(String customerEmail);

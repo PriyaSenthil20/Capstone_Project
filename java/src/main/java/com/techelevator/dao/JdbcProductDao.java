@@ -174,4 +174,4 @@ public class JdbcProductDao implements ProductDao {
 
         return product;
     }
-};
+}

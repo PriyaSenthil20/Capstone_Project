@@ -136,6 +136,16 @@ export function createStore(currentToken, currentUser) {
       console.error('Error fetching all Drivers:', error);
     });
     },
+    getOrderStatuses({commit}){
+      AdminService.getStatuses()
+      .then((response) => {
+        const orderStatuses = response.data;
+        this.commit('SET_ORDER_STATUSES', orderStatuses);
+        })
+      .catch(error => {
+        console.error('Error fetching all Statuses:', error);
+      });
+    },
     addCustomer({commit}, customer){
       
         AuthService.addCustomer(customer) 
