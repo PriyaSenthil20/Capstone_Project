@@ -12,7 +12,7 @@ public class Payment {
     private int orderId;
     private String paymentType;
     private String cardNumber;
-    private LocalDate cardExpiration;
+    private String cardExpiration;
     private int cardCvv;
     private int cardZipcode;
 
@@ -57,12 +57,12 @@ public class Payment {
     }
 
     // Returns the card expiration date
-    public LocalDate getCardExpiration() {
+    public String getCardExpiration() {
         return cardExpiration;
     }
 
     // Sets the card expiration date
-    public void setCardExpiration(LocalDate cardExpiration) {
+    public void setCardExpiration(String cardExpiration) {
         this.cardExpiration = cardExpiration;
     }
 

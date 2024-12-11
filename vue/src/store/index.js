@@ -12,13 +12,16 @@ export function createStore(currentToken, currentUser) {
       customer: {},
       order: [],
       adminOrders: [],
+      orderStatuses: [],
       drivers: [],
       crusts: [],
       toppings: [],
       sauces: [],
       specialtyPizzas: [],
       customPizzas: [],
-      cart: {}
+      products:[],
+      options:[],
+      orderDetails:{}
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -54,14 +57,11 @@ export function createStore(currentToken, currentUser) {
       SET_DRIVERS(state, drivers){
         state.drivers = drivers;
       },
+      SET_ORDER_STATUSES(state, orderStatuses){
+        state.orderStatuses = orderStatuses;
+      },
       SET_ORDER_DETAILS(state,orderDetails){
         state.orderDetails=orderDetails;
-      },
-      ADD_CART(state, cart){
-        state.cart=cart;
-      },
-      CLEAR_CART(state){
-        state.cart=null;
       },
       LOGOUT(state) {
         localStorage.removeItem('token');
@@ -72,18 +72,25 @@ export function createStore(currentToken, currentUser) {
       },
       SET_ORDER(state,order){
         state.order=order;
+      },
+      SET_PRODUCTS(state,products){
+        state.products=products;
+      },
+      SET_OPTIONS(state,options){
+        state.options=options;
       }
     },
     actions:{
       loadData({commit,dispatch}) {
         dispatch('getPizzas');
         dispatch('getOptions');
+        
       },
       getPizzas({ commit }) {
       OrderService.getPizzas()
       .then(response => {
         const products = response.data;
-    
+        this.commit('SET_PRODUCTS',products);
         this.commit('SET_SPECIALTY_PIZZAS',products
         .filter(product => product.productTypeId === 1));
         this.commit('SET_CUSTOM_PIZZAS',products
@@ -97,6 +104,7 @@ export function createStore(currentToken, currentUser) {
         OrderService.getPizzaOptions()
         .then((response) => {
           const options = response.data;
+          this.commit('SET_OPTIONS',options);
           this.commit('SET_CRUSTS',options
             .filter(option => option.optionTypeId=== 3));
             this.commit('SET_TOPPINGS',options
@@ -120,14 +128,14 @@ export function createStore(currentToken, currentUser) {
   },
   getDrivers({commit}){
     AdminService.getDrivers()
-    .then((response) => {
+      .then((response) => {
       const drivers = response.data;
       this.commit('SET_DRIVERS', drivers);
       })
-    .catch(error => {
+      .catch(error => {
       console.error('Error fetching all Drivers:', error);
     });
-},
+    },
     addCustomer({commit}, customer){
       
         AuthService.addCustomer(customer) 
@@ -144,6 +152,7 @@ export function createStore(currentToken, currentUser) {
       OrderService.customerOrder(this.state.order)
       .then(response=>{
         this.commit('SET_ORDER_DETAILS',response.data);
+        alert("orderId"+this.state.orderDetails.orderId);
       })
       .catch(error => {
         console.log(error);

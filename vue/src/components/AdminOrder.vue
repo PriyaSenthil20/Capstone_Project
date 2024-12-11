@@ -6,7 +6,7 @@
         <select v-model="selectedOrder" class="dropdown" required>
           <option disabled selected>Select an Order</option>
           <option v-for="order in this.$store.state.adminOrders" :key="order.orderId" :value="order.orderId">
-            Order #{{ order.orderId }} - {{ order.customerName }}
+            Order #{{ order.orderId }}
           </option>
         </select>
       </div>
@@ -14,8 +14,8 @@
         <h3>Assign Driver</h3>
         <select v-model="selectedDriver" class="dropdown" required>
           <option disabled selected>Select a Driver</option>
-          <option v-for="driver in drivers" :key="driver.driverId" :value="driver.driverId">
-            {{ driver.name }}
+          <option v-for="driver in this.$store.state.drivers" :key="driver.driverId" :value="driver.driverId">
+            {{ driver.driverName }}
           </option>
         </select>
         <button type="button" class="nes-btn is-primary" @click="assignDriver">
@@ -26,8 +26,8 @@
         <h3>Update Order Status</h3>
         <select v-model="selectedStatus" class="dropdown" required>
           <option disabled selected>Select a Status</option>
-          <option v-for="status in orderStatuses" :key="status.id" :value="status.id">
-            {{ status.name }}
+          <option v-for="status in this.$store.state.orderStatuses" :key="status.statusId" :value="status.statusId">
+            {{ status.statusType }}
           </option>
         </select>
         <button type="button" class="nes-btn is-warning" @click="updateOrderStatus">
@@ -63,10 +63,10 @@ export default {
   },
   computed: {
     adminOrders() {
-      let localOrders = this.$store.state.adminOrders;
+      return this.$store.state.adminOrders;
     },
     drivers() {
-      let localDrivers = this.$store.state.drivers;
+      return this.$store.state.drivers;
     }
   },
   methods: {
@@ -76,6 +76,8 @@ export default {
   },
   created() {
     this.$store.dispatch('getAdminOrders');
+    this.$store.dispatch('getDrivers');
+    this.$store.dispatch('getOrdersStatuses');
   }
 },}
 </script>

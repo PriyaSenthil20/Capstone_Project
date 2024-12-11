@@ -16,6 +16,10 @@ export default {
     return http.get('/admin/drivers');
   },
 
+  getStatuses() {
+    return http.get('/admin/statuses');
+  },
+
   // Update order status
   updateOrderStatus(orderId, status) {
     return http.put(`/admin/orders/${orderId}/status`, { status });
