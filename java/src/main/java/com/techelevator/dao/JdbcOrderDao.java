@@ -161,11 +161,12 @@ public class JdbcOrderDao implements OrderDao {
     }
 
 
-    public Order updateOrderStatus(Order order, int orderId) {
-        String updateStatusSql = "UPDATE orders SET status_id=?  WHERE order_id = ?";
+    public Order updateOrderStatus(OrderStatusDto order) {
+        String updateStatusSql = "UPDATE orders SET status_id = ?  WHERE order_id = ?";
         Order updatedOrder = null;
         try {
-            int rowsAffected = jdbcTemplate.update(updateStatusSql, order.getStatusId(), orderId);
+            int rowsAffected = jdbcTemplate.update(updateStatusSql,
+                    order.getStatusId(), order.getOrderId());
             if (rowsAffected != 1) {
                 throw new DaoException("Zero or more than one row affected.");
             } else {

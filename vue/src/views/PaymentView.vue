@@ -1,4 +1,7 @@
 <template>
+  <div>
+    <nav-options />
+    </div>
     <div class="payment-view">
       <payment-form  />
     </div>
@@ -6,10 +9,11 @@
   
   <script>
   import PaymentForm from '../components/Payment.vue';
-  
+  import NavOptions from '../components/NavOptions.vue';
   export default {
     components: {
-      PaymentForm
+      PaymentForm,
+      NavOptions
     }
   };
   </script>

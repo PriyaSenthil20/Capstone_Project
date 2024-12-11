@@ -6,26 +6,26 @@ public class Product {
 
     private int id;
     private String productName;
-    private String productDescription;
+    private String productDesc;
     private int productTypeId;
     private BigDecimal productPrice = new BigDecimal(0);
 
-    private boolean availability;
+    private boolean productAvailable;
     private int sizeId;
 
     public Product (){
 
     }
 
-    public Product(int id, String productName, String productDescription,
-                   int productTypeId, BigDecimal productPrice, boolean availability, int sizeId){
+    public Product(int id, String productName, String productDesc,
+                   int productTypeId, BigDecimal productPrice, boolean productAvailable, int sizeId){
 
         this.id = id;
         this.productName = productName;
-        this.productDescription = productDescription;
+        this.productDesc = productDesc;
         this.productTypeId = productTypeId;
         this.productPrice = productPrice;
-        this.availability = availability;
+        this.productAvailable = productAvailable;
         this.sizeId = sizeId;
     }
 
@@ -41,11 +41,11 @@ public class Product {
     public void setProductName(String productName) {
         this.productName = productName;
     }
-    public String getProductDescription() {
-        return productDescription;
+    public String getproductDesc() {
+        return productDesc;
     }
-    public void setProductDescription(String productDescription) {
-        this.productDescription = productDescription;
+    public void setproductDesc(String productDesc) {
+        this.productDesc = productDesc;
     }
     public int getProductTypeId() {
         return productTypeId;
@@ -59,11 +59,11 @@ public class Product {
     public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
-    public boolean getAvailability() {
-        return availability;
+    public boolean getProductAvailable() {
+        return productAvailable;
     }
-    public void setAvailability(boolean availability) {
-        this.availability = availability;
+    public void setProductAvailable(boolean productAvailable) {
+        this.productAvailable = productAvailable;
     }
     public int getSizeId() {
         return sizeId;

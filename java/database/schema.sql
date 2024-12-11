@@ -144,7 +144,7 @@ CREATE TABLE orders_selections (
 CREATE TABLE payment (
 	payment_id serial NOT NULL,
 	order_id int NOT NULL,
-	payment_type varchar (10) NOT NULL,
+	payment_type varchar (20) NOT NULL,
 	card_number varchar (16) NOT NULL,
 	card_expiration varchar (10) NOT NULL,
 	card_cvv int NOT NULL,

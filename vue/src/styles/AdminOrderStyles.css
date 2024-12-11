@@ -1,0 +1,92 @@
+html {background-image: url('../assets/PaperBackRound.png')}
+  
+  /* Section Headings */
+  h3 {
+    font-size: 1.5rem;
+    color: #3a3a3a;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  }
+  .admin-orders {
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  /* Dropdown Styling */
+  .dropdown {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    color: #333;
+  }
+  
+  .dropdown:focus {
+    border-color: #e85d04;
+    background-color: #fff;
+    outline: none;
+  }
+  
+  /* Buttons */
+  .nes-btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    margin-top: 10px;
+  }
+  
+  .nes-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  .nes-btn.is-primary {
+    background-color: #000000;
+    color: #fff;
+  }
+  
+  .nes-btn.is-primary:hover {
+    background-color: #e65100;
+  }
+  
+  .nes-btn.is-warning {
+    background-color: #000000;
+    color: #fff;
+  }
+  
+  .nes-btn.is-warning:hover {
+    background-color: #e65100;
+  }
+  
+
+  
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .admin-orders {
+      padding: 15px;
+    }
+  
+    h3 {
+      font-size: 1.2rem;
+    }
+  
+    .dropdown {
+      font-size: 0.9rem;
+    }
+  
+    .nes-btn {
+      font-size: 0.9rem;
+    }
+  
+    .order-details p,
+    .order-details ul li {
+      font-size: 0.9rem;
+    }
+  }
+  

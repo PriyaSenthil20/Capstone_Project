@@ -84,7 +84,7 @@ public class AdminController {
     @PutMapping("/products/availability")
     public Product changeProductAvailability(@RequestBody Product product) {
         try {
-            return productDao.setProductAvailabilityById(product.getProductId(), product.getAvailability());
+            return productDao.setProductAvailableById(product.getProductId(), product.getProductAvailable());
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update product availability.", e);
         }
@@ -121,10 +121,12 @@ public class AdminController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to fetch pending orders.", e);
         }
     }
-    @PutMapping("/orders/{id}/status")
-    public Order changeOrderStatus(@PathVariable int id, @RequestBody Order order) {
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("admin/order/status")
+    public Order changeOrderStatus(@RequestBody OrderStatusDto order) {
         try {
-            return orderDao.updateOrderStatus(order, id);
+            return orderDao.updateOrderStatus(order);
         } catch (DaoException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update order status.", e);
         }
