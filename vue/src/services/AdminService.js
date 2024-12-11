@@ -29,7 +29,7 @@ export default {
 
   // Assign driver to an order
   assignDriver(orderDriverDto) {
-    return http.put('/admin/driver',orderDriverDto);
+    return http.put('/admin/driver', orderDriverDto);
   },
 
   //Get list of All Products Available or Otherwise

@@ -6,7 +6,7 @@
         <h3>Select Order</h3>
         <select v-model="selectedOrder" class="dropdown" required>
           <option disabled selected>Select an Order</option>
-          <option v-for="order in this.$store.state.adminOrders" :key="order.orderId" :value="order">
+          <option v-for="order in this.$store.state.adminOrders" :key="order.orderId" :value="order.orderId">
             Order #{{ order.orderId }} - {{ order.customerName }}
           </option>
         </select>
@@ -97,7 +97,7 @@ export default {
     updateOrderStatus() {
       if (this.selectedOrder && this.selectedStatus) {
         const orderId = this.selectedOrder.orderId;
-        const statusId = this.selectedStatus;
+        const statusId = this.selectedStatus.statusId;
 
         const orderStatus = {
           orderId: orderId,
