@@ -59,7 +59,14 @@ contains:
             />
           </td>
           <td>{{ product.productDesc }}</td>
-          <td><input type="text" v-bind:id="'price' + product.productId" v-bind:placeholder="product.productPrice" /></td>
+          <td><input 
+          type="text" v-bind:id="'price' + product.productId"
+           v-bind:placeholder="product.productPrice" /> 
+          <button v-bind:disabled="!commitButtonEnabled"
+              v-bind:id="'updateBtn' + product.productId"
+              class="updateValue"
+              v-on:click="updatePrice(product)"
+            >Update</button></td>
           <!-- To-do. Add price update functionality, make input fields with placeholder of price and tie them to
            update quantity method that posts to db, button disabled if filtered list price matches product price in db -->
           <td>{{ product.productAvailable }}</td>
@@ -79,6 +86,10 @@ contains:
       <button v-on:click="activateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Selected Available</button>
       <button v-on:click="deactivateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Selected Unavailable</button>
     </div>
+    <div class="Commit-actions">
+      <button v-on:click="activateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Selected Available</button>
+      <button v-on:click="deactivateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Selected Unavailable</button>
+    </div>
 
     <button v-on:click="showForm = !showForm">Add New Product</button>
 
@@ -94,8 +105,10 @@ contains:
       <div class="field">
         <label for="ProductTypeId">Product Type Id:</label>
         <select type="text" id="ProductTypeId" name="ProductTypeId" v-model="newProduct.productTypeId" >
-          <!-- dynamically populate options from product type table, content to contain both values of Product type table productTypeId and ProductName-->
-        <option value="WY">Wyoming</option>
+          <!-- SG dynamically populate options from product type table, content to contain both values of Product type table productTypeId and ProductName-->
+        <option value="1">Special Pizza</option>
+        <option value="2">Custom Pizza</option>
+        <option value="3">Drink</option>
         </select>
       </div>
       <div class="field">
@@ -109,8 +122,11 @@ contains:
       <div class="field">
         <label for="sizeId">Size:</label>
         <select type="text" id="sizeId" name="sizeId" v-model="newProduct.sizeId" >
-          <!-- dynamically populate options from size table, content to contain both values of Size Table SizeId and SizeStyle and Price Multiplier-->
-        <option value="WY">Wyoming</option>
+          <!-- SG dynamically populate options from size table, content to contain both values of Size Table SizeId and SizeStyle and Price Multiplier-->
+        <option value="1">Small</option>
+        <option value="2">Medium</option>
+        <option value="3">Large</option>
+        <option value="4">Anthony</option>
         </select>
       </div>      
       <button type="submit" class="btn save">Save Product</button>
@@ -134,7 +150,7 @@ import NavOptions from '../components/NavOptions.vue';
 import AdminService from '../services/AdminService';
 import InventoryProduct from '../components/InventoryProduct.vue';
 import InventoryProductOption from '../components/InventoryProductOption.vue';
-import { computed } from 'vue';
+import { computed, toValue } from 'vue';
 
 export default {
   components: {
@@ -181,13 +197,23 @@ export default {
       .catch(error => {
         console.log(error);
       })
+      
     },
     saveProduct() {
+      AdminService
+          .createProduct(this.newProduct)
+          .then((response) => {})
+          .catch((error) => {
+            const response = error.response;
+
+            if (response.status === 400) {
+              alert('Bad Request: Validation Errors');
+            }
+          });
+      this.clearNewProduct();
+      this.getProducts
       /* to-do set method to call method to post to product table in db,
       clearNewProduct then reload products*/
-      
-     // this.products.push(this.newProduct); won't need this since we'll reload from db
-      this.clearNewProduct();
     },
     clearNewProduct() {
       this.newProduct = {
@@ -201,7 +227,6 @@ export default {
     },
     flipStatus(id) {
       const index = this.findProductById(id);
-      alert(index)
       this.products[index].productAvailable =
         this.products[index].productAvailable === "true" ? "false" : "true";
     },
@@ -229,11 +254,27 @@ export default {
     },
     findProductById(id) {
       return this.products.findIndex((product) => product.productId === id);
-    }
+    },
+    updatePrice(product) {
+      const index = this.findProductById(product.productId);
+      if (index !== -1) {
+        // Update the product price with the new value from the input field
+        this.products[index].productPrice = product.tempPrice;
+        // Optionally call API to update the database (if required)
+        AdminService.updateProductPrice(product.productId, product.tempPrice)
+          .then(response => {
+            console.log('Product price updated successfully');
+          })
+          .catch(error => {
+            console.error('Error updating product price', error);
+          });
+      }
+    },
   },
   created() {
     this.getProducts();
     this.getOptions();
+    // this.getTypes();  Stretch goal to dynamically update type information based on table in database (option_type, product_type, size)
   },
   computed: {
     filteredList() {
@@ -261,7 +302,10 @@ export default {
     },
     actionButtonEnabled() {
       return this.selectedProducts.length > 0;
-    }
+    } /*,
+    commitButtonEnabled() {
+      return product.productPrice == );
+    }*/
   }
 };
 
