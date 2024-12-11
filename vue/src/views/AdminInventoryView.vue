@@ -1,5 +1,5 @@
  <!-- WILL BE LENGTHY WITH NEW ROUTE!!! If we have time I'll attempt to
- move the tables to the components and not the view.
+ move the tables to the components and not the view and drop everything in the store.
  
 Tabs to choose whether to display product/options removed If you see
  any references to them or a stepper please comment out or delete
@@ -14,7 +14,16 @@ contains:
     <nav class="navbar">
       <nav-options />
     </nav>
-     <div id="test-table">
+     <!-- Demo of Gets from Product table to be used in table and basis for forms in components-->
+    
+    <div class="content-section">      
+      <inventory-product v-bind:products="products" />
+    </div>
+    <div class="product-page-buttons">
+      <button v-on:click="editAvailability = !editAvailability">Edit Product Availability</button>
+      <button v-on:click="showForm = !showForm">Add New Product</button>
+    </div>
+     <div id="test-table" v-show="editAvailability">
       <h3>Change Price/Availability</h3>
       <table id="tblProduct">
       <thead>
@@ -59,14 +68,15 @@ contains:
             />
           </td>
           <td>{{ product.productDesc }}</td>
-          <td><input 
+          <td>{{product.productPrice}}</td>
+            <!-- <input 
           type="text" v-bind:id="'price' + product.productId"
            v-bind:placeholder="product.productPrice" /> 
           <button v-bind:disabled="!commitButtonEnabled"
               v-bind:id="'updateBtn' + product.productId"
               class="updateValue"
               v-on:click="updatePrice(product)"
-            >Update</button></td>
+            >Update</button> -->
           <!-- To-do. Add price update functionality, make input fields with placeholder of price and tie them to
            update quantity method that posts to db, button disabled if filtered list price matches product price in db -->
           <td>{{ product.productAvailable }}</td>
@@ -75,7 +85,7 @@ contains:
             <button
               class="btnActivateDeactivate"
               v-on:click="flipStatus(product.productId)"
-            >{{ product.productAvailable === 'true' ? 'false' : 'true' }}</button>
+            >{{ product.productAvailable === 'true' ? 'Make Unavailable' : 'Make Available' }}</button>
           </td>
         </tr>
       </tbody>
@@ -83,17 +93,12 @@ contains:
 
     
     <div class="all-actions">
-      <button v-on:click="activateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Selected Available</button>
-      <button v-on:click="deactivateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Selected Unavailable</button>
+      <button v-on:click="activateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Make Selected Available</button>
+      <button v-on:click="deactivateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Make Selected Unavailable</button>
     </div>
-    <div class="Commit-actions">
-      <button v-on:click="activateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Selected Available</button>
-      <button v-on:click="deactivateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Selected Unavailable</button>
     </div>
-
-    <button v-on:click="showForm = !showForm">Add New Product</button>
-
-    <form id="frmAddNewProduct" v-show="showForm" v-on:submit.prevent="saveProduct">
+    <div>
+      <form id="frmAddNewProduct" v-show="showForm" v-on:submit.prevent="saveProduct">
       <div class="field">
         <label for="productName">Product Name:</label>
         <input type="text" id="productName" name="productName" v-model="newProduct.productName" />
@@ -131,16 +136,132 @@ contains:
       </div>      
       <button type="submit" class="btn save">Save Product</button>
     </form>
-  
- <!-- Demo of Gets from Product table to be used in table and basis for forms in components-->
     </div>
-    <div class="content-section">      
-      <inventory-product v-bind:products="products" />
-    </div>
+<!-- ----------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+-->
 
- <!-- Demo of Gets from Product Options table to be used in table and basis for forms in components-->
+    <!-- Demo of Gets from Product Options table to be used in table and basis for forms in components-->
     <div class="content-section">      
       <inventory-product-option v-bind:productOptions="productOptions" />
+    </div>
+    <div class="option-page-buttons">
+      <button v-on:click="editOptionAvailability = !editOptionAvailability">Edit Option Availability</button>
+      <button v-on:click="showOptionForm = !showOptionForm">Add New Option</button>
+    </div>
+    <div id="test-option-table" v-show="editOptionAvailability">
+      <h3>Change Price/Availability</h3>
+      <table id="tblOption">
+      <thead>
+        <tr>
+          <th>select</th>
+          <th>Option Name</th>
+          <th>Option Available</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <input type="checkbox" id="selectAllProducts" v-on:change="selectAllProducts($event)" v-bind:checked="selectedProducts.length === products.length" />
+          </td>
+          <td>
+            <input type="text" id="productDescFilter" v-model="filter.productDesc" />
+          </td>
+          <td>
+            <input type="text" id="productPriceFilter" v-model="filter.productPrice" />
+          </td>
+          <td>
+            <select id="productAvailableFilter" v-model="filter.productAvailable">
+              <option value>Show All</option>
+              <option value="true">Available</option>
+              <option value="false">Unavailable</option>
+            </select>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr
+          v-for="product in filteredList"
+          v-bind:key="product.productId"
+          v-bind:class="{ deactivated: product.productAvailable === 'false' }"
+        >
+          <td>
+            <input
+              type="checkbox"
+              v-bind:id="'checkbox' + product.productId"
+              v-bind:value="product.productId"
+              v-model="selectedProducts"
+            />
+          </td>
+          <td>{{ product.productDesc }}</td>
+          <td>{{product.productPrice}}</td>
+            <!-- <input 
+          type="text" v-bind:id="'price' + product.productId"
+           v-bind:placeholder="product.productPrice" /> 
+          <button v-bind:disabled="!commitButtonEnabled"
+              v-bind:id="'updateBtn' + product.productId"
+              class="updateValue"
+              v-on:click="updatePrice(product)"
+            >Update</button> -->
+          <!-- To-do. Add price update functionality, make input fields with placeholder of price and tie them to
+           update quantity method that posts to db, button disabled if filtered list price matches product price in db -->
+          <td>{{ product.productAvailable }}</td>
+          
+          <td>
+            <button
+              class="btnActivateDeactivate"
+              v-on:click="flipStatus(product.productId)"
+            >{{ product.productAvailable === 'true' ? 'Make Unavailable' : 'Make Available' }}</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    
+    <div class="all-actions">
+      <button v-on:click="activateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Make Selected Available</button>
+      <button v-on:click="deactivateSelectedProducts()" v-bind:disabled="!actionButtonEnabled">Make Selected Unavailable</button>
+    </div>
+    </div>
+    <div>
+      <form id="frmAddNewProduct" v-show="showForm" v-on:submit.prevent="saveProduct">
+      <div class="field">
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" v-model="newProduct.productName" />
+      </div>
+      <div class="field">
+        <label for="productDesc">Product Description:</label>
+        <input type="text" id="productDesc" name="productDesc" v-model="newProduct.productDesc" />
+      </div>
+      <div class="field">
+        <label for="ProductTypeId">Product Type Id:</label>
+        <select type="text" id="ProductTypeId" name="ProductTypeId" v-model="newProduct.productTypeId" >
+          <!-- SG dynamically populate options from product type table, content to contain both values of Product type table productTypeId and ProductName-->
+        <option value="1">Special Pizza</option>
+        <option value="2">Custom Pizza</option>
+        <option value="3">Drink</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="productPrice">Product Price:</label>
+        <input type="text" id="productPrice" name="productPrice" v-model="newProduct.productPrice" />
+      </div>
+            <div class="field">
+        <label for="productAvailable">Product Available?</label>
+        <input type="checkbox" id="productAvailable" name="productAvailable" v-model="newProduct.productAvailable" />
+      </div>
+      <div class="field">
+        <label for="sizeId">Size:</label>
+        <select type="text" id="sizeId" name="sizeId" v-model="newProduct.sizeId" >
+          <!-- SG dynamically populate options from size table, content to contain both values of Size Table SizeId and SizeStyle and Price Multiplier-->
+        <option value="1">Small</option>
+        <option value="2">Medium</option>
+        <option value="3">Large</option>
+        <option value="4">Anthony</option>
+        </select>
+      </div>      
+      <button type="submit" class="btn save">Save Product</button>
+    </form>
     </div>
   </div>
 </template>
@@ -168,6 +289,9 @@ export default {
         productAvailable: ""
       },
       showForm: false,
+      editAvailability: false,
+      showOptionForm: false,
+      editOptionAvailability: false,
       newProduct: {
         productName: "",
         productDesc: "",
@@ -177,6 +301,11 @@ export default {
         sizeId: ""
       },
       selectedProducts: [],
+      productAvailableDto: {
+          productId: "",
+          productAvailable: ""
+
+      }
   };
   },
   methods: {
@@ -215,6 +344,7 @@ export default {
       /* to-do set method to call method to post to product table in db,
       clearNewProduct then reload products*/
     },
+
     clearNewProduct() {
       this.newProduct = {
         productName: "",
@@ -227,8 +357,14 @@ export default {
     },
     flipStatus(id) {
       const index = this.findProductById(id);
+      
       this.products[index].productAvailable =
         this.products[index].productAvailable === "true" ? "false" : "true";
+      
+      this.productAvailableDto.productId = id;
+       this.productAvailableDto.productAvailable = this.products[index].productAvailable;
+        AdminService.updateProductAvailability(productAvailableDto)
+    
     },
     selectAllProducts(event) {
       if (event.target.checked) {
@@ -239,15 +375,25 @@ export default {
     },
     activateSelectedProducts() {
       this.selectedProducts.forEach((id) => {
-        this.products[this.findProductById(id)].productAvailable = "true";
+
+       // this.products[this.findProductById(id)].productAvailable = "true";
+       this.productAvailableDto.productId = id;
+       this.productAvailableDto.productAvailable = "true";
+        AdminService.updateProductAvailability(productAvailableDto)
       });
       this.clearSelectedProducts();
+      this.getProducts();
     },
     deactivateSelectedProducts() {
       this.selectedProducts.forEach((id) => {
-        this.products[this.findProductById(id)].productAvailable = "false";
+        // send out to db         this.products[this.findProductById(id)].productAvailable = "false";
+        this.productAvailableDto.productId = id;
+       this.productAvailableDto.productAvailable = "true";
+        AdminService.updateProductAvailability(productAvailableDto)
+
       });
       this.clearSelectedProducts();
+      this.getProducts();
     },
     clearSelectedProducts() {
       this.selectedProducts = [];
@@ -255,7 +401,7 @@ export default {
     findProductById(id) {
       return this.products.findIndex((product) => product.productId === id);
     },
-    updatePrice(product) {
+    /* updatePrice(product) {
       const index = this.findProductById(product.productId);
       if (index !== -1) {
         // Update the product price with the new value from the input field
@@ -269,7 +415,7 @@ export default {
             console.error('Error updating product price', error);
           });
       }
-    },
+    }, */
   },
   created() {
     this.getProducts();
@@ -288,10 +434,8 @@ export default {
       }
       if (this.filter.productPrice != "") {
         filteredProducts = filteredProducts.filter((product) =>
-          product.productPrice
-            .toLowerCase()
-            .includes(this.filter.productPrice.toLowerCase())
-        );
+          product.productPrice == this.filter.productPrice)
+        
       }
       if (this.filter.productAvailable != "") {
         filteredProducts = filteredProducts.filter((product) =>
