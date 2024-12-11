@@ -77,11 +77,15 @@ export default {
       if (this.selectedOrder && this.selectedDriver) {
         const orderId = this.selectedOrder.orderId;
         const driverId = this.selectedDriver;
+        
+        const orderDriver = {
+          orderId: orderId,
+          driverId: driverId
+        };
 
-        AdminService.assignDriver(orderId, driverId)
-          .then(() => {
-            alert(`Driver ID ${driverId} assigned to Order ID ${orderId} successfully.`);
-            this.$store.dispatch("getAdminOrders"); 
+        AdminService.assignDriver(orderDriver)
+          .then(response => {
+            this.commit('SET_CURRENT_ORDER_DRIVER') 
           })
           .catch((error) => {
             console.error("Error assigning driver:", error);
@@ -93,12 +97,16 @@ export default {
     updateOrderStatus() {
       if (this.selectedOrder && this.selectedStatus) {
         const orderId = this.selectedOrder.orderId;
-        const status = this.selectedStatus;
+        const statusId = this.selectedStatus;
 
-        AdminService.updateOrderStatus(orderId, status)
-          .then(() => {
-            alert(`Order ID ${orderId} updated to status ID ${status} successfully.`);
-            this.$store.dispatch("getAdminOrders"); 
+        const orderStatus = {
+          orderId: orderId,
+          driverId: statusId
+        };
+
+        AdminService.updateOrderStatus(orderStatus)
+          .then(response => {
+            this.commit('SET_CURRENT_ORDER_STATUS') 
           })
           .catch((error) => {
             console.error("Error updating order status:", error);
