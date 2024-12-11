@@ -44,6 +44,11 @@ export default {
     return http.post(`/admin/products`, product);
   },
 
+  //Get list of All Options Available or Otherwise
+  Options() {
+    return http.get('/admin/options')
+  },
+
   // Change availability of product options
   updateProductOptionAvailability(optionId, availability) {
     return http.put(`/admin/options/availability`, {

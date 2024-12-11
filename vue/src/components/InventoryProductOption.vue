@@ -1,10 +1,11 @@
 <template>
      <div class = "inventory-message">
-        <h1>Products</h1>
-            <div v-for="product in this.products" v-bind:key="product.productId">
-                {{product.productName}}
+            <h1>Options</h1>
+            <div v-for="productOption in this.productOptions" v-bind:key="productOption.optionId">
+                {{productOption.optionName}}
             </div>
     </div>
+    
 </template>
 
 <script>
@@ -12,11 +13,11 @@
 
 export default{
     props:{
-        products:{
+        productOptions:{
             type: Array,
             required: true
-        }
-    }
+        },
+    },
 }
 </script>
 
