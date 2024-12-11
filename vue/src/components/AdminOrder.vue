@@ -97,7 +97,7 @@ export default {
     updateOrderStatus() {
       if (this.selectedOrder && this.selectedStatus) {
         const orderId = this.selectedOrder.orderId;
-        const statusId = this.selectedStatus;
+        const statusId = this.selectedStatus.statusId;
 
         const orderStatus = {
           orderId: orderId,
