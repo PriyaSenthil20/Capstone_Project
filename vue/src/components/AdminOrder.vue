@@ -115,6 +115,6 @@ export default {
   },
 };
 </script>
-
-
+<style src="../styles/AdminOrderStyles.css">
+</style>
 
