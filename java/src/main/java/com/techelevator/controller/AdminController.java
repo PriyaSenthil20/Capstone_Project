@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
+@PreAuthorize("isAuthenticated()")
 public class AdminController {
 
     private final DriverDao driverDao;
@@ -31,6 +32,7 @@ public class AdminController {
         this.orderStatusDao = orderStatusDao;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("admin/drivers")
     public List<Driver> getAllDrivers() {
         try {
