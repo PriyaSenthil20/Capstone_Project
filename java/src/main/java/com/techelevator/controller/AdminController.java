@@ -97,6 +97,7 @@ public class AdminController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to add product.", e);
         }
     }
+
     @PutMapping("/product-options/availability")
     public ProductOption changeProductOptionAvailability(@RequestBody ProductOption productOption) {
         try {

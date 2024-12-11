@@ -6,7 +6,7 @@
         <h3>Select Order</h3>
         <select v-model="selectedOrder" class="dropdown" required>
           <option disabled selected>Select an Order</option>
-          <option v-for="order in this.$store.state.adminOrders" :key="order.orderId" :value="order.orderId">
+          <option v-for="order in this.$store.state.adminOrders" :key="order.orderId" :value="order">
             Order #{{ order.orderId }} - {{ order.customerName }}
           </option>
         </select>
@@ -16,7 +16,7 @@
         <h3>Assign Driver</h3>
         <select v-model="selectedDriver" class="dropdown" required>
           <option disabled selected>Select a Driver</option>
-          <option v-for="driver in this.$store.state.drivers" :key="driver.driverId" :value="driver.driverId">
+          <option v-for="driver in this.$store.state.drivers" :key="driver.driverId" :value="driver">
             {{ driver.driverName }}
           </option>
         </select>
@@ -29,7 +29,7 @@
         <h3>Update Order Status</h3>
         <select v-model="selectedStatus" class="dropdown" required>
           <option disabled selected>Select a Status</option>
-          <option v-for="status in this.$store.state.orderStatuses" :key="status.statusId" :value="status.statusId">
+          <option v-for="status in this.$store.state.orderStatuses" :key="status.statusId" :value="status">
             {{ status.statusType }}
           </option>
         </select>
@@ -76,7 +76,7 @@ export default {
     assignDriver() {
       if (this.selectedOrder && this.selectedDriver) {
         const orderId = this.selectedOrder.orderId;
-        const driverId = this.selectedDriver;
+        const driverId = this.selectedDriver.driverId;
         
         const orderDriver = {
           orderId: orderId,
@@ -101,7 +101,7 @@ export default {
 
         const orderStatus = {
           orderId: orderId,
-          driverId: statusId
+          statusId: statusId
         };
 
         AdminService.updateOrderStatus(orderStatus)

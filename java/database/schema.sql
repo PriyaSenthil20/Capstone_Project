@@ -179,18 +179,25 @@ VALUES ('Special Pizza'),
 INSERT INTO options_type(description)
 VALUES ('Topping'),
 ('Sauce'),
-('Crust');
+('Crust'),
+('Premium');
 
 INSERT INTO product_options(option_name, option_desc, option_type_id, option_price, option_available)
-VALUES ('Pepperoni', 'Pepperoni', 1, 2.00, true),
+VALUES ('None', 'None', 1, 0.00, true),
+('Pepperoni', 'Pepperoni', 1, 2.00, true),
+('Bacon', 'Bacon', 1, 2.00, true),
 ('Onions', 'Onions', 1, 2.00, true),
 ('Green Pepper', 'Green Pepper', 1, 2.00, true),
+('Mushrooms', 'Mushrooms', 1, 2.00, true),
+('Onions', 'Onions', 1, 2.00, true),
 ('Sausage', 'Sausage', 1, 2.00, true),
 ('Marinara', 'Marinara', 2, 0.00, true),
 ('Alfredo', 'Alfredo', 2, 0.00, true),
 ('Pesto', 'Pesto', 2, 0.00, true),
 ('Traditional','Traditional', 3, 0.00, true),
-('Deep Dish','Deep Dish', 3, 2.00, true);
+('Deep Dish','Deep Dish', 3, 2.00, true),
+('Steak','Steak', 4, 3.50, true),
+('Chicken','Chicken', 4, 3.50, true);
 
 
 INSERT INTO products(product_name, product_desc, product_type_id, product_price, product_available, size_id)
