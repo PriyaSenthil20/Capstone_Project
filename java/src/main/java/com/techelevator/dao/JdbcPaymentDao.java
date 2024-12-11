@@ -97,7 +97,7 @@ public class JdbcPaymentDao implements PaymentDao {
         payment.setOrderId(rs.getInt("order_id"));
         payment.setPaymentType(rs.getString("payment_type"));
         payment.setCardNumber(rs.getString("card_number"));
-        payment.setCardExpiration(rs.getDate("card_expiration").toLocalDate());
+        payment.setCardExpiration(rs.getString("card_expiration"));
         payment.setCardCvv(rs.getInt("card_cvv"));
         payment.setCardZipcode(rs.getInt("card_zipcode"));
         return payment;
