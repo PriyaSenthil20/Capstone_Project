@@ -80,7 +80,7 @@ export default {
   align-items: center;
 }
 #loginform{
-  background-color: rgba(149, 180, 230, 0.1 );
+  background-color: rgba(124, 146, 181, 0.1);
   
   
   
@@ -98,5 +98,19 @@ h1 {
 }
 label {
   color: #808080;
+}
+button {
+  background-color: red; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 4px; 
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+}
+
+button:hover {
+  background-color: darkred; 
 }
 </style>

@@ -232,7 +232,17 @@ export default {
 
 <style scoped>
 #register {
-  background-image: url('../assets/register1.png'); 
+  background-image: url('../assets/register5.png'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#customerRegister{
+  background-image: url('../assets/register5.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -242,8 +252,22 @@ export default {
   align-items: center;
 }
 .form-input-group {
+  disply:flex;
+  align-items:center;
   margin-bottom: 1rem;
 }
+.form-input-group input, .form-input-group select {
+  width: 100%;  
+  padding: 10px;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-input-group select {
+  max-width: 100%;
+}
+
 label {
   margin-right: 0.5rem;
 }
@@ -254,5 +278,19 @@ h1 {
 }
 label {
   color: #808080;
+}
+button {
+  background-color: red; 
+  color: white; 
+  padding: 10px 20px; 
+  border: none; 
+  border-radius: 4px; 
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+}
+
+button:hover {
+  background-color: darkred; 
 }
 </style>
