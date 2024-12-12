@@ -239,7 +239,7 @@ export default {
 
 <style scoped>
 #register {
-  background-image: url('../assets/register5.png'); 
+  background-image: url('../assets/register9.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -249,7 +249,7 @@ export default {
   align-items: center;
 }
 #customerRegister{
-  background-image: url('../assets/register5.png'); 
+  background-image: url('../assets/register9.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
