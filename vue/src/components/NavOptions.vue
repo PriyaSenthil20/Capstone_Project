@@ -16,18 +16,16 @@
                     <router-link v-bind:to="{ name: 'customerRegister' }" @click="onLinkClicked('/customerRegister')">
                         <button class = "navBtn"> Register </button></router-link>
                 </span>                            
-           
-            <button class="navBtn">Menu</button>
 
-            <span v-if="$store.state.user.role === 'ROLE_ADMIN'" @click="onLinkClicked('/adminInventory')">
-              <router-link v-bind:to="{ name: 'AdminInventory' }">
-              <button class="navBtn">Inventory</button></router-link>
-            </span>
+                <span v-if="$store.state.user.role === 'ROLE_ADMIN'" @click="onLinkClicked('/adminInventory')">
+                  <router-link v-bind:to="{ name: 'AdminInventory' }">
+                  <button class="navBtn">Inventory</button></router-link>
+                </span>
 
-            <span v-if="$store.state.user.role === 'ROLE_ADMIN'" @click="onLinkClicked('/adminOrder')">
-              <router-link v-bind:to="{ name: 'AdminOrder' }">
-              <button class="navBtn">Check Orders</button></router-link>
-            </span>
+                <span v-if="$store.state.user.role === 'ROLE_ADMIN'" @click="onLinkClicked('/adminOrder')">
+                  <router-link v-bind:to="{ name: 'AdminOrder' }">
+                  <button class="navBtn">Check Orders</button></router-link>
+                </span>
                 <span >
                     <router-link v-bind:to="{ name: 'menu' }">
                         <button class = "navBtn"> Menu </button></router-link>
