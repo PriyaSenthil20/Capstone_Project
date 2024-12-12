@@ -116,7 +116,7 @@ export default {
   font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
-  background-color: #d84a4a; /* Deep blue */
+  background-color: #df3535; /* Deep blue */
   padding: 12px 0; /* Adjust padding for consistency */
   border: none;
   border-radius: 8px;
