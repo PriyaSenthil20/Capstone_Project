@@ -32,29 +32,29 @@ public class JdbcOrderDao implements OrderDao {
     @Override
     public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
-        String sql = ORDER_SELECT + " FROM orders INNER JOIN order_status on orders.status_id = order_status.status_id";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-            while (results.next()) {
-                Order order = mapRowToOrder(results);
-                orders.add(order);
+            String sql = ORDER_SELECT + " FROM orders INNER JOIN order_status on orders.status_id = order_status.status_id";
+            try {
+                SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+                while (results.next()) {
+                    Order order = mapRowToOrder(results);
+                    orders.add(order);
+                }
+            } catch (CannotGetJdbcConnectionException e) {
+                throw new DaoException("Unable to connect to server or database", e);
             }
-        } catch (CannotGetJdbcConnectionException e) {
-            throw new DaoException("Unable to connect to server or database", e);
+            return orders;
         }
-        return orders;
-    }
 
-    @Override
-    public List<Order> getPendingOrders() {
-        List<Order> orders = new ArrayList<>();
-        String sql = ORDER_SELECT + " FROM orders WHERE ";
-        try {
-            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
-            while (results.next()) {
-                Order order = mapRowToOrder(results);
-                orders.add(order);
-            }
+        @Override
+        public List<Order> getPendingOrders() {
+            List<Order> orders = new ArrayList<>();
+            String sql = ORDER_SELECT + " FROM orders WHERE ";
+            try {
+                SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+                while (results.next()) {
+                    Order order = mapRowToOrder(results);
+                    orders.add(order);
+                }
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
         }
@@ -63,7 +63,8 @@ public class JdbcOrderDao implements OrderDao {
 
     public Order getOrderById(int id) {
         Order order = null;
-        String sql = ORDER_SELECT + "  FROM orders WHERE order_id = ?";
+        String sql = "SELECT order_id, customer_id, transfer_id, driver_id, " +
+        "notes, total_sale, pickup_date, pickup_time, status_id FROM orders WHERE order_id = ?";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
             if (results.next()) {
@@ -92,9 +93,9 @@ public class JdbcOrderDao implements OrderDao {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
                 "RETURNING order_id";
 
-        if(orderDto == null || orderDto.getProductDtoList() == null || orderDto.getProductDtoList().isEmpty()){
-            throw new IllegalArgumentException("orderDto and ProductDtoList cannot be null or empty");
-        }
+       // if(orderDto == null || orderDto.getProductDtoList() == null || orderDto.getProductDtoList().isEmpty()){
+     //       throw new IllegalArgumentException("orderDto and ProductDtoList cannot be null or empty");
+      //  }
 
         for (ProductDto productDto : orderDto.getProductDtoList()) {
             BigDecimal productPrice = jdbcProductDao.getProductById(productDto.getProductId()).getProductPrice();
@@ -232,7 +233,7 @@ public class JdbcOrderDao implements OrderDao {
         order.setPickUpDate(rs.getString("pickup_date"));
         order.setPickUpTime(rs.getString("pickup_time"));
         order.setStatusId(rs.getInt("status_id"));
-        order.setStatusText(rs.getString("status_type"));
+        //order.setStatusText(rs.getString("status_type"));
         //deprecated, will revisit
         //order.setCreatedTime(LocalDateTime.from(rs.getTime("created_time").toLocalTime()));
         return order;
