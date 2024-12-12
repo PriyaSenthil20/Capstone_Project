@@ -16,25 +16,19 @@ public class Order {
     private String pickUpTime;
     private int statusId;
 
+    private String statusText;
 
     private LocalDateTime createdTime;
 
     public Order() {
     }
 
-    public Order(int orderId, int customerId, int transferId, int driverId, String name,
-                 BigDecimal totalSale, String notes, String pickUpDate, String pickUpTime,
-                 int statusId, LocalDateTime createdTime) {
-        this.orderId = orderId;
-        this.customerId = customerId;
-        this.transferId = transferId;
-        this.driverId = driverId;
-        this.totalSale = totalSale;
-        this.notes = notes;
-        this.pickUpDate = pickUpDate;
-        this.pickUpTime = pickUpTime;
-        this.statusId = statusId;
-        this.createdTime = createdTime;
+    public String getStatusText() {
+        return statusText;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 
     public int getCustomerId() {

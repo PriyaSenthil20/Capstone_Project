@@ -92,7 +92,7 @@
         </div>
       </form>
     </div>
-    <div name="paymentConfirmationPage" v-if="submitSuccess">
+    <div class="paymentConfirmationPage" v-if="submitSuccess" >
       <label>Order SuccessFul</label>
       <label> Your Payment Confirmation Id: {{this.paymentConfirmation}}</label>
       <label> Enjoy Your Pizza!!!</label>
@@ -216,5 +216,17 @@
   button:hover:not(:disabled) {
     background-color: #45a049;
   }
+  .paymentConfirmationPage {
+  background-image: url('../assets/login1.png');
+  background-size: cover;
+  background-position: center;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
   </style>
   

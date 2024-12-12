@@ -22,6 +22,10 @@ export default {
     return http.get('/admin/statuses');
   },
 
+  getStatusByStatusId(orderStatusDto) {
+    return http.get('admin/status/', orderStatusDto);
+  },
+
   // Update order status
   updateOrderStatus(orderStatusDto) {
     return http.put('/admin/order/status', orderStatusDto);

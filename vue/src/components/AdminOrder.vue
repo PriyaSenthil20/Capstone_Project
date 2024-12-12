@@ -1,14 +1,15 @@
 <template>
   <div class="admin-orders">
 
+<!--
   <div>
         <ul>
           <li v-for="order in this.pendingOrders" :key="order.orderId">
             Order #{{ order.orderId }} Pending 
           </li>
         </ul>  
-    </div>
-  </div>
+    </div>-->
+  
 
     <form class="admin-order form">
 
@@ -17,12 +18,13 @@
         <select v-model="selectedOrder" class="dropdown" required>
           <option disabled selected>Select an Order</option>
           <option v-for="order in this.$store.state.adminOrders" :key="order.orderId" :value="order">
-            Order #{{ order.orderId }} - {{ order.customerName }}
+            Order #{{ order.orderId }} - {{ order.statusText }}
           </option>
         </select>
       </div>
 
-      <div v-if="selectedOrder">
+      <!--<div v-if="selectedOrder">-->
+        <div>
         <h3>Assign Driver</h3>
         <select v-model="selectedDriver" class="dropdown" required>
           <option disabled selected>Select a Driver</option>
@@ -35,7 +37,8 @@
         </button>
       </div>
 
-      <div v-if="selectedOrder">
+      <!--<div v-if="selectedOrder">-->
+        <div>
         <h3>Update Order Status</h3>
         <select v-model="selectedStatus" class="dropdown" required>
           <option disabled selected>Select a Status</option>
@@ -49,6 +52,7 @@
       </div>
 
       <div v-if="selectedOrder">
+        
         <h3>Order Details</h3>
         <p>Customer: {{ selectedOrder.customerName }}</p>
         <p>Delivery Option: {{ selectedOrder.transferType }}</p>
@@ -59,8 +63,9 @@
           </li>
         </ul>
       </div>
-    </form>
 
+    </form>
+</div>
     
 </template>
 
@@ -75,18 +80,7 @@ export default {
       selectedDriver: null,
       selectedStatus: null,
     };
-  },
-  computed: {
-  filteredList() {
-    let pendingOrders = this.orders;
-    if (this.pendingOrders.statusId = 1) {
-      pendingOrders = pendingOrders.filter((order) =>
-        order.statusId
-      );
-
-    return pendingOrders;
-  }
-  },
+  },  
   methods: {
     getOrders() {
       AdminService.getOrders()
@@ -139,14 +133,30 @@ export default {
         alert("Please select an order and status.");
       }
     },
+    getStatusOfOrder(orderId,statusId) {
+
+      const orderStatus = {
+          orderId: orderId,
+          statusId: statusId
+        };
+
+        AdminService.getStatusByStatusId(orderStatus)
+          .then(response => {
+            this.commit('SET_CURRENT_ORDER_STATUS') 
+          })
+          .catch((error) => {
+            console.error("Error updating order status:", error);
+          });
+    },
   },
   created() {
     this.$store.dispatch("getAdminOrders");
     this.$store.dispatch("getDrivers");
     this.$store.dispatch("getOrderStatuses");
+    this.$store.dispatch("getStatusByStatusId")
     this.getOrders();
   },
-},
+
 }
 </script>
 <style src="../styles/AdminOrderStyles.css">
