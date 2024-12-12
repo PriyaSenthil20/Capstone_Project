@@ -16,7 +16,6 @@ export default {
 
   registerCustomer(customer){
     console.log(customer)
-    alert("bonk")
     return http.post('/customerRegister', customer)
   }
   

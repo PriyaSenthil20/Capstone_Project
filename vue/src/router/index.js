@@ -99,7 +99,7 @@ const routes = [
     name: "menu",
     component: MenuView,
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },{
     path: "/aboutUs",
