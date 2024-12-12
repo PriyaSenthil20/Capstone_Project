@@ -46,14 +46,15 @@
   font-family: 'Roboto', Arial, sans-serif; /* Modern, readable font */
 }
 .comments h2 {
-  color: #2d3436; /* Dark neutral for the heading */
+  color: #edeeee; /* Dark neutral for the heading */
   font-size: 2rem;
-  font-weight: 700;
-  border-bottom: 3px solid #1268aae3; /* Bold blue for a standout divider */
-  padding-bottom: 10px;
+  font-weight: 600;
+  border-bottom: 3px ; /* Bold blue for a standout divider */
+  padding-bottom: 5px;
   margin-bottom: 25px;
   text-align: center;
-  
+  font-family:cursive;
+  background-color:#457b9d;
   letter-spacing: 1px; /* Adds a modern touch */
 }
 .comment {
