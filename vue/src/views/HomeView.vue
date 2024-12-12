@@ -10,7 +10,8 @@
     </div>
     <div class="content-section">      
       <specials v-bind:products="products"   />
-      <about-us />
+    
+      
     </div>
   </div>
 </template>
@@ -19,7 +20,7 @@
 import NavOptions from '../components/NavOptions.vue';
 import Welcome from '../components/Welcome.vue';
 import Specials from '../components/Specials.vue';
-import AboutUs from '../components/AboutUs.vue';
+
 import PizzaService from '../services/PizzaService.js';
 
 
@@ -28,7 +29,7 @@ export default {
     NavOptions,
     Welcome,
     Specials,
-    AboutUs,
+    
   },
   data() {
     return{ 

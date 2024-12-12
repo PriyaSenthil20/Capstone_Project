@@ -1,8 +1,7 @@
 <template>
      <div class = "aboutUs-message">
-        <h1 v-if="!aboutUs" v-on:click="aboutus()">About Us&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1>
-        <div v-if="aboutUs" class="aboutText">
-            <h1 v-on:click="aboutus()">About Us</h1>
+        <div class="aboutText">
+            <h1>About Us</h1>
         
           <ul><li>  <p>
                 Welcome to Rocco's Pizza , your ultimate pizza destination where every bite is an adventure!
@@ -22,20 +21,8 @@
         </div>
     </div>
 </template>
-<script>
-export default{
-    data(){
-        return{
-        aboutUs:false
-        };
-    },
-    methods:
-    {
-    aboutus(){
-        this.aboutUs=!this.aboutUs;
-    }
-    }
-}</script>
+
+
 <style scoped>
 .aboutUs-message {
     font-family: sans-serif;

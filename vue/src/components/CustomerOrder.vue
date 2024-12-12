@@ -142,6 +142,7 @@
           <ul><li>Pick Up Date and Time:
             <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{this.$store.state.orderDetails.pickUpDate}}&nbsp;{{this.$store.state.orderDetails.pickUpTime}}</li>
             <li>Pickup Address: <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rocco's Pizza Place,<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anthony's Drive,<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java Purple,<br>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NLR-2024.
 
@@ -358,7 +359,6 @@ export default {
           let hours24 = new Date().getHours();
           const minutes = new Date().getMinutes();
           let ampm = ' AM';
-
           this.storeTime = []; // Initialize storeTime array
 
           if (hours24 >= 21) {
