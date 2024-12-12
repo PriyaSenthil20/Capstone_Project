@@ -4,7 +4,7 @@
         </div>
 
       <div class="customerComponent">
-      <customer-orders />
+      <about-us />
       </div>
    
 </template>
@@ -12,19 +12,16 @@
 <script>
 
 
-import CustomerOrders from "../components/CustomerOrder.vue";
 import NavOptions from "../components/NavOptions.vue";
+import AboutUs from "../components/AboutUs.vue";
 
 export default {
 
  
 components: {
-    CustomerOrders,
+    AboutUs,
     NavOptions
-},
-created(){
-       this.$store.dispatch('loadData');
-    }
+}
 
 }
 

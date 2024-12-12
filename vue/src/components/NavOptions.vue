@@ -36,8 +36,7 @@
               <button class="navBtn orderBtn">Start Order</button>
             </router-link>
             
-        </div>
-        <img v-bind:src="this.logoUrl"/>
+        <img v-bind:src="this.logoUrl" class="logo"/></div>
     </div>
 </template>
 
@@ -45,91 +44,97 @@
 
 
 export default {
-    data(){
-       
-    },
-    methods: {
-        
-    },
+   
     computed: {
         logoUrl(){
             return `../src/assets/PizzaIcon.png`;            
         }
-    },
-    created(){
-       
     }
 };
 </script>
 
 
 <style scoped>
-
+/* General Layout */
 #main {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  
-  /*border-radius: 5px;
-  padding: 1rem;
-  background-color: #f4f4f4;*/
-  background-color: #e63946;
+  justify-content: center;
+  background-color: #e63946; /* A vibrant red background */
+  height: 50%;
+  padding: 20px;
+  box-sizing: border-box;
 }
-
 
 #menu-options {
-  background-color: #e63946;
   display: flex;
-  flex-wrap: wrap;
-/*
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
-  margin-bottom: 1rem;
-  padding: 1.5rem;
-  background-color: #e63946;
+  flex-wrap: nowrap; /* Prevent wrapping to new lines */
+  justify-content: space-between; /* Even spacing between buttons */
+  align-items: center; /* Align buttons vertically */
+  gap: 10px; /* Optional: small space between buttons */
+  background-color: #f1faee; /* Light background for contrast */
+  padding: 20px;
   border-radius: 15px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-  */
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.2rem;
 }
 
+/* Buttons */
 .navBtn {
-   background-color: #FFD700;
-   font-size: 24px;
-   padding: 32px 32px;
-   border: 0px;
-  /*padding: 1.2rem 2.5rem;
-  font-size: 1.5rem;
+  flex: 1; /* Makes all buttons take equal space */
+  width: 120px; /* Ensures buttons don’t grow too large */
+  height: 50px; /* Enforce consistent height */
+  text-align: center;
+  font-size: 1.2rem;
   font-weight: bold;
-  color: white;
-  background-color: #ff6347;
+  color: #fff;
+  background-color: #457b9d; /* Deep blue */
+  padding: 12px 0; /* Adjust padding for consistency */
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s, transform 0.2s;*/
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .navBtn:hover {
-  background-color: #ff4500;
+  background-color: #1d3557; /* Darker blue for hover */
   transform: translateY(-3px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-/*
+/* Order Button (Highlight) */
 .orderBtn {
-  background-color: #ffd700;
+  background-color: #ffcc00; /* Bright yellow */
   color: #333;
 }
 
 .orderBtn:hover {
-  background-color: #ffcc00;
-}*/
-
-.logo {
-  max-width: 120px;
-  margin-top: 1.5rem;
+  background-color: #ffb900; /* Slightly darker yellow */
 }
 
+/* Logo */
+.logo {
+  max-width: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
 
+/* Responsive Design */
+@media (max-width: 768px) {
+  #menu-options {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .navBtn {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+
+  .logo {
+    max-width: 10px;
+  }
+}
 </style>

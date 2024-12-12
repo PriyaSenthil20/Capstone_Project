@@ -1,9 +1,14 @@
 <template>
-     <div class = "specials-message">
-        <h1>Specials</h1>
-            <div v-for="product in this.products" v-bind:key="product.productId">
-                {{product.productName}}
-            </div>
+     <div >
+        <h1 v-on:click="specials()" class = "specials-message">Specials&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h1><br>
+        <div v-if="selectedSpecial" class="specialsMenu">
+            <ul>
+                <li v-for="product in uniqueProducts" :key="product.productId">
+                  {{ product.productName }} 
+                
+                </li>
+              </ul>
+        </div>
     </div>
 </template>
 
@@ -16,6 +21,28 @@ export default{
             type: Array,
             required: true
         }
+    },
+    data(){
+    return{
+        selectedSpecial:false
+
+    };
+    },computed: {
+    uniqueProducts() {
+      const seen = new Set();
+      return this.products.filter((product) => {
+        const isDuplicate = seen.has(product.productName);
+        seen.add(product.productName);
+        return !isDuplicate;
+      });
+     }
+    },
+    
+    methods:
+    {
+    specials(){
+        this.selectedSpecial=!this.selectedSpecial;
+    }
     }
 }
 </script>
@@ -29,7 +56,9 @@ export default{
     justify-content: space-between;
     text-align: center;
 }
-
+.specialsMenu li{
+ list-style: none;
+}
 .text {
     font-family: sans-serif;
 }

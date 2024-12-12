@@ -3,7 +3,7 @@
     <form class="customer-order" v-on:submit.prevent="customerOrder()">
       <h3>Select Delivery Option</h3>
     <ul class="delivery-options">
-    <li>Pick Up
+    <li>Pick Up<br><br>
       <div class="option-container" value='2' @click="selectDeliveryOption('2') ">
         <img 
         src="../assets/pickup-icon.png" 
@@ -14,7 +14,7 @@
       <p v-if="deliveryOption === '2'">Pick-up Selected</p>
       </div>
     </li>
-    <li>Delivery 
+    <li>Delivery <br><br>
     <div class="option-container value='1'"  @click="selectDeliveryOption('1') ">
       <img 
         src="../assets/delivery-icon.png" 
@@ -29,7 +29,7 @@
       <!-- Pizza Selection -->
       <div v-if="deliveryOption !== null" class="pizza-selection">
         <h3>Select Pizza Type</h3>
-        <ul class="pizza-list"><li>Custom Pizza
+        <ul class="pizza-list"><li>Custom Pizza<br><br>
         <div class="pizza-img-container" @click="selectPizza('custom')">
           <img 
             src="../assets/PizzaPic.png" 
@@ -40,7 +40,7 @@
           />
           <p v-if="selectedPizzaType === 'custom'">Custom Pizza Selected</p>
         </div></li>
-        <li>Specialty Pizza
+        <li>Specialty Pizza<br><br>
         <div class="pizza-img-container" @click="selectPizza('specialty')">
           <img 
             src="../assets/PizzaPic.png" 

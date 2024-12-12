@@ -9,7 +9,7 @@
   <div>
     </div>
     <div class="content-section">      
-      <specials v-bind:products="products" />
+      <specials v-bind:products="products"   />
       <about-us />
     </div>
   </div>

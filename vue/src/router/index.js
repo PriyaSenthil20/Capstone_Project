@@ -11,7 +11,7 @@ import CustomerOrderView from '../views/CustomerOrderView.vue';
 import AdminInventoryView from '../views/AdminInventoryView.vue';
 import AdminOrderView from '../views/AdminOrderView.vue';
 import PaymentView from '../views/PaymentView.vue';
-
+import AboutUsView from '../views/AboutUsView.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
  * inside of App.vue depending on the URL.

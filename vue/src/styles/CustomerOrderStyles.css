@@ -7,7 +7,7 @@ html {
 }
 
 .customer-products {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 50px auto;
   padding: 40px;
   background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
@@ -42,7 +42,7 @@ html {
 
 .pizza-img-container {
   width: 100%;
-  max-width: 250px;
+  max-width: 200px;
   margin: 0 auto;
   overflow: hidden;
   border-radius: 12px;
@@ -83,9 +83,9 @@ html {
 .delivery-options {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 8px;
   padding: 0;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   list-style: none;
 }
 
@@ -96,7 +96,7 @@ html {
 
 .option-container {
   width: 100%;
-  max-width: 200px;
+  max-width: 150px;
   margin: 0 auto;
   overflow: hidden;
   border-radius: 12px;
