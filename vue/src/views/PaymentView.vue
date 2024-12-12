@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="navOptions">
     <nav-options />
     </div>
     <div class="payment-view">
@@ -18,15 +18,4 @@
   };
   </script>
   
-  <style scoped>
-  .payment-view {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f1f1f1;
-  }
-  
-
-  </style>
-  
+ 
