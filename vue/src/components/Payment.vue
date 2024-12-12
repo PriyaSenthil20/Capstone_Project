@@ -10,7 +10,7 @@
         </div>
 
         <div class="form-group" v-if="this.$store.state.orderDetails.transferId=='1'">
-          <div class="form-group"><label for="deliveryAddress">Enter Delivery Address</label>
+          <div ><label for="deliveryAddress">Enter Delivery Address</label>
           <input
             type="text"
             id="deliveryAddress"
@@ -96,9 +96,10 @@
       </form>
     </div>
     <div class="paymentConfirmationPage" v-if="submitSuccess" >
+      <div  class="paymentConfirmationBox">
       <label>Order SuccessFul</label>
       <label> Your Payment Confirmation Id: {{this.paymentConfirmation}}</label>
-      <label> Enjoy Your Pizza!!!</label>
+      
       <div v-if="this.$store.state.orderDetails.transferId===1">
         <label>Your Pizza Will be delivered to:</label>
         <p>{{this.deliveryAddress}}, <br>{{this.cityName}}, {{this.stateName}}</p>
@@ -110,9 +111,10 @@
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java Purple,<br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NLR-2024.
         </p>
-        <p>{{this.deliveryAddress}}, <br>{{this.cityName}}, {{this.stateName}}</p>
-      </div>
-    </div>
+       
+        
+      </div><label> Life Happens, Pizza Helps.!!!</label>
+    </div></div>
   </template>
   <script>
    import PaymentService from '../services/PaymentServices.js';
@@ -174,7 +176,7 @@
     max-width: 400px;
     margin: 50px auto;
     padding: 20px 25px;
-    background-color: #ffffff;
+    background-color: #ffffffee;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
@@ -238,27 +240,55 @@
   }
   
   /* Success Message */
-  .paymentConfirmationPage {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 100vh;
-    color: white;
-    background-color: #007bff;
-  }
-  
-  .paymentConfirmationPage label {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 10px 0;
-  }
-  
-  .paymentConfirmationPage p {
-    font-size: 1rem;
-    margin: 10px 0;
-  }
+  /* Payment Confirmation Box */
+.paymentConfirmationPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  background: url('../assets/login1.png') no-repeat center center;
+  background-size: cover;
+  padding: 20px;
+}
+
+.paymentConfirmationBox {
+  background-color: rgb(238, 231, 231);
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.paymentConfirmationBox label {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333333;
+  margin: 10px 0;
+}
+
+.paymentConfirmationBox p {
+  font-size: 1rem;
+  color: #555555;
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+/* Adjust alignment for delivery details */
+.paymentConfirmationBox .deliveryDetails {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #444444;
+}
+
+.paymentConfirmationBox .deliveryDetails p {
+  margin: 5px 0;
+}
+
   
   /* Delivery Details */
   .form-group div {

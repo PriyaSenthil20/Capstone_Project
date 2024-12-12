@@ -13,7 +13,7 @@
     <div class="gallery-container">
         <div class="gallery">
             <div class="gallery-inner">
-                <div v-for="(photo, index) in photoGallery" :key="index" class="photo-item">
+                <div v-for="(photo, index) in photoGallery" :key="index" class="photo-item ">
                 <img :src="photo.image" :alt="photo.description" class="gallery-image" />
                 <p>{{ photo.description }}</p>
                 </div>
@@ -162,6 +162,8 @@ export default {
   padding: 1.5rem;
 }
 
+
+
 .gallery-container {
     width: 100%;
     overflow: hidden;
@@ -191,7 +193,7 @@ export default {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-50%); /* Adjusted to -50% for seamless repeat */
+        transform: translateX(-80%); 
     }
 }
 </style>

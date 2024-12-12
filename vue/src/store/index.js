@@ -171,12 +171,9 @@ export function createStore(currentToken, currentUser) {
         }); 
       },
     createCustomerOrder({commit}){
-      alert("Before Service Call");
-      alert(this.state.user.id);
       OrderService.customerOrder(this.state.order)
       .then(response=>{
         this.commit('SET_ORDER_DETAILS',response.data);
-        alert("orderId"+this.state.orderDetails.orderId);
       })
       .catch(error => {
         console.log(error);
