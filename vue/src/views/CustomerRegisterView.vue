@@ -4,12 +4,9 @@
       <nav-options/>
     </nav>
   </div>
-  <span>
-    <h3 id="showStep1" v-if="$store.state.token == ''">Step 1/2</h3>
-    <h3 id="showStep2" v-if="$store.state.token != ''">Step 2/2</h3>
-  </span>
-  <div id="register" class="text-center" v-if="$store.state.token == ''">
-    <form v-on:submit.prevent="register">
+
+  <div id="login"  v-if="$store.state.token == ''">
+    <form id="loginform" v-on:submit.prevent="register">
       <h1>Create Account</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
@@ -32,9 +29,9 @@
   </div>
 
   
-  <div id="customerRegister" class="text-center" v-else>
-    <form v-on:submit.prevent="registerCustomer">
-       <h1>Enter Customer Details for {{customer.customerId}} {{this.$store.state.user.username}}</h1>
+  <div id="login" v-else>
+    <form id="loginform" v-on:submit.prevent="registerCustomer">
+       <h1>Enter Customer Details</h1>
       <div role="alert" v-if="registrationErrors">
         {{ registrationErrorMsg }}
       </div>
@@ -237,8 +234,8 @@ export default {
 </script>
 
 <style scoped>
-#register {
-  background-image: url('../assets/register9.jpg'); 
+#login {
+  background-image: url('../assets/login1.png'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -247,33 +244,20 @@ export default {
   justify-content: center;
   align-items: center;
 }
-#customerRegister{
-  background-image: url('../assets/register9.jpg'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#loginform{
+  background-color: rgb(239, 244, 245);
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  
 }
 .form-input-group {
-  display:flex;
-  align-items:center;
   margin-bottom: 1rem;
+  
 }
-.form-input-group input, .form-input-group select {
-  width: 100%;  
-  padding: 10px;
-  margin: 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.form-input-group select {
-  max-width: 100%;
-}
-
 label {
   margin-right: 0.5rem;
 }
@@ -286,7 +270,7 @@ label {
   color: #808080;
 }
 button {
-  background-color: red; 
+  background-color: rgb(26, 115, 171); 
   color: white; 
   padding: 10px 20px; 
   border: none; 

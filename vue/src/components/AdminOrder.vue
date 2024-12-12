@@ -181,8 +181,9 @@ export default {
     //this.$store.dispatch("getAdminOrders");
     //this.$store.dispatch("getDrivers");
     //this.$store.dispatch("getOrderStatuses");
-    this.getOrders();
     this.getDrivers();
+    this.getOrders();
+    
     this.getStatuses();
   },
 
