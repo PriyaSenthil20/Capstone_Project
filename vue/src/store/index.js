@@ -25,11 +25,6 @@ export function createStore(currentToken, currentUser) {
       orderDetails:{},
       currentOrderDriver: {},
       currentOrderStatus: {}
-    },
-    getters: {
-      isAdmin(state) {
-        return state.user.authorities[0].name === 'ROLE_ADMIN';
-      } 
     }, 
     mutations: {
       SET_AUTH_TOKEN(state, token) {
