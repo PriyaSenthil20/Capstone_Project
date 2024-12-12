@@ -60,6 +60,10 @@ export default {
         {
           image: new URL("../assets/actionPic.jpg", import.meta.url).href,
           description: "Now that's taking one for the team.",
+        },
+        {
+          image: new URL("../assets/inCar.jpg", import.meta.url).href,
+          description: "The pizza didn't even make it home.",
         }
         
       ],
