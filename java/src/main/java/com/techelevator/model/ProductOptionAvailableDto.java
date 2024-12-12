@@ -2,25 +2,25 @@ package com.techelevator.model;
 
 public class ProductOptionAvailableDto {
 
-    private int productOptionId;
-    private boolean productOptionAvailable;
+    private int optionId;
+    private boolean optionAvailable;
 
     public ProductOptionAvailableDto() {
     }
 
     public int getProductOptionId() {
-        return productOptionId;
+        return optionId;
     }
 
-    public void setProductOptionId(int productOptionId) {
-        this.productOptionId = productOptionId;
+    public void setProductOptionId(int optionId) {
+        this.optionId = optionId;
     }
 
     public boolean isProductOptionAvailable() {
-        return productOptionAvailable;
+        return optionAvailable;
     }
 
-    public void setProductOptionAvailable(boolean productOptionAvailable) {
-        this.productOptionAvailable = productOptionAvailable;
+    public void setProductOptionAvailable(boolean optionAvailable) {
+        this.optionAvailable = optionAvailable;
     }
 }
