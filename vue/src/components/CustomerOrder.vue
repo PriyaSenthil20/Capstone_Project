@@ -74,8 +74,15 @@
           <label v-for="topping in $store.state.toppings" :key="topping.optionId">
             <input type="checkbox" :value="topping.optionId" v-model="selectedToppings"  />
             {{ topping.optionName }}
+          </label>   
+        </div> 
+        <h3>Premium Toppings</h3>
+        <div id="premiumToppings" class="checkbox-group">
+          <label v-for="topping in $store.state.premiumToppings" :key="topping.optionId">
+            <input type="checkbox" :value="topping.optionId" v-model="selectedPremiumToppings"  />
+            {{ topping.optionName }}
           </label>
-        </div>
+        </div>      
         <h3>Sauces</h3>
         <select v-model="selectedSauce" class="dropdown" required>
           <option v-for="sauce in this.$store.state.sauces" :key="sauce.optionId" :value="sauce.optionId">
@@ -83,21 +90,28 @@
           </option>
         </select>
       </div>
-
-      <div v-if="selectedPizzaType === 'specialty'">
+    <div v-if="selectedPizzaType === 'specialty'">
         <h3>Specialty Pizza Options</h3>
         <select v-model="selectedProduct" class="dropdown" required>
           <option v-for="specialtyPizza in this.$store.state.specialtyPizzas" :key="specialtyPizza.productId" :value="specialtyPizza.productId">
             {{ specialtyPizza.productDesc }}
           </option>
-        </select>
-     
+        </select>    
       </div>
         <div v-if="deliveryOption !== null && selectedPizzaType !== null">
         <!-- Quantity Input -->
         <h3>Quantity</h3>
         <input class="quantity" name="quantity" type="number" v-model="orderQuantity" placeholder="Quantity" min="1"/>
       
+        <h3>PickUp Timings</h3>
+        <div id="time" class="dropdown">
+          <label v-if="this.dateLabel">The Store is closed now, but you can place a pre-order for tomorrow: {{this.pickUpDate}}</label>
+          <select v-model="time" class="dropdown" required>
+            <option v-for="pickUpTimeSlot in this.storeTime" :key="pickUpTimeSlot" :value="pickUpTimeSlot" >
+              {{ pickUpTimeSlot }}
+            </option>
+          </select>          
+        </div> 
         <!-- Buttons -->
         <div class="action-buttons">
           <button type="button" class="add-to-cart" @click="addToCart">
@@ -154,13 +168,10 @@ import OrderService from '../services/OrderService';
 
 export default {
   created(){
-    
+    this.loadTime();
   },
   data() {
-    const now = new Date();
-    now.setMinutes(now.getMinutes() + 45);
-    const defaultPickUpDate = now.toISOString().split('T')[0]; 
-    const defaultPickUpTime = now.toTimeString().split(' ')[0];
+   
     return {
       order: {
         customerId: null,
@@ -169,21 +180,24 @@ export default {
         pickUpTime: null,
         productDtoList: []
       }, 
+      
       orderProducts:[],
       orderOptions:[],
-      time:defaultPickUpTime,
-      date:defaultPickUpDate,
+      time:null,
+      date:(new Date().getMonth()+1)+'-'+new Date().getDate()+'-'+new Date().getFullYear(),
       selectedProduct: null,
       selectedPizzaType: null,
       selectedCrust: null,
       selectedToppings: [],
+      selectedPremiumToppings: [],
       selectedSauce: null,
       deliveryOption: null,
       showConfirmation :false,
       orderQuantity : 1,
       errorMessage :[],
-      cartCheck : false
-      
+      cartCheck : false,
+      dateLabel:false,
+      storeTime:[]
     };
     },
    computed: {
@@ -204,6 +218,10 @@ export default {
           let result=true;
         if (!this.selectedProduct) {
           this.errorMessage.push("Please select a product.");
+          result=false;
+        }
+        if (!this.time) {
+          this.errorMessage.push("Please select a TimeSlot.");
           result=false;
         }
         if (this.selectedPizzaType === 'custom') {
@@ -239,6 +257,10 @@ export default {
           
             productOptions.push({productOptionId:this.selectedToppings[i]});
           }
+          for(let i=0;i<this.selectedPremiumToppings.length;i++){
+          
+          productOptions.push({productOptionId:this.selectedPremiumToppings[i]});
+        }
           if(this.selectedSauce){
             productOptions.push({productOptionId:this.selectedSauce});
           }       
@@ -312,7 +334,7 @@ export default {
           let temp=this.$store.state.products;
           for(let i=0;i<temp.length;i++){
              if(temp[i].productId===this.selectedProduct){
-                this.orderProducts.push(temp[i].productDescription);
+                this.orderProducts.push(temp[i].productDesc);
               }
             }
           temp=this.$store.state.options;
@@ -324,13 +346,60 @@ export default {
                 else if(temp[i].optionId===this.selectedSauce){
                   this.orderOptions.push(temp[i].optionName);
                 }
-                if (this.selectedToppings.includes(temp[i].optionId)) {
+                else if (this.selectedToppings.includes(temp[i].optionId)) {
                    this.orderOptions.push(temp[i].optionName);
                 }
+                else if (this.selectedPremiumToppings.includes(temp[i].optionId)) {
+                   this.orderOptions.push(temp[i].optionName);
+                }
+              }
+          },
+          loadTime() {
+          let hours24 = new Date().getHours();
+          const hours12 = hours24 % 12 || 12;
+          const minutes = new Date().getMinutes();
+          let ampm = ' AM';
+
+          if (hours24 >= 21) {
+            this.dateLabel = true;
+            const today = new Date();
+            const nextDate = new Date(today);
+            nextDate.setDate(today.getDate() + 1);
+            this.pickUpDate = nextDate.getDate()+"-"+nextDate.getMonth()+"-"+nextDate.getFullYear();
+            hours24 = 8;
+
+            for (let i = 0; hours24 < 21; i++, hours24++) {
+              const displayHours12 = hours24 % 12 || 12;
+              ampm = hours24 >= 12 ? ' PM' : ' AM';
+              this.storeTime[i++] = displayHours12 + ':00' + ampm;
+              this.storeTime[i] = displayHours12 + ':30' + ampm;
+            }
+          } else if (hours24 < 8) {
+            hours24 = 8;
+            for (let i = 0; hours24 < 21; i++, hours24++) {
+              const displayHours12 = hours24 % 12 || 12;
+              ampm = hours24 >= 12 ? ' PM' : ' AM';
+              this.storeTime[i++] = displayHours12 + ':00' + ampm;
+              this.storeTime[i] = displayHours12 + ':30' + ampm;
+            } 
           }
+          else {
+            for (let i = 0; hours24 < 21; i++) {
+              const displayHours12 = hours24 % 12 || 12;
+              ampm = hours24 >= 12 ? ' PM' : ' AM';
+              if (minutes < 30 && minutes > 10 && this.dateLabel === false) {
+                this.storeTime[i++] = displayHours12 + ':30' + ampm;
+                this.storeTime[i] = (displayHours12 + 1) + ':00' + ampm;
+              } else if (minutes > 30 && minutes < 50 && this.dateLabel === false) {
+                this.storeTime[i++] = (displayHours12 + 1) + ':00' + ampm;
+                this.storeTime[i] = displayHours12 + ':30' + ampm;
+              }
+            }
           }
+        }
+ 
     }
-};
+  };
 </script>
 <style src="../styles/CustomerOrderStyles.css">
 </style>

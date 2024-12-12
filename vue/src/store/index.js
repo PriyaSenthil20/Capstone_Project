@@ -16,6 +16,7 @@ export function createStore(currentToken, currentUser) {
       drivers: [],
       crusts: [],
       toppings: [],
+      premiumToppings:[],
       sauces: [],
       specialtyPizzas: [],
       customPizzas: [],
@@ -43,6 +44,9 @@ export function createStore(currentToken, currentUser) {
       },
       SET_TOPPINGS(state, toppings){
         state.toppings = toppings;
+      },
+      SET_PREMIUM_TOPPINGS(state, toppings){
+        state.premiumToppings = toppings;
       },
       SET_SAUCES(state, sauces){
         state.sauces = sauces;
@@ -115,6 +119,8 @@ export function createStore(currentToken, currentUser) {
           this.commit('SET_OPTIONS',options);
           this.commit('SET_CRUSTS',options
             .filter(option => option.optionTypeId=== 3));
+            this.commit('SET_PREMIUM_TOPPINGS',options
+            .filter(option => option.optionTypeId=== 4));
             this.commit('SET_TOPPINGS',options
             .filter(option => option.optionTypeId=== 1));
             this.commit('SET_SAUCES',options
