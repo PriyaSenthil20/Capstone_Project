@@ -247,7 +247,7 @@ export default {
   align-items: center;
 }
 .form-input-group {
-  disply:flex;
+  display:flex;
   align-items:center;
   margin-bottom: 1rem;
 }

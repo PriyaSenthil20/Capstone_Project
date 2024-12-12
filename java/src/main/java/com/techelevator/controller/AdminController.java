@@ -114,7 +114,7 @@ public class AdminController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to add product option.", e);
         }
     }
-    @GetMapping("/orders/pending")
+    @GetMapping("admin/orders/pending")
     public List<Order> viewPendingOrders() {
         try {
             return orderDao.getOrders(); // Modify to filter for pending orders if needed.

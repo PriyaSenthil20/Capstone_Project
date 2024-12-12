@@ -90,12 +90,12 @@ public class JdbcProductOptionDao implements ProductOptionDao{
     @Override
     public ProductOption createProductOption(ProductOption productOption) {
         int newProductId;
-        String sql  = "INSERT INTO product_options (option_name,option_desc \n" +
+        String sql  = "INSERT INTO product_options (option_name,option_desc, \n" +
                 "\toption_type_id,\n" +
                 "\toption_price,\n" +
-                "\toption_available,\n"+
-                "VALUES (?,?,?,?,?,?) " +
-                "RETURNING option_id ";
+                "\toption_available)\n"+
+                "VALUES (?,?,?,?,?) " +
+                "RETURNING option_id";
         try {
             newProductId = jdbcTemplate.queryForObject(sql, int.class, productOption.getOptionName(),
                     productOption.getOptionDesc(), productOption.getOptionTypeId(), productOption.getOptionPrice(),productOption.isOptionAvailable());

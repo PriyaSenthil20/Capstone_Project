@@ -9,7 +9,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 @Component
@@ -34,6 +33,22 @@ public class JdbcOrderDao implements OrderDao {
     public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
         String sql = ORDER_SELECT + " FROM orders";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                Order order = mapRowToOrder(results);
+                orders.add(order);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new DaoException("Unable to connect to server or database", e);
+        }
+        return orders;
+    }
+
+    @Override
+    public List<Order> getPendingOrders() {
+        List<Order> orders = new ArrayList<>();
+        String sql = ORDER_SELECT + " FROM orders WHERE ";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {

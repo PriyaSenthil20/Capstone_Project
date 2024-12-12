@@ -38,11 +38,8 @@ export default {
   },
 
   // Change product availability
-  updateProductAvailability(productId, availability) {
-    return http.put(`/admin/products/availability`, {
-      productId,
-      availability,
-    });
+  updateProductAvailability(productAvailableDto) {
+    return http.put(`/admin/products/availability`, productAvailableDto);
   },
 
   
@@ -58,11 +55,8 @@ export default {
   },
 
   // Change availability of product options
-  updateProductOptionAvailability(optionId, availability) {
-    return http.put(`/admin/options/availability`, {
-      optionId,
-      availability,
-    });
+  updateProductOptionAvailability(productOptionAvailableDto) {
+    return http.put(`/admin/options/availability`,productOptionAvailableDto);
   },
 
   // Add a new product option (e.g., crust, topping, sauce)
