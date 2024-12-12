@@ -20,7 +20,7 @@
         <select v-model="selectedDriver" class="dropdown" required>
           <option disabled selected>Select a Driver</option>
           <option v-for="driver in this.$store.state.drivers" :key="driver.driverId" :value="driver">
-            {{ driver.driverName }} ID: {{ driver.driverId }}
+            {{ driver.driverName }} ID: {{driver.driverId}}
           </option>
         </select>
         <button type="button" class="nes-btn is-primary" @click="assignDriver">
@@ -42,12 +42,18 @@
         </button>
       </div>
 
+      <div>
+        <button type="button" class="nes-btn is-warning" @click="getOrderDetails(selectedOrder)">
+          Refresh
+        </button>
+      </div>
+
       <div v-if="selectedOrder">
         
         <h3>Order Details</h3>
-        <p>Order: {{ selectedOrder.orderId }}</p>
-        <p>Driver ID: {{ selectedDriver.driverId }}</p>
-        <p>Status: {{ selectedStatus.statusType }}</p>
+        <p>Order: {{ currentAdminOrder.orderId }}</p>
+        <p>Driver ID: {{ currentAdminOrder.driverId }}</p>
+        <p>Status: {{ CalculateStatus(this.currentAdminOrder.statusId) }}</p>
         <p>Order Total: ${{ selectedOrder.totalSale }}</p>
         <ul>
           <li v-for="item in selectedOrder.items" :key="item.id">
@@ -118,7 +124,7 @@ export default {
 
         AdminService.updateOrderStatus(orderStatus)
           .then(response => {
-            updatedStatus = response.data;
+            this.updatedStatus = response.data;
             this.commit('SET_CURRENT_ORDER_STATUS') 
           })
           .catch((error) => {

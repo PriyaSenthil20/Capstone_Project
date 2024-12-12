@@ -274,7 +274,6 @@ export default {
             productOptionDtoList:productOptions
           });
           }       
-         alert("Products added to the order"); 
           
          }  
          else{
