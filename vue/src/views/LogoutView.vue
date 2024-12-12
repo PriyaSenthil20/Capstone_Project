@@ -4,7 +4,7 @@
       <nav-options/>
     </nav>
   </div>
-  <h1>Logout</h1>
+  <h1>You're Now Logged Out</h1>
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
   },
   created() {
     this.$store.commit("LOGOUT");
-    this.$router.push("/login");
+    this.$router.push("/");
   }
 };
 </script>

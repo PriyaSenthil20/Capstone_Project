@@ -33,18 +33,19 @@
             </router-link>
             
         <img v-bind:src="this.logoUrl" class="logo"/></div>
-    </div>
-    <div id="admin-buttons">
-                      <span v-if="getRole()" @click="onLinkClicked('/adminInventory')">
+        <div id="admin-buttons" v-if="getRole()">
+                      <span>
                   <router-link v-bind:to="{ name: 'AdminInventory' }">
                   <button class="navBtn">Inventory</button></router-link>
                 </span>
                 <h1>Admin Options</h1>
-                <span v-if="getRole()" @click="onLinkClicked('/adminOrder')">
+                <span>
                   <router-link v-bind:to="{ name: 'AdminOrder' }">
                   <button class="navBtn">Check Orders</button></router-link>
                 </span>
       </div>
+         </div>
+       
 </template>
 
 <script>
@@ -57,11 +58,17 @@ export default {
         if (!this.isAuthenticated) {
           // If not authenticated, redirect to login with a query to redirect after login
           this.$router.push({ name: 'login', query: { redirect: redirectPath } });
+        }else{
+          this.$router.push(redirectPath);
         }
       },
-    getRole(){
-      return (this.$store.getters.isAdmin); 
-    }
+      getRole(){
+        if(this.$store.state.token != ''){
+      return this.$store.state.user.authorities[0].name === 'ROLE_ADMIN'; 
+        } else{
+          return false;
+        }
+      }
     },
     computed: {
         logoUrl(){

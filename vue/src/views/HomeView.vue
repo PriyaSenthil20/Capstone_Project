@@ -6,25 +6,21 @@
     <div class="welcome-section">
       <welcome />
     </div>
-    <div>
-    </div>
-    <div class="content-section">      
-      <specials v-bind:products="products"   />
     
-      
+  </div>
+  <div class="gallery-body">
+    <h1>Photo Gallery</h1>
+    <div class="gallery-container">
+        <div class="gallery">
+            <div class="gallery-inner">
+                <div v-for="(photo, index) in photoGallery" :key="index" class="photo-item">
+                <img :src="photo.image" :alt="photo.description" class="gallery-image" />
+                <p>{{ photo.description }}</p>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
-  <h1>Photo Gallery</h1>
-  <div class="gallery-container">
-        <div class="gallery">
-    <div class="gallery-inner">
-      <div v-for="(photo, index) in photoGallery" :key="index" class="photo-item">
-        <img :src="photo.image" :alt="photo.description" class="gallery-image" />
-        <p>{{ photo.description }}</p>
-      </div>
-    </div>
-    </div>
-    </div>
 </template>
 
 <script>
@@ -39,7 +35,6 @@ export default {
   components: {
     NavOptions,
     Welcome,
-    Specials,
     
   },
   data() {
@@ -80,7 +75,7 @@ export default {
     };
   },
   methods: {
-      getMenu(){
+      /*getMenu(){
       
       PizzaService.menu()
       .then(response => {
@@ -100,10 +95,10 @@ export default {
       .catch(error => {
         console.log(error);
       })
-    }
+    } */
   },
   created() {
-    this.getMenu();
+   // this.getMenu();
   }
 };
 </script>
