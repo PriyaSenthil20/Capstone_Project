@@ -10,7 +10,6 @@ const http = axios.create({
 export default {
 
   customerOrder(order){
-    console.log(order);
     return http.post('/orders', order);
   },
     

@@ -8,7 +8,6 @@ const http = axios.create({
 export default {
 
   submitPayment(payment){
-    console.log(payment);
     return http.post('/payments', payment);
   }
 }

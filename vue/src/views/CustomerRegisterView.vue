@@ -200,15 +200,15 @@ export default {
       }
     },
     registerCustomer() {
-      
-      alert(this.customer.customerId)
-      console.log(this.customer)
         authService
           .registerCustomer(this.customer)
           .then((response) => {
             if (response.status == 201) {
               this.$store.commit("SET_CUSTOMER", response.data);
-              this.$router.push('/');
+              this.$router.push({
+                path: '/',
+                query: { registration: 'success' },
+              });
             }
           })
           .catch((error) => {

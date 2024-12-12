@@ -15,7 +15,6 @@ export default {
   },
 
   registerCustomer(customer){
-    console.log(customer)
     return http.post('/customerRegister', customer)
   }
   
