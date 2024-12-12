@@ -28,6 +28,18 @@
               <router-link v-bind:to="{ name: 'AdminOrder' }">
               <button class="navBtn">Check Orders</button></router-link>
             </span>
+                <span >
+                    <router-link v-bind:to="{ name: 'menu' }">
+                        <button class = "navBtn"> Menu </button></router-link>
+                </span>                            
+        
+            <router-link v-bind:to="{ name: 'aboutUs' }">
+              <button class="navBtn">About Us</button></router-link>
+
+              <router-link v-bind:to="{ name: 'Specials' }">
+              <button class="navBtn">Specials</button></router-link>
+
+
             <!--
                 For Account route...
 
