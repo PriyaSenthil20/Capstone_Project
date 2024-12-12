@@ -17,15 +17,6 @@
                         <button class = "navBtn"> Register </button></router-link>
                 </span>                            
 
-                <span v-if="$store.state.user.role === 'ROLE_ADMIN'" @click="onLinkClicked('/adminInventory')">
-                  <router-link v-bind:to="{ name: 'AdminInventory' }">
-                  <button class="navBtn">Inventory</button></router-link>
-                </span>
-
-                <span v-if="$store.state.user.role === 'ROLE_ADMIN'" @click="onLinkClicked('/adminOrder')">
-                  <router-link v-bind:to="{ name: 'AdminOrder' }">
-                  <button class="navBtn">Check Orders</button></router-link>
-                </span>
                 <span >
                     <router-link v-bind:to="{ name: 'menu' }">
                         <button class = "navBtn"> Menu </button></router-link>
@@ -37,24 +28,23 @@
               <router-link v-bind:to="{ name: 'Specials' }">
               <button class="navBtn">Specials</button></router-link>
 
-
-            <!--
-                For Account route...
-
-                <span v-if="$store.state.token === ''">
-                    <router-link v-bind:to="{ name: 'account' }">
-                        <button> Account </button></router-link>
-                </span>   
-
-            -->
-
-            <!-- If the user is not signed this should prompt them to sign in or register -->
             <router-link v-bind:to="{ name: 'customerOrder' }" @click="onLinkClicked('/customerOrder')">
               <button class="navBtn orderBtn">Start Order</button>
             </router-link>
             
         <img v-bind:src="this.logoUrl" class="logo"/></div>
     </div>
+    <div id="admin-buttons">
+                      <span v-if="getRole()" @click="onLinkClicked('/adminInventory')">
+                  <router-link v-bind:to="{ name: 'AdminInventory' }">
+                  <button class="navBtn">Inventory</button></router-link>
+                </span>
+                <h1>Admin Options</h1>
+                <span v-if="getRole()" @click="onLinkClicked('/adminOrder')">
+                  <router-link v-bind:to="{ name: 'AdminOrder' }">
+                  <button class="navBtn">Check Orders</button></router-link>
+                </span>
+      </div>
 </template>
 
 <script>
@@ -68,7 +58,10 @@ export default {
           // If not authenticated, redirect to login with a query to redirect after login
           this.$router.push({ name: 'login', query: { redirect: redirectPath } });
         }
-      }
+      },
+    getRole(){
+      return (this.$store.getters.isAdmin); 
+    }
     },
     computed: {
         logoUrl(){
@@ -92,7 +85,7 @@ export default {
   box-sizing: border-box;
 }
 
-#menu-options {
+#menu-options, #admin-buttons {
   display: flex;
   flex-wrap: nowrap; /* Prevent wrapping to new lines */
   justify-content: space-between; /* Even spacing between buttons */
