@@ -20,8 +20,13 @@
                     <router-link v-bind:to="{ name: 'menu' }">
                         <button class = "navBtn"> Menu </button></router-link>
                 </span>                            
-            <button class="navBtn">About Us</button>
-            <button class="navBtn">Specials</button>
+        
+            <router-link v-bind:to="{ name: 'aboutUs' }">
+              <button class="navBtn">About Us</button></router-link>
+
+              <router-link v-bind:to="{ name: 'Specials' }">
+              <button class="navBtn">Specials</button></router-link>
+
 
             <!--
                 For Account route...

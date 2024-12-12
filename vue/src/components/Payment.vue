@@ -103,6 +103,7 @@
       <div v-if="this.$store.state.orderDetails.transferId===2">
         <label>Please Pick Your Pizza At:</label>
         <p><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rocco's Pizza Place,<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Anthony's Drive,<br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Java Purple,<br>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NLR-2024.
         </p>

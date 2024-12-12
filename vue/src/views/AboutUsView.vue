@@ -3,9 +3,12 @@
         <nav-options />
         </div>
 
-      <div class="customerComponent">
+      <div class="aboutUs">
       <about-us />
       </div>
+      <div class="ReviewsComponent">
+        <reviews/>
+        </div>
    
 </template>
 
@@ -14,13 +17,15 @@
 
 import NavOptions from "../components/NavOptions.vue";
 import AboutUs from "../components/AboutUs.vue";
+import Reviews from "../components/Reviews.vue";
 
 export default {
 
  
 components: {
     AboutUs,
-    NavOptions
+    NavOptions,
+    Reviews
 }
 
 }
