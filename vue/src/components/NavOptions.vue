@@ -16,8 +16,10 @@
                     <router-link v-bind:to="{ name: 'customerRegister' }">
                         <button class = "navBtn"> Register </button></router-link>
                 </span>                            
-           
-            <button class="navBtn">Menu</button>
+                <span >
+                    <router-link v-bind:to="{ name: 'menu' }">
+                        <button class = "navBtn"> Menu </button></router-link>
+                </span>                            
             <button class="navBtn">About Us</button>
             <button class="navBtn">Specials</button>
 
