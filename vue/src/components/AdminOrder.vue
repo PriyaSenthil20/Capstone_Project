@@ -8,7 +8,7 @@
         <h3>Select Order</h3>
         <select v-model="selectedOrder" class="dropdown" required>
           <option disabled selected>Select an Order</option>
-          <option v-for="order in this.orders" :key="order.orderId" :value="order">
+          <option v-for="order in this.$store.state.adminOrders" :key="order.orderId" :value="order">
             Order #{{ order.orderId }} - {{ CalculateStatus(order.orderId) }}
           </option>
         </select>
@@ -19,7 +19,7 @@
         <h3>Assign Driver</h3>
         <select v-model="selectedDriver" class="dropdown" required>
           <option disabled selected>Select a Driver</option>
-          <option v-for="driver in this.drivers" :key="driver.driverId" :value="driver">
+          <option v-for="driver in this.$store.state.drivers" :key="driver.driverId" :value="driver">
             {{ driver.driverName }} ID: {{driver.driverId}}
           </option>
         </select>
@@ -33,7 +33,7 @@
         <h3>Update Order Status</h3>
         <select v-model="selectedStatus" class="dropdown" required>
           <option disabled selected>Select a Status</option>
-          <option v-for="status in this.statuses" :key="status.statusId" :value="status">
+          <option v-for="status in this.$store.state.orderStatuses" :key="status.statusId" :value="status">
             {{ status.statusType }}
           </option>
         </select>
@@ -74,8 +74,6 @@ export default {
   data() {
     return {
       orders: [],
-      drivers: [],
-      statuses: [],
       selectedOrder: null,
       selectedDriver: null,
       selectedStatus: null,
@@ -84,24 +82,6 @@ export default {
     };
   },  
   methods: {
-    getStatuses() {
-      AdminService.getStatuses()
-      .then(response => {
-        this.statuses = response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    },
-    getDrivers() {
-      AdminService.getDrivers()
-      .then(response => {
-        this.drivers = response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      })
-    },
     getOrders() {
       AdminService.getOrders()
       .then(response => {
@@ -144,7 +124,7 @@ export default {
 
         AdminService.updateOrderStatus(orderStatus)
           .then(response => {
-            updatedStatus = response.data;
+            this.updatedStatus = response.data;
             this.commit('SET_CURRENT_ORDER_STATUS') 
           })
           .catch((error) => {
@@ -178,12 +158,10 @@ export default {
     }
   },
   created() {
-    //this.$store.dispatch("getAdminOrders");
-    //this.$store.dispatch("getDrivers");
-    //this.$store.dispatch("getOrderStatuses");
+    this.$store.dispatch("getAdminOrders");
+    this.$store.dispatch("getDrivers");
+    this.$store.dispatch("getOrderStatuses");
     this.getOrders();
-    this.getDrivers();
-    this.getStatuses();
   },
 
 }

@@ -44,11 +44,34 @@ export default {
           image: new URL("../assets/ModelA.jpg", import.meta.url).href,
           description: "Pizza ready to serve.",
         },
+      
+        {
+          image: new URL("../assets/ModelD.jpg", import.meta.url).href,
+          description: "We LOVE Pizza!",
+        },
         {
           image: new URL("../assets/ModelB.jpg", import.meta.url).href,
           description: "Fresh ingredients on display.",
+        }, {
+          image: new URL("../assets/pic7.jpg", import.meta.url).href,
+          description: "A snapshot of our pizza preparation process.",
         },
         {
+          image: new URL("../assets/ModelC.jpg", import.meta.url).href,
+          description: "A snapshot of our pizza preparation process.",
+        }, {
+          image: new URL("../assets/pic1.jpg", import.meta.url).href,
+          description: "A snapshot of our pizza preparation process.",
+        }, {
+          image: new URL("../assets/pic5.jpg", import.meta.url).href,
+          description: "A snapshot of our pizza preparation process.",
+        }, {
+          image: new URL("../assets/pic2.jpg", import.meta.url).href,
+          description: "A snapshot of our pizza preparation process.",
+        }, {
+          image: new URL("../assets/pic3.jpg", import.meta.url).href,
+          description: "A snapshot of our pizza preparation process.",
+        }, {
           image: new URL("../assets/ModelC.jpg", import.meta.url).href,
           description: "A snapshot of our pizza preparation process.",
         },
@@ -66,6 +89,18 @@ export default {
         },
         {
           image: new URL("../assets/heart.jpg", import.meta.url).href,
+          description: "We LOVE Pizza!",
+        },
+        {
+          image: new URL("../assets/grandmas.jpg", import.meta.url).href,
+          description: "We LOVE Pizza!",
+        },
+        {
+          image: new URL("../assets/WholeCheese.jpg", import.meta.url).href,
+          description: "We LOVE Pizza!",
+        },
+        {
+          image: new URL("../assets/WholePepperoni.jpg", import.meta.url).href,
           description: "We LOVE Pizza!",
         }
         
