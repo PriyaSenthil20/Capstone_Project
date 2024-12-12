@@ -12,6 +12,7 @@ import AdminInventoryView from '../views/AdminInventoryView.vue';
 import AdminOrderView from '../views/AdminOrderView.vue';
 import PaymentView from '../views/PaymentView.vue';
 import AboutUsView from '../views/AboutUsView.vue';
+import MenuView from '../views/MenuView.vue';
 import SpecialsView from '../views/SpecialsView.vue';
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -93,8 +94,14 @@ const routes = [
     meta: {
       requiresAuth: true
     }
-  },
-  {
+  },{
+    path: "/menu",
+    name: "menu",
+    component: MenuView,
+    meta: {
+      requiresAuth: true
+    }
+  },{
     path: "/aboutUs",
     name: "aboutUs",
     component: AboutUsView,
