@@ -1,7 +1,7 @@
 <template>
     <div id="main">    
         <div id="menu-options">
-            <router-link v-bind:to="{ name: 'home' }">
+            <router-link v-bind:to="{ name: 'home' }" >
               <button class = "navBtn"> Home </button></router-link>
 
                 <span v-if="$store.state.token != ''">
@@ -9,20 +9,25 @@
                         <button class = "navBtn"> Logout </button></router-link>
                 </span>
                 <span v-else>
-                    <router-link v-bind:to="{ name: 'login' }">
+                    <router-link v-bind:to="{ name: 'login' }" @click="onLinkClicked('/login')">
                         <button class = "navBtn"> Login </button></router-link>
                 </span>    
                 <span v-if="$store.state.token === ''">
-                    <router-link v-bind:to="{ name: 'customerRegister' }">
+                    <router-link v-bind:to="{ name: 'customerRegister' }" @click="onLinkClicked('/customerRegister')">
                         <button class = "navBtn"> Register </button></router-link>
                 </span>                            
            
             <button class="navBtn">Menu</button>
-            <router-link v-bind:to="{ name: 'aboutUs' }">
-              <button class="navBtn">About Us</button></router-link>
-              <router-link v-bind:to="{ name: 'Specials' }">
-              <button class="navBtn">Specials</button></router-link>
 
+            <span v-if="$store.state.user.role === 'ROLE_ADMIN'" @click="onLinkClicked('/adminInventory')">
+              <router-link v-bind:to="{ name: 'AdminInventory' }">
+              <button class="navBtn">Inventory</button></router-link>
+            </span>
+
+            <span v-if="$store.state.user.role === 'ROLE_ADMIN'" @click="onLinkClicked('/adminOrder')">
+              <router-link v-bind:to="{ name: 'AdminOrder' }">
+              <button class="navBtn">Check Orders</button></router-link>
+            </span>
             <!--
                 For Account route...
 
@@ -34,7 +39,7 @@
             -->
 
             <!-- If the user is not signed this should prompt them to sign in or register -->
-            <router-link v-bind:to="{ name: 'customerOrder' }">
+            <router-link v-bind:to="{ name: 'customerOrder' }" @click="onLinkClicked('/customerOrder')">
               <button class="navBtn orderBtn">Start Order</button>
             </router-link>
             
@@ -46,7 +51,15 @@
 
 
 export default {
-   
+
+    methods: {
+      onLinkClicked(redirectPath) {
+        if (!this.isAuthenticated) {
+          // If not authenticated, redirect to login with a query to redirect after login
+          this.$router.push({ name: 'login', query: { redirect: redirectPath } });
+        }
+      }
+    },
     computed: {
         logoUrl(){
             return `../src/assets/PizzaIcon.png`;            
