@@ -186,7 +186,6 @@ export default {
               authService.login(this.user).then((response) => {
 
               if (response.status == 200){
-                alert("is this called?")
                 this.$store.commit("SET_AUTH_TOKEN", response.data.token);
                 this.$store.commit("SET_USER", response.data.user);
                 this.customer.customerId= this.$store.state.user.id;
