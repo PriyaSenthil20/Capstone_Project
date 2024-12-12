@@ -211,7 +211,7 @@ export default {
           .then((response) => {
             if (response.status == 201) {
               this.$store.commit("SET_CUSTOMER", response.data);
-              
+              this.$router.push('/');
             }
           })
           .catch((error) => {

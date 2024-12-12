@@ -38,7 +38,7 @@
                 <h1>Admin Options</h1>
                 <span>
                   <router-link v-bind:to="{ name: 'AdminOrder' }">
-                  <button class="navBtn">Check Orders</button></router-link>
+                  <button class="navBtn">Orders</button></router-link>
                 </span>
       </div>
          </div>

@@ -1,24 +1,8 @@
- <!-- WILL BE LENGTHY WITH NEW ROUTE!!! If we have time I'll attempt to
- move the tables to the components and not the view and drop everything in the store.
- 
-Tabs to choose whether to display product/options removed If you see
- any references to them or a stepper please comment out or delete
-contains:
-- 1st table for products --18
- - attached form to add new Product shown by button -- 83
--2nd table product options --
- - attached form to add new product options shown by button --
- -->
 <template>
   <div class="home">
     <nav class="navbar">
       <nav-options />
     </nav>
-     <!-- Demo of Gets from Product table to be used in table and basis for forms in components-->
-    
-    <div class="content-section">      
-      <inventory-product v-bind:products="products" />
-    </div>
     <div class="product-page-buttons">
       <button v-on:click="editAvailability = !editAvailability">Edit Product Availability</button>
       <button v-on:click="showForm = !showForm">Add New Product</button>
@@ -142,10 +126,6 @@ contains:
 -----------------------------------------------------------------------------------------------------------
 -->
 
-    <!-- Demo of Gets from Product Options table to be used in table and basis for forms in components-->
-    <div class="content-section">      
-      <inventory-product-option v-bind:productOptions="productOptions" />
-    </div>
     <div class="option-page-buttons">
       <button v-on:click="editOptionAvailability = !editOptionAvailability && clearSelectedOptions">Edit Option Availability</button>
       <button v-on:click="showOptionForm = !showOptionForm">Add New Option</button>
@@ -243,15 +223,10 @@ contains:
 <script>
 import NavOptions from '../components/NavOptions.vue';
 import AdminService from '../services/AdminService';
-import InventoryProduct from '../components/InventoryProduct.vue';
-import InventoryProductOption from '../components/InventoryProductOption.vue';
-import { computed, toValue } from 'vue';
 
 export default {
   components: {
     NavOptions,
-    InventoryProduct,
-    InventoryProductOption,
   },
   data() {
     return{
@@ -300,8 +275,11 @@ export default {
     getProducts(){
       AdminService.Products()
       .then(response => {
-       this.products = response.data;
-      })
+       this.products = response.data.map(product => ({
+        ...product,
+        productAvailable: String(product.productAvailable)
+      }));
+    })
       .catch(error => {
         console.log(error);
       })
@@ -309,8 +287,11 @@ export default {
     getOptions(){
       AdminService.Options()
       .then(response => {
-       this.productOptions = response.data;
-      })
+       this.productOptions = response.data.map(productOption => ({
+        ...productOption,
+        optionAvailable: String(productOption.optionAvailable)
+      }));
+    })
       .catch(error => {
         console.log(error);
       })
@@ -365,11 +346,16 @@ export default {
       },
     flipStatus(id) {
       const index = this.findProductById(id);
-        this.products[index].productAvailable =
-        this.products[index].productAvailable === "true" ? "false" : "true";
+        this.filteredList[index].productAvailable =
+        this.filteredList[index].productAvailable === "true" ? "false" : "true";
+        
+        //this.productAvailableDto = {
+        //productId: id,
+        //productAvailable: this.products[index].productAvailable};
+      this.products = [...this.products];
       this.productAvailableDto.productId = id;
-      this.productAvailableDto.productAvailable = this.products[index].productAvailable;
-      AdminService.updateProductAvailability(productAvailableDto)
+      this.productAvailableDto.productAvailable = this.filteredList[index].productAvailable;
+      AdminService.updateProductAvailability(this.productAvailableDto)
     },
     selectAllProducts(event) {
       if (event.target.checked) {
@@ -379,19 +365,25 @@ export default {
       }
     },
     activateSelectedProducts() {
-      this.selectedProducts.forEach((id) => {
+           this.selectedProducts.forEach((id) => {
+        const index = this.findProductById(id); 
        this.productAvailableDto.productId = id;
        this.productAvailableDto.productAvailable = "true";
-        AdminService.updateProductAvailability(productAvailableDto)
+        AdminService.updateProductAvailability(this.productAvailableDto)
+        this.products[index].productAvailable = "true";
+        this.products = [...this.products];
       });
       this.clearSelectedProducts();
       this.getProducts();
     },
     deactivateSelectedProducts() {
       this.selectedProducts.forEach((id) => {
+        const index = this.findProductById(id);
         this.productAvailableDto.productId = id;
        this.productAvailableDto.productAvailable = "false";
-        AdminService.updateProductAvailability(productAvailableDto)
+        AdminService.updateProductAvailability(this.productAvailableDto)
+        this.products[index].productAvailable = "false";
+        this.products = [...this.products];
       });
       this.clearSelectedProducts();
       this.getProducts();
@@ -411,20 +403,24 @@ export default {
     },
     activateSelectedOptions() {
       this.selectedOptions.forEach((id) => {
+        const index = this.findOptionById(id);
        this.productOptionAvailableDto.optionId = id;
        this.productOptionAvailableDto.optionAvailable = "true";
-        AdminService.updateProductOptionAvailability(productOptionAvailableDto)
+        AdminService.updateProductOptionAvailability(this.productOptionAvailableDto)
+        this.productOptions[index].productAvailable = "true";
+        this.productOptions = [...this.productOptions];
       });
       this.clearSelectedOptions();
       this.getOptions();
     },
     deactivateSelectedOptions() {
-      alert(id)
       this.selectedOptions.forEach((id) => {
+        const index = this.findOptionById(id);
         this.productOptionAvailableDto.optionId = id;
        this.productOptionAvailableDto.optionAvailable = "false";
-        AdminService.updateProductOptionAvailability(productOptionAvailableDto)
-
+        AdminService.updateProductOptionAvailability(this.productOptionAvailableDto)
+        this.productOptions[index].productAvailable = "false";
+        this.productOptions = [...this.productOptions];
       });
       this.clearSelectedOptions();
       this.getOptions();
