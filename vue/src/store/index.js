@@ -135,7 +135,7 @@ export function createStore(currentToken, currentUser) {
       .then((response) => {
         const adminOrders = response.data;
         this.commit('SET_ADMIN_ORDERS', adminOrders);
-        })
+      })
       .catch(error => {
         console.error('Error fetching Admin Orders:', error);
       });

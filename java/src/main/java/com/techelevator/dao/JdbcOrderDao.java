@@ -19,7 +19,7 @@ public class JdbcOrderDao implements OrderDao {
 
     private final JdbcDriverDao jdbcDriverDao;
     private final String ORDER_SELECT = "SELECT order_id, customer_id, transfer_id, driver_id, " +
-            "notes, total_sale, pickup_date, pickup_time, status_id ";
+            "notes, total_sale, pickup_date, pickup_time, orders.status_id, order_status.status_type ";
 
     public JdbcOrderDao(JdbcTemplate jdbcTemplate, JdbcProductDao jdbcProductDao,
                         JdbcProductOptionDao jdbcProductOptionDao, JdbcDriverDao jdbcDriverDao) {
@@ -32,7 +32,7 @@ public class JdbcOrderDao implements OrderDao {
     @Override
     public List<Order> getOrders() {
         List<Order> orders = new ArrayList<>();
-        String sql = ORDER_SELECT + " FROM orders";
+        String sql = ORDER_SELECT + " FROM orders INNER JOIN order_status on orders.status_id = order_status.status_id";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -232,6 +232,7 @@ public class JdbcOrderDao implements OrderDao {
         order.setPickUpDate(rs.getString("pickup_date"));
         order.setPickUpTime(rs.getString("pickup_time"));
         order.setStatusId(rs.getInt("status_id"));
+        order.setStatusText(rs.getString("status_type"));
         //deprecated, will revisit
         //order.setCreatedTime(LocalDateTime.from(rs.getTime("created_time").toLocalTime()));
         return order;

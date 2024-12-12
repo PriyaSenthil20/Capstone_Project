@@ -52,6 +52,16 @@ public class AdminController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("admin/status/")
+    public OrderStatus getOrderStatus(@RequestBody OrderStatusDto orderStatusDto) {
+        try {
+            return orderStatusDao.getOrdersStatusById(orderStatusDto.getStatusId());
+        } catch (DaoException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/drivers/{id}")
     public Driver getDriverById(@PathVariable int id) {
         try {
