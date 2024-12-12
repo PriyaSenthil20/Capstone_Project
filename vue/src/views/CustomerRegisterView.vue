@@ -178,12 +178,18 @@ export default {
         authService
           .register(this.user)
           .then((response) => {
+
+
+
             if (response.status == 201) {
               
               authService.login(this.user).then((response) => {
+
               if (response.status == 200){
+                alert("is this called?")
                 this.$store.commit("SET_AUTH_TOKEN", response.data.token);
                 this.$store.commit("SET_USER", response.data.user);
+                this.customer.customerId= this.$store.state.user.id;
             }
               })
             }
@@ -198,11 +204,15 @@ export default {
       }
     },
     registerCustomer() {
+      
+      alert(this.customer.customerId)
+      console.log(this.customer)
         authService
           .registerCustomer(this.customer)
           .then((response) => {
             if (response.status == 201) {
               this.$store.commit("SET_CUSTOMER", response.data);
+              
             }
           })
           .catch((error) => {
@@ -220,7 +230,9 @@ export default {
     },
   },
   created(){
+
     this.customer.customerId= this.$store.state.user.id;
+
   }
 };
 </script>
