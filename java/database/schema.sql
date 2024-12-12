@@ -208,5 +208,8 @@ VALUES ('Custom Pizza', 'Small Custom Pizza', 2, 10, true, 1),
 ('Coca Cola', 'Large Coca Cola', 3, 5, true, 3),
 ('Rocco Special', 'Medium Special Pizza', 1, 15, true, 2),
 ('Rocco Special', 'Large Special Pizza', 1, 22, true, 3);
+('Apollo Special', 'A supreme blend of toppings for a truly satisfying bite.', 1, 15.99, true, 2);
+('Lei'Ed', 'A masterful selection for a pizza king.', 1, 15.99, true, 2);
+('The Master', 'Can you handle the Master?', 1, 15.99, true, 2);
 	
 COMMIT TRANSACTION;
