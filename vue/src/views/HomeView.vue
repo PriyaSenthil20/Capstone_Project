@@ -100,7 +100,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f4f4f4;
+
   font-family: Arial, sans-serif;
   
   /*
@@ -156,7 +156,6 @@ export default {
 .gallery-container {
     width: 100%;
     overflow: hidden;
-    background-color: #f0f0f0;
     padding: 20px 0;
 }
 

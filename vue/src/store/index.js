@@ -140,6 +140,16 @@ export function createStore(currentToken, currentUser) {
         console.error('Error fetching Admin Orders:', error);
       });
   },
+  getOrderStatuses({commit}){
+    AdminService.getStatuses()
+    .then((response) => {
+      const orderStatuses = response.data;
+      this.commit('SET_ORDER_STATUSES', orderStatuses);
+    })
+    .catch(error => {
+      console.error('Error fetching list of status types:', error);
+    });
+},
   getDrivers({commit}){
     AdminService.getDrivers()
       .then((response) => {
@@ -149,16 +159,6 @@ export function createStore(currentToken, currentUser) {
       .catch(error => {
       console.error('Error fetching all Drivers:', error);
     });
-    },
-    getOrderStatuses({commit}){
-      AdminService.getStatuses()
-      .then((response) => {
-        const orderStatuses = response.data;
-        this.commit('SET_ORDER_STATUSES', orderStatuses);
-        })
-      .catch(error => {
-        console.error('Error fetching all Statuses:', error);
-      });
     },
     addCustomer({commit}, customer){
       
