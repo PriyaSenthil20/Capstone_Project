@@ -10,7 +10,7 @@
         </div>
 
         <div class="form-group" v-if="this.$store.state.orderDetails.transferId=='1'">
-          <label for="deliveryAddress">Enter Delivery Address</label>
+          <div class="form-group"><label for="deliveryAddress">Enter Delivery Address</label>
           <input
             type="text"
             id="deliveryAddress"
@@ -18,7 +18,8 @@
             required
             maxlength="100"
             placeholder="Enter Street Name and Door Number"
-          />
+          /></div>
+          <div class="form-group">
           <label for="City">City</label>
           <input
             type="text"
@@ -27,7 +28,8 @@
             required
             maxlength="10"
             placeholder="Enter City Name"
-          />
+          /></div>
+          <div class="form-group">
           <label for="State">State</label>
           <input
             type="text"
@@ -36,7 +38,7 @@
             required
             maxlength="2"
             placeholder="Enter State Abbreviation"
-          />
+          /></div>
         </div>
         <div class="form-group">
           <label for="paymentType">Payment Type</label>
@@ -68,9 +70,10 @@
         <div class="form-group">
           <label for="cardCvv">Card CVV</label>
           <input
-            type="number"
+            type="text"
             id="cardCvv"
             v-model="payment.cardCvv"
+         
             required
             maxlength="3"
             placeholder="Enter CVV"
@@ -166,67 +169,100 @@
   </script>
   
   <style scoped>
+  /* Payment Form Container */
   .payment-form {
-    width: 300px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px 25px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
   }
   
-  h3 {
+  /* Header */
+  .payment-form h3 {
     text-align: center;
+    font-size: 1.5rem;
+    color: #333333;
     margin-bottom: 20px;
   }
   
+  /* Form Groups */
   .form-group {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
   }
   
+  /* Labels */
   label {
-    display: block;
-    margin-bottom: 5px;
+    font-size: 0.9rem;
     font-weight: bold;
+    color: #555555;
+    margin-bottom: 5px;
   }
   
+  /* Inputs and Selects */
   input,
   select {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  button {
-    width: 100%;
+    font-size: 1rem;
     padding: 10px;
-    background-color: #4CAF50;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    outline: none;
+    background-color: #f9f9f9;
+    transition: border-color 0.2s ease-in-out;
+  }
+  
+  input:focus,
+  select:focus {
+    border-color: #007bff;
+  }
+  
+  /* Button */
+  button {
+    font-size: 1rem;
+    font-weight: bold;
     color: white;
+    background-color: #007bff;
     border: none;
-    border-radius: 4px;
+    padding: 12px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
   }
   
-  button:disabled {
-    background-color: #ccc;
+  button:hover {
+    background-color: #0056b3;
   }
   
-  button:hover:not(:disabled) {
-    background-color: #45a049;
-  }
+  /* Success Message */
   .paymentConfirmationPage {
-  background-image: url('../assets/login1.png');
-  background-size: cover;
-  background-position: center;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  text-align: center;
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    color: white;
+    background-color: #007bff;
+  }
+  
+  .paymentConfirmationPage label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+  
+  .paymentConfirmationPage p {
+    font-size: 1rem;
+    margin: 10px 0;
+  }
+  
+  /* Delivery Details */
+  .form-group div {
+    margin-bottom: 10px;
+  }
   </style>
   
