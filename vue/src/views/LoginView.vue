@@ -80,13 +80,18 @@ export default {
   align-items: center;
 }
 #loginform{
-  background-color: rgba(124, 146, 181, 0.1);
-  
-  
+  background-color: rgb(239, 244, 245);
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
   
 }
 .form-input-group {
   margin-bottom: 1rem;
+  
 }
 label {
   margin-right: 0.5rem;
@@ -100,7 +105,7 @@ label {
   color: #808080;
 }
 button {
-  background-color: red; 
+  background-color: rgb(26, 115, 171); 
   color: white; 
   padding: 10px 20px; 
   border: none; 
