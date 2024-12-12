@@ -83,11 +83,16 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #e63946; /* A vibrant red background */
+  background-image: url("../assets/topbar.png"); /* Add the image */
+  background-size: auto; /* Keep the image at its natural size */
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-position: top center; /* Focus on the top section of the image */
   height: 50%;
   padding: 20px;
   box-sizing: border-box;
 }
+
+
 
 #menu-options, #admin-buttons {
   display: flex;
@@ -111,7 +116,7 @@ export default {
   font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
-  background-color: #457b9d; /* Deep blue */
+  background-color: #d84a4a; /* Deep blue */
   padding: 12px 0; /* Adjust padding for consistency */
   border: none;
   border-radius: 8px;
