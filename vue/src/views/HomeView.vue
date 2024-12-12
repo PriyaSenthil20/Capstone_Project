@@ -64,7 +64,16 @@ export default {
         {
           image: new URL("../assets/inCar.jpg", import.meta.url).href,
           description: "The pizza didn't even make it home.",
+        },
+        {
+          image: new URL("../assets/Pepperoni2.jpg", import.meta.url).href,
+          description: "The pizza so big, it does not fit the frame.",
+        },
+        {
+          image: new URL("../assets/heart.jpg", import.meta.url).href,
+          description: "We LOVE Pizza!",
         }
+        
         
       ],
       products: []
