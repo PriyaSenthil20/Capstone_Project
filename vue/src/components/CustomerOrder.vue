@@ -353,51 +353,56 @@ export default {
                    this.orderOptions.push(temp[i].optionName);
                 }
               }
-          },
-          loadTime() {
+                },
+                  loadTime() {
           let hours24 = new Date().getHours();
-          const hours12 = hours24 % 12 || 12;
           const minutes = new Date().getMinutes();
           let ampm = ' AM';
+
+          this.storeTime = []; // Initialize storeTime array
 
           if (hours24 >= 21) {
             this.dateLabel = true;
             const today = new Date();
             const nextDate = new Date(today);
             nextDate.setDate(today.getDate() + 1);
-            this.pickUpDate = nextDate.getDate()+"-"+nextDate.getMonth()+"-"+nextDate.getFullYear();
+            this.pickUpDate = nextDate.getDate() + "-" + (nextDate.getMonth() + 1) + "-" + nextDate.getFullYear();
             hours24 = 8;
 
-            for (let i = 0; hours24 < 21; i++, hours24++) {
-              const displayHours12 = hours24 % 12 || 12;
+            for (let i = 0; hours24 < 21; hours24++) {
+              let displayHours12 = hours24 % 12 || 12;
               ampm = hours24 >= 12 ? ' PM' : ' AM';
-              this.storeTime[i++] = displayHours12 + ':00' + ampm;
-              this.storeTime[i] = displayHours12 + ':30' + ampm;
+              this.storeTime.push(displayHours12 + ':00' + ampm, displayHours12 + ':30' + ampm);
             }
           } else if (hours24 < 8) {
             hours24 = 8;
-            for (let i = 0; hours24 < 21; i++, hours24++) {
-              const displayHours12 = hours24 % 12 || 12;
+            for (let i = 0; hours24 < 21; hours24++) {
+              let displayHours12 = hours24 % 12 || 12;
               ampm = hours24 >= 12 ? ' PM' : ' AM';
-              this.storeTime[i++] = displayHours12 + ':00' + ampm;
-              this.storeTime[i] = displayHours12 + ':30' + ampm;
-            } 
-          }
-          else {
-            for (let i = 0; hours24 < 21; i++) {
-              const displayHours12 = hours24 % 12 || 12;
+              this.storeTime.push(displayHours12 + ':00' + ampm, displayHours12 + ':30' + ampm);
+            }
+          } else {
+            for (let i = 0; hours24 < 21; ) {
+              let displayHours12 = hours24 % 12 || 12;
               ampm = hours24 >= 12 ? ' PM' : ' AM';
-              if (minutes < 30 && minutes > 10 && this.dateLabel === false) {
-                this.storeTime[i++] = displayHours12 + ':30' + ampm;
-                this.storeTime[i] = (displayHours12 + 1) + ':00' + ampm;
-              } else if (minutes > 30 && minutes < 50 && this.dateLabel === false) {
-                this.storeTime[i++] = (displayHours12 + 1) + ':00' + ampm;
-                this.storeTime[i] = displayHours12 + ':30' + ampm;
+
+              if (minutes < 30) {
+                this.storeTime.push(displayHours12 + ':30' + ampm);
+                hours24++;
+                displayHours12 = hours24 % 12 || 12;
+                ampm = hours24 >= 12 ? ' PM' : ' AM';
+                this.storeTime.push(displayHours12 + ':00' + ampm);
+              } else {
+                hours24++;
+                displayHours12 = hours24 % 12 || 12;
+                ampm = hours24 >= 12 ? ' PM' : ' AM';
+                this.storeTime.push(displayHours12 + ':00' + ampm, displayHours12 + ':30' + ampm);
               }
             }
           }
         }
- 
+
+  
     }
   };
 </script>
