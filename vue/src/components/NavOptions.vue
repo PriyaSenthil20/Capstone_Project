@@ -13,7 +13,7 @@
                         <button class = "navBtn"> Login </button></router-link>
                 </span>    
                 <span v-if="$store.state.token === ''">
-                    <router-link v-bind:to="{ name: 'customerRegister' }" @click="onLinkClicked('/customerRegister')">
+                    <router-link v-bind:to="{ name: 'customerRegister' }">
                         <button class = "navBtn"> Register </button></router-link>
                 </span>                            
 
