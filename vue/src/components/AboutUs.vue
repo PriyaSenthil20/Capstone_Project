@@ -93,7 +93,7 @@ export default {
         },
         {
           image: new URL("../assets/ModelA.jpg", import.meta.url).href,
-          description: "A snapshot of our pizza preparation process.",
+          description: "Hot Pizza, Cool Vibes.",
         },
       ],
     };
