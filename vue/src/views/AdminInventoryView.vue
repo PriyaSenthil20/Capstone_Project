@@ -8,7 +8,7 @@
       <button v-on:click="editAvailability = !editAvailability">Edit Product Availability</button>
       <button v-on:click="showForm = !showForm">Add New Product</button>
     </div>
-     <div id="test-table" v-show="editAvailability && !editOptionAvailability">
+     <div id="test-table" v-show="editAvailability">
       <h3>Change Price/Availability</h3>
       <table id="tblProduct">
       <thead>
@@ -135,7 +135,7 @@
       <button v-on:click="editOptionAvailability = !editOptionAvailability && clearSelectedOptions">Edit Option Availability</button>
       <button v-on:click="showOptionForm = !showOptionForm">Add New Option</button>
     </div>
-    <div id="test-option-table" v-show="editOptionAvailability && !editAvailability">
+    <div id="test-option-table" v-show="editOptionAvailability">
       <h3>Change Price/Availability</h3>
       <table id="tblOption">
       <thead>
