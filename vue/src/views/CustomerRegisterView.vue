@@ -12,11 +12,11 @@
         {{ registrationErrorMsg }}
       </div>
       <div class="form-input-group">
-        <label for="username">Username</label>
+        <label for="username">Username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
       </div>
       <div class="form-input-group">
-        <label for="password">Password</label>
+        <label for="password">Password&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <input type="password" id="password" v-model="user.password" required />
       </div>
       <div class="form-input-group">
@@ -44,11 +44,11 @@
         <input type="text" id="customerLastName" v-model="customer.customerLastName" required />
       </div>
       <div class="form-input-group">
-        <label for="customerAddress">Address</label>
+        <label for="customerAddress">Address&nbsp;&nbsp;&nbsp;</label>
         <input type="text" id="customerAddress" v-model="customer.customerAddress" required />
       </div>
       <div class="form-input-group">
-        <label for="customerCity">City</label>
+        <label for="customerCity">City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <input type="text" id="customerCity" v-model="customer.customerCity" required />
       </div>
       <div class="form-input-group">
@@ -56,7 +56,7 @@
         <input type="number" id="customerZipCode" v-model="customer.customerZipCode" required />
       </div>
       <div class="form-input-group">
-        <label for="customerState">State</label>
+        <label for="customerState">State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
         <select id="customerState" placeholder="Select a State" v-model="customer.customerState" required >
 	           <option value="AL">Alabama</option>
 		          <option value="AK">Alaska</option>
@@ -251,7 +251,7 @@ export default {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   max-width: 500px;
   width: 100%;
-  text-align: center;
+ 
   
 }
 .form-input-group {
@@ -259,8 +259,14 @@ export default {
   
 }
 label {
-  margin-right: 0.5rem;
+  margin-right: 0.1rem;
 }
+form .form-input-group input,
+form .form-input-group select {
+  margin-bottom: 15px;
+}
+
+
 h1 {
   font-size: 2rem;
   margin-bottom: 20px;
@@ -278,7 +284,18 @@ button {
   font-size: 16px; 
   cursor: pointer; 
   transition: background-color 0.3s ease; 
+  max-width: 350px;
+}.form-input-group input,
+.form-input-group select {
+  width: 100%;
+  max-width: 350px; /* Ensures inputs don’t stretch too wide */
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
 
 button:hover {
   background-color: darkred; 

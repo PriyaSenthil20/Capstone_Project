@@ -3,6 +3,7 @@
     <nav class="navbar">
       <nav-options />
     </nav>
+    <div class="adminForm">
     <div class="product-page-buttons">
       <button v-on:click="editAvailability = !editAvailability">Edit Product Availability</button>
       <button v-on:click="showForm = !showForm">Add New Product</button>
@@ -16,6 +17,7 @@
           <th>Product Name</th>
           <th>Product Price</th>
           <th>Availability</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -118,8 +120,11 @@
         <option value="4">Anthony</option>
         </select>
       </div>      
-      <button type="submit" class="btn save">Save Product</button>
+      <div class="btnsavediv">
+      <button type="submit" class="btnsave">Save Product</button>
+      </div>
     </form>
+   
     </div>
 <!-- ----------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------
@@ -214,10 +219,11 @@
         <label for="optionAvailable">Option Available?</label>
         <input type="checkbox" id="optionAvailable" name="optionAvailable" v-model="newOption.optionAvailable" />
       </div>
-      <button type="submit" class="btn save">Save Option</button>
+      <button type="submit" class="btn_save">Save Option</button>
     </form>
     </div>
-  </div>
+  </div> 
+</div>
 </template>
 
 <script>
@@ -487,23 +493,50 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  width: 100%;
-  display: flex;
+
+
+.adminForm{
+  display:flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #f4f4f4;
-  font-family: Arial, sans-serif;
-  
-}
-
-.navbar {
-  width: 100%;
-  display: bottom;
-  justify-content: center;
+  text-align: center;
+  font-size: large;
  
+
+}.product-page-buttons, .option-page-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Allows buttons to wrap if necessary */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  gap: 1rem; /* Space between buttons */
+  margin: 2rem auto; /* Center the container itself if needed */
+  width: 100%; /* Full width of the parent container */
+  max-width: 600px; /* Optional: limit the maximum width */
+  text-align: center;
 }
 
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: whitesmoke;
+  color: black;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0057b3e7;
+}
+
+.btnsave{
+  max-width: 600px; 
+  height: 50px;
+}
+
+.btnsavediv{
+  justify-content: center;
+}
 .welcome-section {
   width: 90%;
   max-width: 1200px;
@@ -531,17 +564,54 @@ export default {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
 }
+#tblProduct, #tblOption {
+  margin: 2rem auto; /* Center the table horizontally */
+  width: fit-content; /* Adjust the table width based on content */
+  border-collapse: collapse; /* Ensures borders are collapsed and not doubled */
+  text-align: center; /* Center text inside table cells */
+}
+
+th, td {
+  padding: 0.5rem; 
+  border: 1px solid #ccc; 
+}
 
 th {
   text-transform: uppercase;
   text-align: center;
+  background-color: #f1f1f1; /* Light background for header */
+  font-weight: bold; /* Make header text bold */
 }
+
 tr.deactivated {
   color: grey;
   background-color: rgb(195, 211, 225);
 }
 
-test-option-table{
+.all-actions {
+  display: flex;
+  justify-content: center;  
+}
 
+.field label {
+  width: 150px; /* Ensures consistent width for labels */
+  text-align: right;
+  
+}
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; /* Space between label and input */
+  margin-bottom: 1.5rem; /* Space between rows of fields */
+}
+
+
+.field input,
+.field select {
+  width: 250px; /* Sets consistent width for input elements */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 </style>

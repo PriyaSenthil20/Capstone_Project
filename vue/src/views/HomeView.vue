@@ -9,7 +9,7 @@
     
   </div>
   <div class="gallery-body">
-    <h1>Photo Gallery</h1>
+    
     <div class="gallery-container">
         <div class="gallery">
             <div class="gallery-inner">
@@ -54,26 +54,26 @@ export default {
           description: "Fresh ingredients on display.",
         }, {
           image: new URL("../assets/pic7.jpg", import.meta.url).href,
-          description: "A snapshot of our pizza preparation process.",
+          description: "Bringing Smiles One Slice at a Time.",
         },
         {
           image: new URL("../assets/ModelC.jpg", import.meta.url).href,
-          description: "A snapshot of our pizza preparation process.",
+          description: "In Pizza We Crust!",
         }, {
           image: new URL("../assets/pic1.jpg", import.meta.url).href,
-          description: "A snapshot of our pizza preparation process.",
+          description: "Where Every Slice Feels Like Home.",
         }, {
           image: new URL("../assets/pic5.jpg", import.meta.url).href,
-          description: "A snapshot of our pizza preparation process.",
+          description: "Your Pizza, Your Way!",
         }, {
           image: new URL("../assets/pic2.jpg", import.meta.url).href,
-          description: "A snapshot of our pizza preparation process.",
+          description: "Life Happens, Pizza Helps.",
         }, {
           image: new URL("../assets/pic3.jpg", import.meta.url).href,
-          description: "A snapshot of our pizza preparation process.",
+          description: "Cheese Your Day with Us!",
         }, {
           image: new URL("../assets/ModelC.jpg", import.meta.url).href,
-          description: "A snapshot of our pizza preparation process.",
+          description: "Crust to Crave, Flavor to Savor",
         },
         {
           image: new URL("../assets/actionPic.jpg", import.meta.url).href,
@@ -93,15 +93,15 @@ export default {
         },
         {
           image: new URL("../assets/grandmas.jpg", import.meta.url).href,
-          description: "We LOVE Pizza!",
+          description: "Hot Pizza, Cool Vibes.",
         },
         {
           image: new URL("../assets/WholeCheese.jpg", import.meta.url).href,
-          description: "We LOVE Pizza!",
+          description: "The Secret Ingredient is Always Pizza!",
         },
         {
           image: new URL("../assets/WholePepperoni.jpg", import.meta.url).href,
-          description: "We LOVE Pizza!",
+          description: "Fuel Your Day, One Slice at a Time.",
         }
         
         

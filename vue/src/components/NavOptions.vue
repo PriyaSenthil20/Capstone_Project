@@ -102,7 +102,6 @@ export default {
   gap: 10px; /* Optional: small space between buttons */
   background-color: #f1faee; /* Light background for contrast */
   padding: 20px;
-  border-radius: 15px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
   margin-bottom: 0.2rem;
 }
@@ -116,11 +115,12 @@ export default {
   font-size: 1.2rem;
   font-weight: bold;
   color: #fff;
-  background-color: #df3535; /* Deep blue */
+  background-color: #df3535; 
   padding: 12px 0; /* Adjust padding for consistency */
   border: none;
   border-radius: 8px;
   cursor: pointer;
+
   transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
